@@ -171,11 +171,6 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 
-#. URI of the theme
-#. Author URI of the theme
-msgid "https://grownonstop.com/"
-msgstr ""
-
 #: inc/posts-category-image.php:34 inc/posts-category-image.php:63
 msgid "Image"
 msgstr ""
@@ -246,9 +241,6 @@ msgstr ""
 msgid "No posts found"
 msgstr ""
 
-#. Author of the theme
-msgid "Nonstop Corporation"
-msgstr ""
 
 #: no-results.php:10
 msgid "Nothing Found"
@@ -528,7 +520,7 @@ msgstr ""
 
 #. Description of the theme
 msgid ""
-"This is the beginning of Nonstop themes. Organizations and businesses have "
+"This is the beginning of Aviationist themes. Organizations and businesses have "
 "the ability to create dynamic landing pages with endless layouts using the "
 "group and column blocks. The centered content column and fine-tuned "
 "typography also makes it perfect for traditional blogs. Complete editor "
