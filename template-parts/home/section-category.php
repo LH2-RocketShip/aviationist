@@ -22,9 +22,9 @@
   </div>
   <?php
     $cats_args = array(
-        'number'     => get_theme_mod('nsc_blog_category_cat_num'), // 10
-        'orderby'    => 'name',  //get_theme_mod('nsc_blog_category_order_by'),
-        'order'      => 'asc', //get_theme_mod('nsc_blog_category_order'), //
+        'number'     => get_theme_mod('nsc_blog_category_cat_num'),
+        'orderby'    => 'name',
+        'order'      => 'asc',
         'hide_empty' => true,
     );
 
@@ -146,14 +146,10 @@
                </defs>
                </svg>
              </a>
-
             </div>
         </div>
        <?php endwhile; ?>
-
   </div>
-
-
    <?php }else {
      echo "<h4>No posts found.</h4>";
    }

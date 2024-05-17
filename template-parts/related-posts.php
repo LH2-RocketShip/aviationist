@@ -4,14 +4,6 @@
  *
  */
 
- // $sidebar = get_theme_mod('nsc_blog_single_post_sidebar', true);
- //
- // if ($sidebar == 0){
- //   $post_count = 4;
- // }else {
- //   $post_count = 3;
- // }
-
 $nsc_blog_related_args = array(
     // 'posts_per_page'    => absint( get_theme_mod( 'nsc_blog_related_posts_per_page', $post_count ) ),
     'post__not_in'      => array( get_the_ID() ),

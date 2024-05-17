@@ -22,13 +22,8 @@ get_header();
 				 <?php dynamic_sidebar('home-page');?>
        </div>
      </div>
-
      <?php get_template_part('template-parts/nsc-user'); ?>
 		 <?php get_template_part('template-parts/articles/section-video-interview'); ?>
    </div>
  </main>
-
-
-
-
 <?php get_footer();

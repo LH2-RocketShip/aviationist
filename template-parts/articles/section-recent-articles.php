@@ -56,18 +56,6 @@
     object-fit: cover;
 }
 
-.d-flex {
-    display: flex;
-}
-
-.align-items-center {
-    align-items: center;
-}
-
-.gap-2 {
-    gap: 10px;
-}
-
 .nsc-common-btn {
     background-color: #000;
     color: #fff;
@@ -118,7 +106,7 @@
         <h4><?php echo esc_html_e('Please add the post to see this section', 'nsc-blog'); ?></h4>
     <?php }
     wp_reset_postdata(); ?>
-    <div class="nsc-common-btn-wrap" style="text-align:center;">
+    <div class="nsc-common-btn-wrap text-center" >
       <button class="nsc-common-btn mt-4">
           <?php echo esc_html__('Load More', 'nsc-blog'); ?>
       </button>

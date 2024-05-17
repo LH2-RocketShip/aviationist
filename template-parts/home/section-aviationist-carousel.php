@@ -4,7 +4,6 @@
  *
  * @package nsc-blog
  */
-
 ?>
 
 <section id="nsc-aviationist-carousel" class="nsc-aviationist-carousel">
@@ -52,6 +51,5 @@
       <h4> <?php echo esc_html_e('Please add the post to see this section', 'nsc-blog'); ?> </h4>
      <?php }
      wp_reset_query(); ?>
-
   </div>
 </section>

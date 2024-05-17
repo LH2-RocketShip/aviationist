@@ -30,8 +30,6 @@
 
                $args = array(
                    'role'    => $role,
-                   // 'orderby' => 'user_nicename',
-                   // 'order'   => 'ASC'
                );
                $users = get_users($args);
                ?>

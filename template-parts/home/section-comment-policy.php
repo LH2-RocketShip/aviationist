@@ -6,9 +6,7 @@
  */
 
  $bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_directory_uri(). '/assets/images/comment-policy.png');
-
 ?>
-
 <section class="nsc-comments-policy" style="background-image: url(<?php echo $bgimage ?>)">
   <div class="container">
     <div class="row">

@@ -40,9 +40,3 @@ if ( ! defined( 'ABSPATH' ) ) {
 	get_template_part('template-parts/header/site-logo');
 	get_template_part('template-parts/header/menu'); ?>
 </header>
-
-<?php
-/*
-if (get_theme_mod('nsc_blog_header_settings', true) !='0'){
-	get_template_part('template-parts/nsc-theme-settings');
-} */ ?>

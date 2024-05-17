@@ -25,11 +25,6 @@ $headh1 = get_theme_mod('nsc_blog_site_title', true); ?>
 								</span>
 							</a>
 			    </div>
-
-					<?php /*
-					<button id="backButton">Back</button>
-					*/ ?>
-
 			<?php } ?>
 		<div class="clearfix"></div>
 	</div>

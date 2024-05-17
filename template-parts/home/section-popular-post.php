@@ -102,14 +102,9 @@
                  </linearGradient>
                  </defs>
                  </svg>
-
                </a>
-
               </div>
-
           </div>
-
-
        <?php endwhile; ?>
        </div>
     <?php  }else { ?>
