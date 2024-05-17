@@ -11,7 +11,7 @@
     <div class="topbar-menu">
       <?php
         wp_nav_menu( array(
-          'theme_location' => 'topbar',
+          'theme_location' => get_theme_mod('nsc_blog_topbar_menu', 'topbar'),
           'container_class' => 'clearfix' ,
           'menu_class' => 'top-menu clearfix',
           'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',
@@ -44,13 +44,24 @@
                     'www.instagram.com',
                     'www.github.com',
                   );
-
+          $title = array(
+                    'Twitter',
+                    'Facebook',
+                    'Instagram',
+                    'Github',
+                  );
 
         $topbar_icons = get_theme_mod('nsc_blog_topbar_icon_number', '4');
-        for ($i=0; $i <$topbar_icons ; $i++) { ?>
-          <a class="" href="<?php echo $urls[$i] ?>" title="<?php echo esc_attr( 'Facebook','nsc-blog' );?>">
-            <?php echo $svg[$i]; ?>
+        for ($i=0; $i < $topbar_icons; $i++) { ?>
+
+          <?php if (get_theme_mod('nsc_blog_topbar_icon_url'.$i) !=''){ ?>
+            <a class=""
+              href="<?php echo esc_attr(get_theme_mod('nsc_blog_topbar_icon_url'.$i, $urls[$i])); ?>"
+              title="<?php echo esc_attr(get_theme_mod('nsc_blog_topbar_icon_title'.$i, $title[$i])); ?>"
+              target="_blank">
+            <?php echo get_theme_mod('nsc_blog_topbar_icon'.$i, $svg[$i]); ?>
           </a>
+          <?php } ?>
         <?php } ?>
     </div>
   </div>

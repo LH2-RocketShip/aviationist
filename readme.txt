@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-This is the beginning of Pritam Shinde themes. Organizations and businesses have the ability to create dynamic landing pages with endless layouts using the group and column blocks. The centered content column and fine-tuned typography also makes it perfect for traditional blogs. Complete editor styles give you a good idea of what your content will look like, even before you publish. You can give your site a personal touch by changing the background colors and the accent color in the Customizer. The colors of all elements on your site are automatically calculated based on the colors you pick, ensuring a high, accessible color contrast for your visitors.
+This is the beginning of Aviationist themes. Organizations and businesses have the ability to create dynamic landing pages with endless layouts using the group and column blocks. The centered content column and fine-tuned typography also makes it perfect for traditional blogs. Complete editor styles give you a good idea of what your content will look like, even before you publish. You can give your site a personal touch by changing the background colors and the accent color in the Customizer. The colors of all elements on your site are automatically calculated based on the colors you pick, ensuring a high, accessible color contrast for your visitors.
 
 == Changelog ==
 
@@ -19,7 +19,7 @@ This is the beginning of Pritam Shinde themes. Organizations and businesses have
 
 == Resources ==
 
-NSC Blog WordPress Theme, Copyright 2024 Prtiam Shinde
+NSC Blog WordPress Theme, Copyright 2024 Pritam Shinde
 NSC Blog is distributed under the terms of the GNU GPL.
 
 Theme is Built using the following resource bundles.

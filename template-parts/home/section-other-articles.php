@@ -6,7 +6,9 @@
  */
 ?>
 <section id="nsc-other-articles" class="nsc-other-articles">
-    <h2 class="section-main-head">OTHER ARTICLES</h2>
+    <?php if (get_theme_mod('nsc_blog_other_articles_heading') !='') { ?>
+      <h2 class="section-main-head"> <?php echo esc_html(get_theme_mod('nsc_blog_other_articles_heading')); ?></h2>
+    <?php } ?>
 
     <?php $args = array(
       'post_type' => 'post',

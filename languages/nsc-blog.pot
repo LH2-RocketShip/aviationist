@@ -241,6 +241,9 @@ msgstr ""
 msgid "No posts found"
 msgstr ""
 
+#. Author of the theme
+msgid "Pritam Shinde"
+msgstr ""
 
 #: no-results.php:10
 msgid "Nothing Found"

@@ -21,12 +21,10 @@ get_header(); ?>
     border-radius: 5px;
     margin-bottom: 20px;
 }
-
 .search-container form {
     display: flex;
     align-items: center;
 }
-
 .search-container input[type="text"],
 .search-container select {
     height: 40px;
@@ -96,11 +94,9 @@ get_header(); ?>
 .search-result {
     margin-bottom: 20px;
 }
-
 .search-result h3 {
     margin: 0 0 10px 0;
 }
-
 .search-result p {
     margin: 0;
 }
@@ -138,13 +134,8 @@ get_header(); ?>
 }
 </style>
 
-
-
-
 <?php echo do_shortcode('[custom_search]'); ?>
 <div class="custom-container">
-
-
   <div class="nsc-post-page-grid">
     <div class="sections">
       <?php get_template_part('template-parts/articles/section-recent-articles'); ?>
@@ -152,7 +143,7 @@ get_header(); ?>
     </div>
 
     <aside class="sidebar">
-      <?php get_sidebar(); ?>
+			<?php dynamic_sidebar('home-page');?>
     </aside>
   </div>
 </div>

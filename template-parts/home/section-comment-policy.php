@@ -14,11 +14,19 @@
     <div class="row">
       <div class="col-md-6 d-flex justify-content-end">
         <div class="">
-          <h2 class="section-heading">The Aviationist Comment Policy</h2>
-          <p>Comments on this site are moderated. Comment policy applies. Please read our Comment Policy before commenting.</p>
-          <a href="#" class="got-it-btn">
-            Got It
-          </a>
+          <?php if (get_theme_mod('nsc_blog_comment_policy_heading') !='') { ?>
+              <h2 class="section-heading"><?php echo esc_html(get_theme_mod('nsc_blog_comment_policy_heading')); ?></h2>
+          <?php } ?>
+
+          <?php if (get_theme_mod('nsc_blog_comment_policy_para') !='') { ?>
+              <p><?php echo esc_html(get_theme_mod('nsc_blog_comment_policy_para')); ?> </p>
+          <?php } ?>
+
+          <?php if (get_theme_mod('nsc_blog_comment_policy_btn') !='') { ?>
+            <a href="<?php echo esc_html(get_theme_mod('nsc_blog_comment_policy_btn_url')); ?>" class="got-it-btn">
+              <?php echo esc_html(get_theme_mod('nsc_blog_comment_policy_btn')); ?>
+            </a>
+          <?php } ?>
         </div>
       </div>
       <div class="col-md-6">

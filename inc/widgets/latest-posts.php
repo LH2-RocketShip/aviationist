@@ -71,12 +71,30 @@ class NSC_Latest_Posts_Widget extends WP_Widget {
             wp_reset_postdata();
         }
 
+        // Add the "View All" button and popup HTML
         if (!empty($view_all_link)) {
             ?>
             <div class="nsc-view-all">
-                <a href="<?php echo esc_url($view_all_link); ?>" class="nsc-view-all-button">
+                <a href="javascript:void(0);" class="nsc-view-all-button" onclick="openCategoryPopup()">
                     <?php esc_html_e('View All Posts', 'nsc-blog'); ?>
                 </a>
+            </div>
+
+            <div id="nsc-category-popup" class="nsc-popup">
+                <div class="nsc-popup-content">
+                    <span class="nsc-popup-close" onclick="closeCategoryPopup()">&times;</span>
+                    <?php echo do_shortcode('[custom_search]'); ?>
+
+                    <h3 class="section-main-head"><?php esc_html_e('All Categories', 'nsc-blog'); ?></h3>
+                    <ul>
+                        <?php
+                        $categories = get_categories();
+                        foreach ($categories as $category) {
+                            echo '<li><a href="' . esc_url(get_category_link($category->term_id)) . '">' . esc_html($category->name) . '</a></li>';
+                        }
+                        ?>
+                    </ul>
+                </div>
             </div>
             <?php
         }

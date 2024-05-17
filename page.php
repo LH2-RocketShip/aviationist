@@ -23,7 +23,7 @@ get_header(); ?>
           endwhile; ?>
         </div>
         <div class="col-md-4">
-          <?php dynamic_sidebar('right-sidebar'); ?>
+            <?php dynamic_sidebar('home-page');?>
         </div>
       </div>
 

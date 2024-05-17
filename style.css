@@ -1,9 +1,9 @@
 /*
 Theme Name: NSC Blog
-Theme URI: 
+Theme URI:
 Author: Pritam Shinde
-Author URI: 
-Description: Organizations and businesses have the ability to create dynamic landing pages with endless layouts using the group and column blocks. The centered content column and fine-tuned typography also makes it perfect for traditional blogs. Complete editor styles give you a good idea of what your content will look like, even before you publish. You can give your site a personal touch by changing the background colors and the accent color in the Customizer. The colors of all elements on your site are automatically calculated based on the colors you pick, ensuring a high, accessible color contrast for your visitors.
+Author URI:
+Description: This is the beginning of Aviationist themes. Organizations and businesses have the ability to create dynamic landing pages with endless layouts using the group and column blocks. The centered content column and fine-tuned typography also makes it perfect for traditional blogs. Complete editor styles give you a good idea of what your content will look like, even before you publish. You can give your site a personal touch by changing the background colors and the accent color in the Customizer. The colors of all elements on your site are automatically calculated based on the colors you pick, ensuring a high, accessible color contrast for your visitors.
 Tags: blog, one-column, custom-background, custom-colors, custom-logo, custom-menu, editor-style, featured-images, footer-widgets, full-width-template, rtl-language-support, sticky-post, theme-options, threaded-comments, translation-ready, block-styles, wide-blocks, accessibility-ready
 Version: 1.0
 Requires at least: 5.8
@@ -484,13 +484,11 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
 }
 .nsc-blog-slider-aviationist .carousel-caption{
   text-align: start;
-  color: #000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
   padding-inline: clamp(13px, 4vw, 27px);
-  gap: 12px;
+  background: linear-gradient(to right, #000000b8 80%, #0006);
+  width: 100%;
+  left: 0;
+  bottom: 0;
 }
 .nsc-blog-slider-aviationist .nsc-post-cat{
   background-color: #000;
@@ -503,7 +501,7 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   font: 600 clamp(12px, 3vw, 28px)/1.2 Work Sans;
 }
 .slider-nsc-post-title a{
-  color: #000;
+  color: #fff;
 }
 .nsc-blog-slider-aviationist .post-metas, .nsc-single-post-page .nsc-post-metas{
   display: flex;
@@ -560,6 +558,11 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
 }
 /* slider END */
 /* category START */
+.nsc-home-category .owl-item{
+  min-width: fit-content;
+  width: max-content !important;
+  margin-inline: 24px;
+}
 .nsc-home-category .owl-item:not(:first-child){
   display: flex;
   justify-content: center;
@@ -797,6 +800,7 @@ aside > div{
 }
 .nsc-tabs {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 12px;
   background: var(--dark-charcoal);
@@ -887,10 +891,10 @@ aside > div{
   padding-block: clamp(12px, 4vw, 68px);
   margin-block-start: clamp(35px, 5vw, 65px);
 }
-.nsc-footer-grid{
+/* .nsc-footer-grid{
   display: grid;
   gap: clamp(24px, 5vw, 60px);
-}
+} */
 .nsc-footer-grid .nsc-foot-column:first-child  > *:not(:last-child){
   margin-bottom: 24px;
 }
@@ -949,30 +953,9 @@ aside > div{
 .nsc-footer .wpforms-container .wpforms-field, .nsc-footer .wp-core-ui div.wpforms-container .wpforms-field{
   padding: 0;
 }
-@media (width >= 776px) {
-  .nsc-blog-slider-aviationist{
-      margin-inline-start: -32px;
-  }
-  .nsc-slider-image{
-    max-width: 75%;
-    margin-inline-start: auto;
-  }
-  .nsc-blog-slider-aviationist .carousel-caption{
-      max-width: 40%;
-      top: 24px;
-      bottom: 24px;
-      left: 32px;
-      background: white;
-      border-radius: 6px;
-      box-shadow: -2px 0px 5px 0px #0000001A,
-                  -10px 0px 10px 0px #00000017,
-                  -22px 0px 13px 0px #0000000D,
-                  -39px 0px 16px 0px #00000003,
-                  -62px 0px 17px 0px #00000000;
-  }
+@media (width >= 767px) {
   .nsc-blog-slider-aviationist .carousel-indicators{
     height: 99px;
-    background: linear-gradient(275.18deg, #000000c4 10.79%, rgba(54, 54, 54, 0) 71%);
   }
   .nsc-blog-grid-5 .post-container:first-child > img {
       aspect-ratio: 3 / 2;
@@ -1070,7 +1053,7 @@ aside > div{
       bottom: 15px;
   }
   .slider-nsc-post-title a{
-    color: #fff;
+    color: var(--black-color);
   }
   .nsc-blog-slider-aviationist .carousel-indicators{
     padding-inline-end: 14px;
@@ -1419,4 +1402,135 @@ blockquote:not(:has(cite)){
 }
 .nsc-author-container svg path{
   fill: var(--tundora-color);
+}
+
+
+/*pop-up*/
+.nsc-popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.nsc-popup-content {
+    background-color: #fff;
+    margin: 15% auto;
+    border: 1px solid #888;
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    border-radius: 20px;
+    padding: 48px 30px 48px 30px;
+    position: relative;
+}
+
+.nsc-popup-content .search-container #searchForm .swrap {
+    display: inline;
+    position: relative;
+}
+.nsc-popup-content .search-container #searchForm .swrap input#searchInput {
+    padding: 4px 16px 4px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    background: rgba(244, 244, 244, 1);
+    max-width: 500px;
+    width: 100%;
+}
+.nsc-popup-content .search-container #searchForm select {
+    width: 141px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 1);
+    height: 34px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    color: rgba(103, 105, 103, 1);
+}
+.nsc-popup-close {
+    font-size: 28px;
+    font-weight: 700;
+    top: 0;
+    position: absolute;
+    right: 20px;
+    color: rgba(255, 204, 0, 1);
+}
+
+.nsc-popup-close:hover,
+.nsc-popup-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.nsc-popup-content h3.section-main-head {
+    text-align: left;
+    margin: 20px 0;
+}
+.nsc-popup-content ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-align: left;
+}
+.nsc-popup-content ul li {
+    padding: 6px 12px 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 1);
+}
+.nsc-popup-content ul li a {
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.36px;
+    text-align: left;
+    color: rgba(0, 0, 0, 1);
+}
+.swrap div#search-results {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    padding: 20px 0 20px 20px;
+    background: #0000008a;
+    border-radius: 8px;
+    z-index: 9;
+}
+.swrap div#search-results h3 a, .swrap div#search-results h3 {
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+}
+.swrap div#search-results p {
+    color: #fff;
+    font-size: 14px;
+}
+.swrap #search-results .search-result {
+    border-bottom: 1px solid #ffffffa6;
+    text-align: left;
+}
+article.nsc-single-post-page {
+    margin: 20px 0;
+}
+@media (max-width: 1040px){
+ .nsc-footer-grid {
+    grid-template-columns: repeat(3,1fr);
+    }
+}
+@media (max-width: 767px){
+ .nsc-footer-grid {
+    grid-template-columns: repeat(2,1fr);
+    }
+}
+@media (max-width: 640px){
+ .nsc-footer-grid {
+    grid-template-columns: repeat(1,1fr);
+    }
 }

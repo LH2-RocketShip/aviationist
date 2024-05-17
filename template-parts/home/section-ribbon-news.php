@@ -7,14 +7,16 @@
 ?>
 
 <div class="nsc-news-bar">
-  <span class="">
-    News Tickers
-  </span>
+  <?php if (get_theme_mod('nsc_blog_news_ribbon_heading') !=''){ ?>
+    <span class="">
+      <?php echo esc_html(get_theme_mod('nsc_blog_news_ribbon_heading')); ?>
+    </span>
+  <?php } ?>
 
   <?php $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
-    'posts_per_page' => 5,
+    'posts_per_page' => get_theme_mod('nsc_blog_news_ribbon_post_num'),
   );
    $query = new WP_Query($args);
    if ( $query->have_posts() ) { ?>

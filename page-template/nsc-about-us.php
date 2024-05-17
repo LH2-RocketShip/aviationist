@@ -19,12 +19,12 @@ get_header();
           <?php echo get_the_content(); ?>
        </div>
        <div class="col-md-4">
-
+				 <?php dynamic_sidebar('home-page');?>
        </div>
      </div>
 
      <?php get_template_part('template-parts/nsc-user'); ?>
-
+		 <?php get_template_part('template-parts/articles/section-video-interview'); ?>
    </div>
  </main>
 

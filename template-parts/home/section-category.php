@@ -8,14 +8,23 @@
 <section id="nsc-home-category" class="nsc-home-category">
 
   <div class="d-flex align-items-center justify-content-between">
-    <h2 class="section-main-head">CATEGORIES</h2>
-    <a href="#">See More</a>
+    <?php if (get_theme_mod('nsc_blog_category_heading') != ''){ ?>
+      <h2 class="section-main-head">
+        <?php echo esc_html(get_theme_mod('nsc_blog_category_heading')); ?>
+      </h2>
+    <?php } ?>
+
+    <?php if (get_theme_mod('nsc_blog_category_see_more') != ''){ ?>
+      <a href="javascript:void(0);" onclick="openCategoryPopup()">
+        <?php echo esc_html(get_theme_mod('nsc_blog_category_see_more')); ?>
+      </a>
+    <?php } ?>
   </div>
   <?php
     $cats_args = array(
-        'number'     => 10,
-        'orderby'    => 'name',
-        'order'      => 'ASC',
+        'number'     => get_theme_mod('nsc_blog_category_cat_num'), // 10
+        'orderby'    => 'name',  //get_theme_mod('nsc_blog_category_order_by'),
+        'order'      => 'asc', //get_theme_mod('nsc_blog_category_order'), //
         'hide_empty' => true,
     );
 
@@ -136,12 +145,12 @@
                </linearGradient>
                </defs>
                </svg>
-
              </a>
 
             </div>
         </div>
        <?php endwhile; ?>
+
   </div>
 
 
@@ -151,9 +160,9 @@
     wp_reset_query(); ?>
 
   <?php } ?>
-  <a href="#" class="nsc-common-btn mt-4">
-    View More
-  </a>
 </div>
+<a href="<?php echo esc_attr( esc_url( get_category_link( $categories[0]->term_id ) ) ); ?>" class="nsc-common-btn mt-4">
+  <?php echo esc_html(get_theme_mod('nsc_blog_category_view_more', 'View More')) ?>
+</a>
 
 </section>

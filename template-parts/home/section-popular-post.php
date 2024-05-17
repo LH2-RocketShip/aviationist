@@ -12,6 +12,14 @@
       'post_type' => 'post',
       'post_status' => 'publish',
       'posts_per_page' => 5,
+      'meta_query' => array(
+          array(
+             'key' => 'reading_count',
+         ),
+       ),
+       'orderby'  => 'meta_value_num',
+       // 'meta_key' => 'reading_count',
+       'order'    => 'DESC',
     );
      $query = new WP_Query($args);
      if ( $query->have_posts() ) { ?>

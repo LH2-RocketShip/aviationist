@@ -5,7 +5,6 @@ function nsc_blog_add_custom_controls() {
 add_action( 'customize_register', 'nsc_blog_add_custom_controls' );
 
 function nsc_blog_customizer_register( $wp_customize ){
-
 	//  site title and tagline
 	$wp_customize->add_setting( 'nsc_blog_site_title',array(
 		'default' => 0,
@@ -53,582 +52,390 @@ function nsc_blog_customizer_register( $wp_customize ){
   $wp_customize->add_panel( 'nsc_blog_add_panel', array(
     'capability' => 'edit_theme_options',
     'theme_supports' => '',
-    'title' => esc_html__( 'NSC Home Page', 'nsc-blog' ),
+    'title' => esc_html__( 'Aviationist Theme Settings', 'nsc-blog' ),
     'priority' => 10,
   ));
 
-  $wp_customize->add_section('nsc_blog_header' , array(
-    'title' => __( 'Header', 'nsc-blog' ),
+
+  // Topbar START
+  $wp_customize->add_section('nsc_blog_topabr' , array(
+    'title' => __( 'Topbar', 'nsc-blog' ),
     'panel' => 'nsc_blog_add_panel'
   ) );
 
-  // menu
-  $wp_customize->add_setting('nsc_blog_header_menu',array(
-	  'default' => 'center top',
-	  'transport' => 'refresh',
-	  'sanitize_callback' => 'nsc_blog_customizer_sanitize_choices'
+	$wp_customize->add_setting('nsc_blog_topbar_menu',array(
+		'default' => 'topbar',
+		'transport' => 'refresh',
+		'sanitize_callback' => 'nsc_blog_customizer_sanitize_choices'
 	));
-	$wp_customize->add_control('nsc_blog_header_menu',array(
+	$wp_customize->add_control('nsc_blog_topbar_menu',array(
 		'type' => 'select',
 		'label' => __('Select the Menu','nsc-blog'),
-		'section' => 'nsc_blog_header',
+		'section' => 'nsc_blog_topabr',
 		'choices' 	=> $menu_list,
-  ));
+	));
 
-  $wp_customize->add_setting( 'nsc_blog_header_search',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_header_search',array(
-		'label' => esc_html__( 'Show / Hide Search','nsc-blog' ),
-		'section' => 'nsc_blog_header'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_header_settings',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_header_settings',array(
-		'label' => esc_html__( 'Show / Hide Settings','nsc-blog' ),
-		'section' => 'nsc_blog_header'
-  )));
-
-	$wp_customize->add_setting('nsc_blog_theme_settings_main_heading',array(
-		'default'=> '',
+	$wp_customize->add_setting('nsc_blog_topbar_icon_number',array(
+		'default'=> '4',
 		'sanitize_callback'	=> 'sanitize_text_field'
 	));
-	$wp_customize->add_control('nsc_blog_theme_settings_main_heading',array(
-		'label'	=> esc_html__('Setting Heading','nsc-blog'),
-		'input_attrs' => array(
-      'placeholder' => esc_html__( 'Customize', 'nsc-blog' ),
-      ),
-		'section'=> 'nsc_blog_header',
-		'type'=> 'text'
+	$wp_customize->add_control('nsc_blog_topbar_icon_number',array(
+		'label'	=> esc_html__('Number of icons to show','nsc-blog'),
+		'section'=> 'nsc_blog_topabr',
+		'type'=> 'number'
 	));
 
-	$wp_customize->add_setting('nsc_blog_theme_settings_direction_heading',array(
-		'default'=> '',
-		'sanitize_callback'	=> 'sanitize_text_field'
-	));
-	$wp_customize->add_control('nsc_blog_theme_settings_direction_heading',array(
-		'label'	=> esc_html__('Direction Heading','nsc-blog'),
-		'input_attrs' => array(
-      'placeholder' => esc_html__( 'Theme dir', 'nsc-blog' ),
-      ),
-		'section'=> 'nsc_blog_header',
-		'type'=> 'text'
-	));
+	$topbar_icons = get_theme_mod('nsc_blog_topbar_icon_number');
+	for ($i=0; $i < $topbar_icons ; $i++) {
+		$wp_customize->add_setting( 'nsc_blog_topbar_icon_separator'.$i,array(
+			'default' => '',
+			'transport' => 'refresh',
+			'sanitize_callback' => 'nsc_blog_toggle_sanitization'
+	  ));
 
-	$wp_customize->add_setting('nsc_blog_theme_settings_direction_heading',array(
-		'default'=> '',
-		'sanitize_callback'	=> 'sanitize_text_field'
-	));
-	$wp_customize->add_control('nsc_blog_theme_settings_direction_heading',array(
-		'label'	=> esc_html__('Direction Heading','nsc-blog'),
-		'input_attrs' => array(
-      'placeholder' => esc_html__( 'Theme dir', 'nsc-blog' ),
-      ),
-		'section'=> 'nsc_blog_header',
-		'type'=> 'text'
-	));
-
-	$wp_customize->add_setting('nsc_blog_theme_settings_theme_modes',array(
-		'default'=> '',
-		'sanitize_callback'	=> 'sanitize_text_field'
-	));
-	$wp_customize->add_control('nsc_blog_theme_settings_theme_modes',array(
-		'label'	=> esc_html__('Theme Modes','nsc-blog'),
-		'input_attrs' => array(
-      'placeholder' => esc_html__( 'Dark mode', 'nsc-blog' ),
-      ),
-		'section'=> 'nsc_blog_header',
-		'type'=> 'text'
-	));
-
-
-  //  latest post section
-  $wp_customize->add_section('nsc_blog_latest_post' , array(
-    'title' => __( 'Latest Post', 'nsc-blog' ),
-    'panel' => 'nsc_blog_add_panel'
-  ) );
-
-  $wp_customize->add_setting( 'nsc_blog_latest_posts_like_button',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_posts_like_button',array(
-		'label' => esc_html__( 'Show / Hide Like Button','nsc-blog' ),
-		'section' => 'nsc_blog_latest_post'
-  )));
-
-  $wp_customize->add_setting( 'nsc_blog_latest_posts_comments_count',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_posts_comments_count',array(
-		'label' => esc_html__( 'Show / Hide Comment Button','nsc-blog' ),
-		'section' => 'nsc_blog_latest_post'
-  )));
-
-  $wp_customize->add_setting( 'nsc_blog_latest_posts_cats',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_posts_cats',array(
-		'label' => esc_html__( 'Show / Hide Category','nsc-blog' ),
-		'section' => 'nsc_blog_latest_post'
-  )));
-
-  $wp_customize->add_setting( 'nsc_blog_latest_posts_title',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_posts_title',array(
-		'label' => esc_html__( 'Show / Hide Title','nsc-blog' ),
-		'section' => 'nsc_blog_latest_post'
-  )));
-
-  // latest articles
-  $wp_customize->add_section('nsc_blog_latest_articles' , array(
-    'title' => __( 'Latest Article', 'nsc-blog' ),
-    'panel' => 'nsc_blog_add_panel'
-  ) );
-
-  $wp_customize->add_setting('nsc_blog_latest_articles_main_heading',array(
-		'default'=> '',
-		'sanitize_callback'	=> 'sanitize_text_field'
-	));
-	$wp_customize->add_control('nsc_blog_latest_articles_main_heading',array(
-		'label'	=> esc_html__('Latest Article Heading','nsc-blog'),
-		'input_attrs' => array(
-      'placeholder' => esc_html__( 'Latest Articles', 'nsc-blog' ),
-      ),
-		'section'=> 'nsc_blog_latest_articles',
-		'type'=> 'text'
-	));
-
-  $wp_customize->add_setting('nsc_blog_latest_articles_description',array(
-		'default'=> '',
-		'sanitize_callback'	=> 'sanitize_text_field'
-	));
-	$wp_customize->add_control('nsc_blog_latest_articles_description',array(
-		'label'	=> esc_html__('Latest Article Description','nsc-blog'),
-		'section'=> 'nsc_blog_latest_articles',
-		'type'=> 'textarea'
-	));
-
-  $wp_customize->add_setting( 'nsc_blog_latest_articles_category',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_category',array(
-    'label' => esc_html__( 'Show / Hide Category','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-  $wp_customize->add_setting( 'nsc_blog_latest_articles_title',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_title',array(
-    'label' => esc_html__( 'Show / Hide Title','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_latest_articles_author_image',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_author_image',array(
-    'label' => esc_html__( 'Show / Hide Author Image','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_latest_articles_author_name',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_author_name',array(
-    'label' => esc_html__( 'Show / Hide Author Name','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_latest_articles_post_date',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_post_date',array(
-    'label' => esc_html__( 'Show / Hide Date','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_latest_articles_sidebar',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_latest_articles_sidebar',array(
-    'label' => esc_html__( 'Show / Hide Sidebar','nsc-blog' ),
-    'section' => 'nsc_blog_latest_articles'
-  )));
-
-
-	// single post page customizer settings
-	$wp_customize->add_section('nsc_blog_single_post_page' , array(
-    'title' => __( 'Single Post Page', 'nsc-blog' ),
-    'panel' => 'nsc_blog_add_panel'
-  ) );
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_cats',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_cats',array(
-    'label' => esc_html__( 'Show / Hide Category','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_title',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_title',array(
-    'label' => esc_html__( 'Show / Hide Post Title','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_except',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_except',array(
-    'label' => esc_html__( 'Show / Hide Post Excerpt','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_author_image',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_author_image',array(
-    'label' => esc_html__( 'Show / Hide Author Image','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_author_name',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_author_name',array(
-    'label' => esc_html__( 'Show / Hide Author Name','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_date',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_date',array(
-    'label' => esc_html__( 'Show / Hide Date','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_like_button',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_like_button',array(
-    'label' => esc_html__( 'Show / Hide Like Button','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_comment_button',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_comment_button',array(
-    'label' => esc_html__( 'Show / Hide Comment Button','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_share_button',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_share_button',array(
-    'label' => esc_html__( 'Show / Hide Share Button','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_link_button',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_link_button',array(
-    'label' => esc_html__( 'Show / Hide Links Button','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_image',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_image',array(
-    'label' => esc_html__( 'Show / Hide Post Image','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_content',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_content',array(
-    'label' => esc_html__( 'Show / Hide Post Content','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_tags',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_tags',array(
-    'label' => esc_html__( 'Show / Hide Post Tags','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_author_details',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_author_details',array(
-    'label' => esc_html__( 'Show / Hide Author Details','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_comments_form',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_comments_form',array(
-    'label' => esc_html__( 'Show / Hide Comment Form','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_related_posts',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_related_posts',array(
-    'label' => esc_html__( 'Show / Hide Related Posts','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_single_post_sidebar',array(
-    'default' => 1,
-    'transport' => 'refresh',
-    'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_single_post_sidebar',array(
-    'label' => esc_html__( 'Show / Hide Sidebar','nsc-blog' ),
-    'section' => 'nsc_blog_single_post_page'
-  )));
-
-
-  // $wp_customize->add_setting('nsc_blog_latest_articles_main_heading',array(
-	// 	'default'=> '',
-	// 	'sanitize_callback'	=> 'sanitize_text_field'
-	// ));
-	// $wp_customize->add_control('nsc_blog_latest_articles_main_heading',array(
-	// 	'label'	=> esc_html__('Latest Article Heading','nsc-blog'),
-	// 	'input_attrs' => array(
-  //     'placeholder' => esc_html__( 'Latest Articles', 'nsc-blog' ),
-  //     ),
-	// 	'section'=> 'nsc_blog_single_post_page',
-	// 	'type'=> 'text'
+	// 	$wp_customize->add_setting( sprintf( 'nsc_blog_topbar_icon_separator%s', $i ), array(
+	//     'default' => '',
+	//     'transport' => 'refresh',
+	//     'sanitize_callback' => 'nsc_blog_toggle_sanitization',
 	// ));
 
-	//  category and tag page
-	$wp_customize->add_section('nsc_blog_cats_tags_page' , array(
-    'title' => __( 'Post Category/Tags', 'nsc-blog' ),
+	  $wp_customize->add_control( new NSC_BLOG_SEPARATOR( $wp_customize, 'nsc_blog_topbar_icon_separator'.$i,array(
+			'label' => esc_html__( 'Icon '.($i + 1),'nsc-blog' ),
+			'section' => 'nsc_blog_topabr'
+	  )));
+
+		$wp_customize->add_setting('nsc_blog_topbar_icon'.$i,array(
+			'default'=> '',
+			// 'sanitize_callback'	=> 'sanitize_text_field'
+		));
+		$wp_customize->add_control('nsc_blog_topbar_icon'.$i,array(
+			'label'	=> esc_html__('Icon Svg Code','nsc-blog'),
+			'description' => __( 'Add the svg code', 'nsc-blog' ),
+			'section'=> 'nsc_blog_topabr',
+			'type'=> 'textarea'
+		));
+
+		$wp_customize->add_setting('nsc_blog_topbar_icon_url'.$i,array(
+			'default'=> '',
+			'sanitize_callback'	=> 'sanitize_text_field'
+		));
+		$wp_customize->add_control('nsc_blog_topbar_icon_url'.$i,array(
+			'label'	=> esc_html__('Url','nsc-blog'),
+			'section'=> 'nsc_blog_topabr',
+			'type'=> 'text'
+		));
+
+		$wp_customize->add_setting('nsc_blog_topbar_icon_title'.$i,array(
+			'default'=> '',
+			'sanitize_callback'	=> 'sanitize_text_field'
+		));
+		$wp_customize->add_control('nsc_blog_topbar_icon_title'.$i,array(
+			'label'	=> esc_html__('Title','nsc-blog'),
+			'description' => __( 'Add the title for the SEO purpose', 'nsc-blog' ),
+			'section'=> 'nsc_blog_topabr',
+			'type'=> 'text'
+		));
+
+	}
+  // Topbar END
+
+	//  news scroller
+	$wp_customize->add_section('nsc_blog_news_scroller' , array(
+    'title' => __( 'News Scroll Bar', 'nsc-blog' ),
     'panel' => 'nsc_blog_add_panel'
   ) );
 
-  $wp_customize->add_setting( 'nsc_blog_category_page_banner',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_page_banner',array(
-		'label' => esc_html__( 'Show / Hide Banner','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
+	$wp_customize->add_setting('nsc_blog_news_ribbon_heading',array(
+		'default'=> 'News Tickers',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_news_ribbon_heading',array(
+		'label'	=> esc_html__('Text','nsc-blog'),
+		'section'=> 'nsc_blog_news_scroller',
+		'type'=> 'text'
+	));
 
-  $wp_customize->add_setting( 'nsc_blog_category_name',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_name',array(
-		'label' => esc_html__( 'Show / Hide Category Name','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
+	$wp_customize->add_setting('nsc_blog_news_ribbon_post_num',array(
+		'default'=> '5',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_news_ribbon_post_num',array(
+		'label'	=> esc_html__('Number of post','nsc-blog'),
+		'section'=> 'nsc_blog_news_scroller',
+		'type'=> 'number'
+	));
 
-  $wp_customize->add_setting( 'nsc_blog_category_post_count',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_post_count',array(
-		'label' => esc_html__( 'Show / Hide Post Count','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
+	//  slider
+	$wp_customize->add_section('nsc_blog_news_slider' , array(
+    'title' => __( 'Slider', 'nsc-blog' ),
+    'panel' => 'nsc_blog_add_panel'
+  ) );
 
-  $wp_customize->add_setting( 'nsc_blog_category_post_image',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_post_image',array(
-		'label' => esc_html__( 'Show / Hide Post Image','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
+	$wp_customize->add_setting('nsc_blog_slider_post_num',array(
+		'default'=> '4',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_slider_post_num',array(
+		'label'	=> esc_html__('Number Of Slider To Show','nsc-blog'),
+		'section'=> 'nsc_blog_news_slider',
+		'type'=> 'number'
+	));
 
-  $wp_customize->add_setting( 'nsc_blog_category_author_image',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_author_image',array(
-		'label' => esc_html__( 'Show / Hide Author Image','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
-
-  $wp_customize->add_setting( 'nsc_blog_category_author_name',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_author_name',array(
-		'label' => esc_html__( 'Show / Hide Author Name','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_category_post_date',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_post_date',array(
-		'label' => esc_html__( 'Show / Hide Post Date','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_category_post_title',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_post_title',array(
-		'label' => esc_html__( 'Show / Hide Post Title','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
-
-	$wp_customize->add_setting( 'nsc_blog_category_sidebar',array(
-		'default' => 1,
-		'transport' => 'refresh',
-		'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-  ));
-  $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_sidebar',array(
-		'label' => esc_html__( 'Show / Hide Sidebar','nsc-blog' ),
-		'section' => 'nsc_blog_cats_tags_page'
-  )));
-
-
-	//  404 page
-	$wp_customize->add_section('nsc_blog_404_error_page' , array(
-		'title' => __( '404 Error Page', 'nsc-blog' ),
+	// Categories section
+	$wp_customize->add_section('nsc_blog_post_categories' , array(
+		'title' => __( 'Category', 'nsc-blog' ),
 		'panel' => 'nsc_blog_add_panel'
 	) );
 
-	$wp_customize->add_setting('nsc_blog_404_page_title',array(
-		'default'=> '',
+	$wp_customize->add_setting('nsc_blog_category_heading',array(
+		'default'=> 'CATEGORIES',
 		'sanitize_callback'	=> 'sanitize_text_field'
 	));
-	$wp_customize->add_control('nsc_blog_404_page_title',array(
-		'label'	=> esc_html__('Heading','nsc-blog'),
-		'input_attrs' => array(
-			'placeholder' => esc_html__( '404 Not Found', 'nsc-blog' ),
-			),
-		'section'=> 'nsc_blog_404_error_page',
+	$wp_customize->add_control('nsc_blog_category_heading',array(
+		'label'	=> esc_html__('Category Heading','nsc-blog'),
+		'section'=> 'nsc_blog_post_categories',
 		'type'=> 'text'
 	));
 
-	$wp_customize->add_setting('nsc_blog_404_page_content',array(
-		'default'=> '',
+	$wp_customize->add_setting('nsc_blog_category_see_more',array(
+		'default'=> 'See More',
 		'sanitize_callback'	=> 'sanitize_text_field'
 	));
-	$wp_customize->add_control('nsc_blog_404_page_content',array(
+	$wp_customize->add_control('nsc_blog_category_see_more',array(
+		'label'	=> esc_html__('See More','nsc-blog'),
+		'section'=> 'nsc_blog_post_categories',
+		'type'=> 'text'
+	));
+
+	// $wp_customize->add_setting('nsc_blog_category_see_more_url',array(
+	// 	'default'=> '#',
+	// 	'sanitize_callback'	=> 'sanitize_text_field'
+	// ));
+	// $wp_customize->add_control('nsc_blog_category_see_more_url',array(
+	// 	'label'	=> esc_html__('See More Url','nsc-blog'),
+	// 	'section'=> 'nsc_blog_post_categories',
+	// 	'type'=> 'text'
+	// ));
+
+	$wp_customize->add_setting('nsc_blog_category_cat_num',array(
+		'default'=> '10',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_category_cat_num',array(
+		'label'	=> esc_html__('Number of tabs to show','nsc-blog'),
+		'section'=> 'nsc_blog_post_categories',
+		'type'=> 'number'
+	));
+
+	$wp_customize->add_setting('nsc_blog_category_view_more',array(
+		'default'=> 'View More',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_category_view_more',array(
+		'label'	=> esc_html__('Number of tabs to show','nsc-blog'),
+		'section'=> 'nsc_blog_post_categories',
+		'type'=> 'text'
+	));
+
+	// other artilces
+	$wp_customize->add_section('nsc_blog_other_articles' , array(
+		'title' => __( 'Other Articles', 'nsc-blog' ),
+		'panel' => 'nsc_blog_add_panel'
+	) );
+
+	$wp_customize->add_setting('nsc_blog_other_articles_heading',array(
+		'default'=> 'OTHER ARTICLES',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_other_articles_heading',array(
+		'label'	=> esc_html__('Other Articles','nsc-blog'),
+		'section'=> 'nsc_blog_other_articles',
+		'type'=> 'text'
+	));
+
+	// 	comment policy
+	$wp_customize->add_section('nsc_blog_comment_policy' , array(
+		'title' => __( 'Comment Policy', 'nsc-blog' ),
+		'panel' => 'nsc_blog_add_panel'
+	) );
+
+	$wp_customize->add_setting('nsc_blog_comments_policy_bgimage',array(
+	    'default'   => '',
+	    'sanitize_callback' => 'esc_url_raw',
+	  ));
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize,'nsc_blog_comments_policy_bgimage',array(
+      'label' => __('Background Image ','nsc-blog'),
+      'description' => __('Dimension (1600px * 700px)','nsc-blog'),
+      'section' => 'nsc_blog_comment_policy',
+      'settings' => 'nsc_blog_comments_policy_bgimage'
+  )));
+
+	$wp_customize->add_setting('nsc_blog_comment_policy_heading',array(
+		'default'=> 'The Aviationist Comment Policy',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_comment_policy_heading',array(
+		'label'	=> esc_html__('Heading','nsc-blog'),
+		'section'=> 'nsc_blog_comment_policy',
+		'type'=> 'text'
+	));
+
+	$wp_customize->add_setting('nsc_blog_comment_policy_para',array(
+		'default'=> 'Comments on this site are moderated. Comment policy applies. Please read our Comment Policy before commenting.',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_comment_policy_para',array(
 		'label'	=> esc_html__('Description','nsc-blog'),
-		'input_attrs' => array(
-			'placeholder' => esc_html__( 'Looks like you have taken a wrong turn, Dont worry, it happens to the best of us.', 'nsc-blog' ),
-			),
-		'section'=> 'nsc_blog_404_error_page',
+		'section'=> 'nsc_blog_comment_policy',
 		'type'=> 'textarea'
 	));
 
-	$wp_customize->add_setting('nsc_blog_404_page_button_text',array(
-		'default'=> '',
+	$wp_customize->add_setting('nsc_blog_comment_policy_btn',array(
+		'default'=> 'Got It',
 		'sanitize_callback'	=> 'sanitize_text_field'
 	));
-	$wp_customize->add_control('nsc_blog_404_page_button_text',array(
-		'label'	=> esc_html__('Description','nsc-blog'),
-		'input_attrs' => array(
-			'placeholder' => esc_html__( 'Go Back', 'nsc-blog' ),
-			),
-		'section'=> 'nsc_blog_404_error_page',
+	$wp_customize->add_control('nsc_blog_comment_policy_btn',array(
+		'label'	=> esc_html__('Button','nsc-blog'),
+		'section'=> 'nsc_blog_comment_policy',
 		'type'=> 'text'
 	));
 
-	// $wp_customize->add_setting( 'nsc_blog_category_page_banner',array(
-	// 	'default' => 1,
-	// 	'transport' => 'refresh',
-	// 	'sanitize_callback' => 'nsc_blog_toggle_sanitization'
-	// ));
-	// $wp_customize->add_control( new NSC_BLOG_TOGGLE_SWITCH_CUSTOM_CONTROL( $wp_customize, 'nsc_blog_category_page_banner',array(
-	// 	'label' => esc_html__( 'Show / Hide Banner','nsc-blog' ),
-	// 	'section' => 'nsc_blog_404_error_page'
-	// )));
+	$wp_customize->add_setting('nsc_blog_comment_policy_btn_url',array(
+		'default'=> '#',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_comment_policy_btn_url',array(
+		'label'	=> esc_html__('Button Url','nsc-blog'),
+		'section'=> 'nsc_blog_comment_policy',
+		'type'=> 'text'
+	));
+
+	//  also on aviationist
+	$wp_customize->add_section('nsc_blog_also_on_aviationist' , array(
+		'title' => __( 'Also on aviationist', 'nsc-blog' ),
+		'panel' => 'nsc_blog_add_panel'
+	) );
+	$wp_customize->add_setting('nsc_blog_also_on_aviationist_heading',array(
+		'default'=> 'ALSO ON THE AVIATIONIST',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_also_on_aviationist_heading',array(
+		'label'	=> esc_html__('Heading','nsc-blog'),
+		'section'=> 'nsc_blog_also_on_aviationist',
+		'type'=> 'text'
+	));
+	$wp_customize->add_setting('nsc_blog_also_on_aviationist_post_num',array(
+		'default'=> '-1',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_also_on_aviationist_post_num',array(
+		'label'	=> esc_html__('Number of post to show','nsc-blog'),
+		'section'=> 'nsc_blog_also_on_aviationist',
+		'type'=> 'text'
+	));
 
 
+	//  contact us page
+	$wp_customize->add_section('nsc_blog_contact_us_page' , array(
+		'title' => __( 'Contact Us Page', 'nsc-blog' ),
+		'panel' => 'nsc_blog_add_panel'
+	) );
+	$wp_customize->add_setting('nsc_blog_contact_us_description',array(
+		'default'=> 'If you want to tell me something or if you need to prepare books, articles, brochures, datasheets, documentaries, presentations, meetings, movies and so on, and need the world’s most authoritative aviation journalist and blogger, you can send me an email.',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_description',array(
+		'label'	=> esc_html__('Page Description','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'textarea'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_page_title',array(
+		'default'=> 'Get in touch',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_page_title',array(
+		'label'	=> esc_html__('Heading','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_title_desc',array(
+		'default'=> 'Reach out, and let\'s create a universe of possibilities together!',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_title_desc',array(
+		'label'	=> esc_html__('Heading Description','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'textarea'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_form_title',array(
+		'default'=> 'Let’s connect constellations',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_form_title',array(
+		'label'	=> esc_html__('Form Heading','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_form_description',array(
+		'default'=> 'Let\'s align our constellations! Reach out and let the magic of collaboration illuminate our skies.',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_form_description',array(
+		'label'	=> esc_html__('Form Description','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'textarea'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_form_shortcode',array(
+		'default'=> '[wpforms id="60"]',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_form_shortcode',array(
+		'label'	=> esc_html__('Form Shortcode','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_image',array(
+			'default'   => '',
+			'sanitize_callback' => 'esc_url_raw',
+		));
+	$wp_customize->add_control(new WP_Customize_Image_Control($wp_customize,'nsc_blog_contact_us_image',array(
+			'label' => __('Image ','nsc-blog'),
+			'section' => 'nsc_blog_contact_us_page',
+			'settings' => 'nsc_blog_contact_us_image'
+	)));
+
+	$wp_customize->add_setting('nsc_blog_contact_us_below_description',array(
+		'default'=> 'If you were looking for one of world’s most read military aviation blogger, you have just found him. My bio can be read in the About page.',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_below_description',array(
+		'label'	=> esc_html__('Text Below Form','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
+	$wp_customize->add_setting('nsc_blog_contact_us_about_page_link',array(
+		'default'=> '#',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_about_page_link',array(
+		'label'	=> esc_html__('About page link','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
+	$wp_customize->add_setting('nsc_blog_contact_us_about_page_text',array(
+		'default'=> 'About page',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_contact_us_about_page_text',array(
+		'label'	=> esc_html__('About us page text','nsc-blog'),
+		'section'=> 'nsc_blog_contact_us_page',
+		'type'=> 'text'
+	));
 }
 add_action( 'customize_register', 'nsc_blog_customizer_register' );
-
-
- ?>

@@ -24,7 +24,7 @@
 	<?php else : ?>
 	<p><?php esc_html_e( 'Dont worry&hellip it happens to the best of us.', 'nsc-blog' ); ?></p><br />
 	<div class="more-btn">
-		<a href="<?php echo esc_url(home_url() ); ?>" title="<?php esc_html_e( 'Back to Home Page','nsc-blog' );?>">
+		<a href="<?php echo esc_url(home_url() ); ?>" title="<?php esc_attr_e( 'Back to Home Page','nsc-blog' );?>">
       <?php esc_html_e( 'Back to Home Page', 'nsc-blog' ); ?>
       <span class="screen-reader-text">
         <?php esc_html_e( 'Back to Home Page','nsc-blog' );?>

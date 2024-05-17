@@ -11,7 +11,7 @@
     <?php $args = array(
       'post_type' => 'post',
       'post_status' => 'publish',
-      'posts_per_page' => 4,
+      'posts_per_page' => get_theme_mod('nsc_blog_slider_post_num'),
     );
      $query = new WP_Query($args);
      if ( $query->have_posts() ) { ?>
@@ -42,17 +42,17 @@
 
           <div class="carousel-caption">
 
-            <?php if(get_theme_mod('nsc_blog_latest_posts_cats', true) != '0'){
+            <?php /* if(get_theme_mod('nsc_blog_latest_posts_cats', true) != '0'){
                $categories = get_the_category();
                  if ( ! empty( $categories ) ) { ?>
                    <a href="<?php echo esc_attr( esc_url( get_category_link( $categories[0]->term_id ) ) ); ?>" class="nsc-post-cat" title="<?php echo esc_attr( $categories[0]->name );  ?>">
                      <?php echo esc_html( $categories[0]->name );  ?>
                    </a>
                  <?php }
-               } ?>
+               } */ ?>
 
             <?php
-            echo ($i == 1 && $query->current_post == 0 ) ? '<h1 class="slider-nsc-post-title m-0">' : '<h3 class="slider-nsc-post-title m-0">' ?>
+            echo ($i == 1 && $query->current_post == 0 ) ? '<h1 class="slider-nsc-post-title">' : '<h3 class="slider-nsc-post-title">' ?>
               <a href="<?php echo get_the_permalink(); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
                 <?php echo esc_html(get_the_title()); ?>
               </a>
@@ -96,7 +96,9 @@
 
            </ul>
 
-              <?php $avatar_html = get_avatar(get_the_author_meta('ID'));
+              <?php
+              /*
+               $avatar_html = get_avatar(get_the_author_meta('ID'));
                   $avatar_url = '';
 
                   if (!empty($avatar_html)) {
@@ -129,7 +131,7 @@
 
             <a href="<?php echo get_the_permalink(); ?>" class="nsc-slider-btn" title="<?php echo get_the_title(); ?>">
               <?php echo esc_html('View Article', 'nsc-blog'); ?>
-            </a>
+            </a> */ ?>
 
           </div>
         </div>

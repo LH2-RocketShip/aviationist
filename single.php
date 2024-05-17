@@ -444,7 +444,7 @@
 
     <?php if(get_theme_mod('nsc_blog_single_post_sidebar', true) != '0'){ ?>
       <aside class="col-md-4 nsc-sidebar">
-        <?php dynamic_sidebar('right-sidebar');?>
+        <?php dynamic_sidebar('home-page');?>
       </aside>
     <?php } ?>
     </div>
