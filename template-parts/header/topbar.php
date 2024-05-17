@@ -12,6 +12,7 @@
       <?php
         wp_nav_menu( array(
           'theme_location' => get_theme_mod('nsc_blog_topbar_menu', 'topbar'),
+          // 'theme_location' => 'topbar',
           'container_class' => 'clearfix' ,
           'menu_class' => 'top-menu clearfix',
           'items_wrap' => '<ul id="%1$s" class="%2$s">%3$s</ul>',

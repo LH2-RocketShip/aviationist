@@ -6,7 +6,7 @@
  */
 ?>
 <section id="nsc-slider" class="mt-0">
-  <div id="nsc-blog-slider-aviationist" class="carousel slide nsc-blog-slider-aviationist">
+  <div id="nsc-blog-slider-aviationist" class="carousel slide nsc-blog-slider-aviationist" data-bs-ride="carousel">
 
     <?php $args = array(
       'post_type' => 'post',
