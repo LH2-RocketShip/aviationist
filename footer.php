@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php }
 				} ?>
 	    </div>
-			<div class="container nsc-copyright text-center">
+			<div class="custom-container nsc-copyright text-center">
 				<?php dynamic_sidebar( 'copyright-text' ); ?>
 			</div>
 

@@ -15,7 +15,7 @@
     <?php } ?>
 
     <?php if (get_theme_mod('nsc_blog_category_see_more') != ''){ ?>
-      <a href="javascript:void(0);" onclick="openCategoryPopup()">
+      <a href="javascript:void(0);" onclick="openCategoryPopup()" class="see-more-cat-btn">
         <?php echo esc_html(get_theme_mod('nsc_blog_category_see_more')); ?>
       </a>
     <?php } ?>
@@ -122,24 +122,40 @@
                    } ?>
 
                      <?php if(get_theme_mod('nsc_blog_single_post_author_name', true) != '0'){ ?>
-                       <p class="nsc-author-name mb-0"><?php echo get_the_author(); ?></p>
+                       <p class="nsc-author-name mb-0 me-2"><?php echo get_the_author(); ?></p>
                      <?php } ?>
 
-                     <p class="nsc-post-date mb-0"><?php echo get_the_date(); ?></p>
+                     <p class="nsc-post-date mb-0 d-flex align-items-center gap-1">
+                       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                         <path d="M11.0003 3.74072H4.00033C2.95329 3.74072 2.10449 4.58952 2.10449 5.63656V11.4699C2.10449 12.5169 2.95329 13.3657 4.00033 13.3657H11.0003C12.0474 13.3657 12.8962 12.5169 12.8962 11.4699V5.63656C12.8962 4.58952 12.0474 3.74072 11.0003 3.74072Z" stroke="#8F90A6"/>
+                         <path d="M4.4375 2.57373V4.6154" stroke="#8F90A6" stroke-linecap="round"/>
+                         <path d="M2.6875 6.36572H12.3125" stroke="#8F90A6" stroke-linecap="round"/>
+                         <path d="M10.8545 2.57373V4.6154" stroke="#8F90A6" stroke-linecap="round"/>
+                         <path d="M5.3125 9.13623C5.55412 9.13623 5.75 8.94036 5.75 8.69873C5.75 8.45711 5.55412 8.26123 5.3125 8.26123C5.07088 8.26123 4.875 8.45711 4.875 8.69873C4.875 8.94036 5.07088 9.13623 5.3125 9.13623Z" fill="#8F90A6"/>
+                         <path d="M7.64551 9.13623C7.88713 9.13623 8.08301 8.94036 8.08301 8.69873C8.08301 8.45711 7.88713 8.26123 7.64551 8.26123C7.40388 8.26123 7.20801 8.45711 7.20801 8.69873C7.20801 8.94036 7.40388 9.13623 7.64551 9.13623Z" fill="#8F90A6"/>
+                         <path d="M9.97949 9.13623C10.2211 9.13623 10.417 8.94036 10.417 8.69873C10.417 8.45711 10.2211 8.26123 9.97949 8.26123C9.73787 8.26123 9.54199 8.45711 9.54199 8.69873C9.54199 8.94036 9.73787 9.13623 9.97949 9.13623Z" fill="#8F90A6"/>
+                         <path d="M5.3125 11.4697C5.55412 11.4697 5.75 11.2739 5.75 11.0322C5.75 10.7906 5.55412 10.5947 5.3125 10.5947C5.07088 10.5947 4.875 10.7906 4.875 11.0322C4.875 11.2739 5.07088 11.4697 5.3125 11.4697Z" fill="#8F90A6"/>
+                         <path d="M7.64551 11.4697C7.88713 11.4697 8.08301 11.2739 8.08301 11.0322C8.08301 10.7906 7.88713 10.5947 7.64551 10.5947C7.40388 10.5947 7.20801 10.7906 7.20801 11.0322C7.20801 11.2739 7.40388 11.4697 7.64551 11.4697Z" fill="#8F90A6"/>
+                         <path d="M9.97949 11.4697C10.2211 11.4697 10.417 11.2739 10.417 11.0322C10.417 10.7906 10.2211 10.5947 9.97949 10.5947C9.73787 10.5947 9.54199 10.7906 9.54199 11.0322C9.54199 11.2739 9.73787 11.4697 9.97949 11.4697Z" fill="#8F90A6"/>
+                       </svg>
+                       <span>
+                         <?php echo get_the_date(); ?>
+                       </span>
+                     </p>
                  </div>
              </div>
 
              <a href="<?php echo get_the_permalink(); ?>" class="read-more-btn">
                <?php echo esc_html__('Read More', 'nsc-blog'); ?>
-               <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 5.05089C0.5 4.76592 0.731012 4.53491 1.01598 4.53491L13.4 4.53491C13.685 4.53491 13.916 4.76592 13.916 5.05089C13.916 5.33586 13.685 5.56687 13.4 5.56687L1.01598 5.56687C0.731012 5.56687 0.5 5.33586 0.5 5.05089Z" fill="url(#paint0_linear_268_2268)"/>
-               <path fill-rule="evenodd" clip-rule="evenodd" d="M10.3175 0.526839C10.5364 0.344403 10.8618 0.373975 11.0442 0.59289L14.3007 4.50052C14.5665 4.81944 14.5665 5.2827 14.3007 5.60162L11.0442 9.50924C10.8618 9.72816 10.5364 9.75773 10.3175 9.5753C10.0986 9.39286 10.069 9.0675 10.2514 8.84858L13.4162 5.05107L10.2514 1.25355C10.069 1.03464 10.0986 0.709276 10.3175 0.526839Z" fill="url(#paint1_linear_268_2268)"/>
+               <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg" class="ms-1">
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M0 4.97008C0 4.68511 0.231012 4.4541 0.515981 4.4541L12.9 4.4541C13.185 4.4541 13.416 4.68511 13.416 4.97008C13.416 5.25505 13.185 5.48606 12.9 5.48606L0.515981 5.48606C0.231012 5.48606 0 5.25505 0 4.97008Z" fill="url(#paint0_linear_240_177)"/>
+               <path fill-rule="evenodd" clip-rule="evenodd" d="M9.8175 0.445784C10.0364 0.263348 10.3618 0.29292 10.5442 0.511835L13.8007 4.41946C14.0665 4.73838 14.0665 5.20164 13.8007 5.52056L10.5442 9.42819C10.3618 9.64711 10.0364 9.67668 9.8175 9.49424C9.59858 9.3118 9.56901 8.98644 9.75145 8.76753L12.9162 4.97001L9.75145 1.1725C9.56901 0.953581 9.59858 0.628221 9.8175 0.445784Z" fill="url(#paint1_linear_240_177)"/>
                <defs>
-               <linearGradient id="paint0_linear_268_2268" x1="0.5" y1="5.05089" x2="13.916" y2="5.05089" gradientUnits="userSpaceOnUse">
+               <linearGradient id="paint0_linear_240_177" x1="0" y1="4.97008" x2="13.416" y2="4.97008" gradientUnits="userSpaceOnUse">
                <stop stop-color="#FFD11A"/>
                <stop offset="1" stop-color="#DE772E"/>
                </linearGradient>
-               <linearGradient id="paint1_linear_268_2268" x1="10.1318" y1="5.05107" x2="14.5" y2="5.05107" gradientUnits="userSpaceOnUse">
+               <linearGradient id="paint1_linear_240_177" x1="9.63184" y1="4.97001" x2="14" y2="4.97001" gradientUnits="userSpaceOnUse">
                <stop stop-color="#FFD11A"/>
                <stop offset="1" stop-color="#DE772E"/>
                </linearGradient>

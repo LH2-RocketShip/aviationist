@@ -15,6 +15,9 @@ $headh1 = get_theme_mod('nsc_blog_site_title', true);
 
 <main id="nsc-contact-us" class="nsc-contact-us">
   <div class="custom-container">
+
+		<?php get_template_part('template-parts/home/section-ribbon-news'); ?>
+
     <?php if (get_theme_mod('nsc_blog_contact_us_description') !=''){ ?>
       <p class="text-start text-md-center nsc-contact-desc nsc-contact-common-para">
         <?php echo esc_html(get_theme_mod('nsc_blog_contact_us_description')); ?>

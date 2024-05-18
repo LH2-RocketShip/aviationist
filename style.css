@@ -445,6 +445,9 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   color: #334158;
   font: 500 12px/1.5 'Inter', sans-serif;
 }
+.nsc-breadcrumb .breadcrumb-arrow{
+  color: #ffcc00;
+}
 .nsc-post-head{
   font: 700 clamp(28px, 4vw, 52px)/1.3 'Calibri', sans-serif;
   padding-inline-end: 4%;
@@ -580,6 +583,7 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   font: 400 clamp(14px, 4vw, 16px)/1.2 'Inter', sans-serif;
   color: #adadad;
   padding: 6px 10px;
+  text-transform: capitalize;
 }
 .section-main-head + a, .view-all-category-btn{
   font: 400 14px/1.2 'Inter', sans-serif;
@@ -608,19 +612,22 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   margin-bottom: 0;
 }
 :is(.nsc-home-category, .nsc-blog-grid-5, .nsc-blog-post-grid) .nsc-author-name{
-  color: #333333;
+  color: var(--para-color);
   font: 600 10px/1.2 'Inter', sans-serif;
   text-transform: capitalize;
 }
-.nsc-home-category .nsc-post-date {
+.nsc-home-category .nsc-post-date, .nsc-post-date {
   font: 400 12px/1.1 'Inter', sans-serif;
   color: #8F90A6
 }
-:is(.nsc-home-category, .nsc-blog-grid-5, .nsc-blog-post-grid) .read-more-btn{
+:is(.nsc-home-category, .nsc-blog-grid-5, .nsc-blog-post-grid) .read-more-btn, .nsc-home-category .see-more-cat-btn{
   font: 400 12px/1.2 'Inter', sans-serif;
   color: transparent;
   background: linear-gradient(90deg, #ffd11a 0%, #de772e 100%);
   background-clip: text;
+}
+.nsc-home-category .see-more-cat-btn{
+  font: 600 clamp(12px, 2vw, 18px)/1.2 'Inter', sans-serif;
 }
 /* category END */
 /* comment policy  */
@@ -652,9 +659,11 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   max-height: 185px;
   aspect-ratio: 2 / 1;
   object-fit: cover;
+  border-radius: 6px;
 }
 .nsc-aviationist-carousel :is(.nsc-post-date, .nsc-author-name) {
   color: #828282;
+  font: 400 14px/ 1.2 "Inter";
 }
 
 article figure{
@@ -910,7 +919,7 @@ aside > div{
 .nsc-footer-grid div:first-child img{
   max-width: 300px !important;
 }
-.nsc-footer-grid :is(span, a, p){
+:is(.nsc-footer-grid, .nsc-copyright) :is(span, a, p, figcaption){
   font: 400 14px/1.1 'Inter', sans-serif;
   color: #fff;
   margin-bottom: 0;
@@ -931,9 +940,6 @@ aside > div{
   background-color: #fff;
   border-radius: 20px;
   padding: 24px;
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
 }
 .nsc-footer .nsc-foot-column:has(form) > div{
   width: 100%;
@@ -957,6 +963,14 @@ aside > div{
 }
 .nsc-footer .wpforms-container .wpforms-field, .nsc-footer .wp-core-ui div.wpforms-container .wpforms-field{
   padding: 0;
+}
+.nsc-copyright{
+  padding-top: clamp(20px, 3vw, 40px);
+  margin-top: clamp(20px, 3vw, 46px);
+  border-top: 1px solid #FFCC00;
+}
+.nsc-copyright > *{
+  margin-bottom: 20px;
 }
 
 /*  dark mode  */
@@ -1121,6 +1135,7 @@ blockquote:not(:has(cite)){
 }
 .nsc-post-navigation{
   display: flex;
+  justify-content: space-between;
   gap: 61px;
 }
 .nsc-post-navigation > div > div{
@@ -1152,6 +1167,12 @@ blockquote:not(:has(cite)){
   max-width: 38ch;
   display: block;
   margin-block: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 .nsc-post-navigation .nsc-nav-btn{
     font; 400 18px/1.1 Inter;
@@ -1168,6 +1189,10 @@ blockquote:not(:has(cite)){
   padding: 12px;
   border-radius: 12px;
   margin-inline-end: 18px;
+}
+.nsc-related-article img{
+  aspect-ratio: 9/5;
+  object-fit: cover;
 }
 
 /* comments area */
@@ -1549,6 +1574,12 @@ article.nsc-single-post-page {
   }
   .nsc-footer-grid {
    grid-template-columns: repeat(2,1fr);
+   }
+   .nsc-copyright{
+     border-top: 0px solid #ffcc00;
+   }
+   .nsc-foot-column{
+      margin-top: 24px;
    }
 }
 

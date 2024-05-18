@@ -54,7 +54,6 @@
 
         $topbar_icons = get_theme_mod('nsc_blog_topbar_icon_number', '4');
         for ($i=0; $i < $topbar_icons; $i++) { ?>
-
           <?php if (get_theme_mod('nsc_blog_topbar_icon_url'.$i) !=''){ ?>
             <a class=""
               href="<?php echo esc_attr(get_theme_mod('nsc_blog_topbar_icon_url'.$i, $urls[$i])); ?>"

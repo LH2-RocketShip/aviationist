@@ -33,7 +33,7 @@
               alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
               title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>" >
 
-                <h3 class="nsc-post-title mb-0">
+                <h3 class="nsc-post-title mb-0 mt-3">
                   <a href="<?php echo get_the_permalink(); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
                     <?php echo get_the_title(); ?>
                   </a>
@@ -47,6 +47,10 @@
            </div>
        <?php endwhile; ?>
        </div>
+       <a href="<?php echo esc_url(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post_url', '#')); ?>" class="nsc-common-btn mt-5">
+         <?php echo esc_html(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post', 'View All')); ?>
+       </a>
+
      <?php }else { ?>
       <h4> <?php echo esc_html_e('Please add the post to see this section', 'nsc-blog'); ?> </h4>
      <?php }

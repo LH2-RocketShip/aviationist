@@ -19,6 +19,9 @@
 
 <article class="nsc-single-post-page">
   <div class="custom-container">
+
+    <?php get_template_part('template-parts/home/section-ribbon-news'); ?>
+
     <div class="row mb-5">
       <div class="<?php echo esc_attr($col8); ?>">
         <?php echo nsc_blog_breadcrumb(); ?>
@@ -75,6 +78,19 @@
                   ?>
                 </li>
                 <li>
+                  <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.4998 3.27081H3.49984C2.4528 3.27081 1.604 4.11961 1.604 5.16665V11C1.604 12.047 2.4528 12.8958 3.49984 12.8958H10.4998C11.5469 12.8958 12.3957 12.047 12.3957 11V5.16665C12.3957 4.11961 11.5469 3.27081 10.4998 3.27081Z" stroke="#8F90A6"/>
+                    <path d="M3.9375 2.10419V4.14585" stroke="#8F90A6" stroke-linecap="round"/>
+                    <path d="M2.1875 5.89581H11.8125" stroke="#8F90A6" stroke-linecap="round"/>
+                    <path d="M10.354 2.10419V4.14585" stroke="#8F90A6" stroke-linecap="round"/>
+                    <path d="M4.8125 8.66669C5.05412 8.66669 5.25 8.47081 5.25 8.22919C5.25 7.98756 5.05412 7.79169 4.8125 7.79169C4.57088 7.79169 4.375 7.98756 4.375 8.22919C4.375 8.47081 4.57088 8.66669 4.8125 8.66669Z" fill="#8F90A6"/>
+                    <path d="M7.146 8.66669C7.38762 8.66669 7.5835 8.47081 7.5835 8.22919C7.5835 7.98756 7.38762 7.79169 7.146 7.79169C6.90437 7.79169 6.7085 7.98756 6.7085 8.22919C6.7085 8.47081 6.90437 8.66669 7.146 8.66669Z" fill="#8F90A6"/>
+                    <path d="M9.479 8.66669C9.72063 8.66669 9.9165 8.47081 9.9165 8.22919C9.9165 7.98756 9.72063 7.79169 9.479 7.79169C9.23738 7.79169 9.0415 7.98756 9.0415 8.22919C9.0415 8.47081 9.23738 8.66669 9.479 8.66669Z" fill="#8F90A6"/>
+                    <path d="M4.8125 11C5.05412 11 5.25 10.8041 5.25 10.5625C5.25 10.3209 5.05412 10.125 4.8125 10.125C4.57088 10.125 4.375 10.3209 4.375 10.5625C4.375 10.8041 4.57088 11 4.8125 11Z" fill="#8F90A6"/>
+                    <path d="M7.146 11C7.38762 11 7.5835 10.8041 7.5835 10.5625C7.5835 10.3209 7.38762 10.125 7.146 10.125C6.90437 10.125 6.7085 10.3209 6.7085 10.5625C6.7085 10.8041 6.90437 11 7.146 11Z" fill="#8F90A6"/>
+                    <path d="M9.479 11C9.72063 11 9.9165 10.8041 9.9165 10.5625C9.9165 10.3209 9.72063 10.125 9.479 10.125C9.23738 10.125 9.0415 10.3209 9.0415 10.5625C9.0415 10.8041 9.23738 11 9.479 11Z" fill="#8F90A6"/>
+                  </svg>
+
                   <?php echo get_the_date(); ?>
                 </li>
                 <li>
@@ -91,7 +107,10 @@
               <?php if(get_theme_mod('nsc_blog_single_post_share_button', true) != '0'){ ?>
                 <div class="nsc-popup-container">
                   <button type="button" name="button" class="copy-link-pop-btn" aria-labelledby="<?php echo esc_attr("Share".$post_id); ?>">
-                    <i class="fa-solid fa-share-nodes"></i>
+                    <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
                     <span class="screen-reader-text">
                       <?php echo esc_html(get_theme_mod('nsc_blog_single_post_share_button',__('Share Button','nsc-blog')));?>
                     </span>

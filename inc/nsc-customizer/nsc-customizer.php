@@ -331,8 +331,28 @@ function nsc_blog_customizer_register( $wp_customize ){
 	$wp_customize->add_control('nsc_blog_also_on_aviationist_post_num',array(
 		'label'	=> esc_html__('Number of post to show','nsc-blog'),
 		'section'=> 'nsc_blog_also_on_aviationist',
+		'type'=> 'num'
+	));
+	$wp_customize->add_setting('nsc_blog_also_on_aviationist_view_all_post',array(
+		'default'=> 'View All',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_also_on_aviationist_view_all_post',array(
+		'label'	=> esc_html__('Button Text','nsc-blog'),
+		'section'=> 'nsc_blog_also_on_aviationist',
 		'type'=> 'text'
 	));
+	$wp_customize->add_setting('nsc_blog_also_on_aviationist_view_all_post_url',array(
+		'default'=> '#',
+		'sanitize_callback'	=> 'sanitize_text_field'
+	));
+	$wp_customize->add_control('nsc_blog_also_on_aviationist_view_all_post_url',array(
+		'label'	=> esc_html__('Button Url','nsc-blog'),
+		'section'=> 'nsc_blog_also_on_aviationist',
+		'type'=> 'text'
+	));
+
+
 
 
 	//  contact us page

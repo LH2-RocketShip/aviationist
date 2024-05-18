@@ -38,7 +38,6 @@
     height: auto;
     display: block;
 }
-
 .nsc-post-cat,
 .nsc-post-title,
 .nsc-post-para,
@@ -48,14 +47,12 @@
 .read-more-btn {
     margin-top: 10px;
 }
-
 .nsc-author-image {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
 }
-
 .nsc-common-btn {
     background-color: #000;
     color: #fff;
