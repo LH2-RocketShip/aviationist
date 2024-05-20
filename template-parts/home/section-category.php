@@ -43,7 +43,9 @@
             role="tab"
             aria-controls="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane"
             aria-selected="<?php if($key == 0){ echo "true"; }else { echo "false"; } ?>">
-          <?php echo esc_html($category->name); ?>
+            <a href="#<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane">
+                <?php echo esc_html($category->name); ?> 
+            </a>
         </button>
         </li>
       <?php } ?>
@@ -173,8 +175,33 @@
 
   <?php } ?>
 </div>
-<a href="<?php echo esc_attr( esc_url( get_category_link( $categories[0]->term_id ) ) ); ?>" class="nsc-common-btn mt-4">
+<a id="view-more-btn" href="<?php echo esc_attr( esc_url( get_category_link( $categories[0]->term_id ) ) ); ?>" class="nsc-common-btnn mt-4">
   <?php echo esc_html(get_theme_mod('nsc_blog_category_view_more', 'View More')) ?>
 </a>
 
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const viewMoreBtn = document.getElementById('view-more-btn');
+  const tabButtons = document.querySelectorAll('#nsc-home-tab-container .nav-link');
+
+  function updateViewMoreHref() {
+    const activeTab = document.querySelector('#nsc-home-tab-container .nav-link.active');
+    if (activeTab) {
+      const activeTabIndex = Array.from(tabButtons).indexOf(activeTab); // Get index of active tab
+      const categoryLinks = document.querySelectorAll('.nsc-post-cat'); // Assuming category links have this class
+      if (categoryLinks[activeTabIndex]) {
+        viewMoreBtn.href = categoryLinks[activeTabIndex].getAttribute('href');
+      }
+    }
+  }
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', updateViewMoreHref);
+  });
+
+  // Update on page load
+  updateViewMoreHref();
+});
+</script>

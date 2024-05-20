@@ -6,9 +6,15 @@
  */
 ?>
 <section id="nsc-other-articles" class="nsc-other-articles">
+    <div class="section-title-wrap">
     <?php if (get_theme_mod('nsc_blog_other_articles_heading') !='') { ?>
       <h2 class="section-main-head"> <?php echo esc_html(get_theme_mod('nsc_blog_other_articles_heading')); ?></h2>
     <?php } ?>
+
+    <a href="javascript:void(0);" onclick="openCategoryPopup()" class="see-more-cat-btn">
+      <?php echo esc_html(get_theme_mod('nsc_blog_category_see_more')); ?>
+    </a>
+  </div>
 
     <?php $args = array(
       'post_type' => 'post',

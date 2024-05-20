@@ -6,8 +6,21 @@
  */
 ?>
 <section id="nsc-all-articles" class="nsc-all-articles">
-    <h2 class="section-main-head">ALL ARTICLES</h2>
+    <div class="section-title-wrap">
+      <h2 class="section-main-head">ALL ARTICLES</h2>
 
+      <a href="javascript:void(0);" onclick="openCategoryPopup()" class="see-more-cat-btn">
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 12H11V10H7V12ZM0 0V2H18V0H0ZM3 7H15V5H3V7Z" fill="url(#paint0_linear_278_1690)"/>
+        <defs>
+        <linearGradient id="paint0_linear_278_1690" x1="0" y1="6" x2="18" y2="6" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#FFD11A"/>
+        <stop offset="1" stop-color="#DE772E"/>
+        </linearGradient>
+        </defs>
+        </svg>
+      </a>
+    </div>
     <?php $args = array(
       'post_type' => 'post',
       'post_status' => 'publish',

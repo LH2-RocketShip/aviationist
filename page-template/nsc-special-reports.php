@@ -44,15 +44,17 @@ get_header(); ?>
 
                        <?php while ($query->have_posts()) : $query->the_post(); ?>
                        <div class="d-flex">
-                         <svg class="me-2" width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                           <path d="M13.1111 0L0 20.4444L3.33333 24L6.22778 19.7833L8.66667 22.2222L11.4722 19.4167L13.1111 23.1111L14.75 19.4167L17.5556 22.2222L19.9944 19.7833L22.8889 24L26.2222 20.4444L13.1111 0ZM12.6111 2.61111V6.94444L10.4444 6.22222L12.6111 2.61111ZM13.6111 2.61111L15.7778 6.22222L13.6111 6.94444V2.61111Z" fill="url(#paint0_linear_652_9240)"/>
-                           <defs>
-                             <linearGradient id="paint0_linear_652_9240" x1="0" y1="12" x2="26.2222" y2="12" gradientUnits="userSpaceOnUse">
-                               <stop stop-color="#FFD11A"/>
-                               <stop offset="1" stop-color="#DE772E"/>
-                            </linearGradient>
-                           </defs>
-                         </svg>
+                         <div class="svg-wrap">
+													 <svg class="me-2" width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                           <path d="M13.1111 0L0 20.4444L3.33333 24L6.22778 19.7833L8.66667 22.2222L11.4722 19.4167L13.1111 23.1111L14.75 19.4167L17.5556 22.2222L19.9944 19.7833L22.8889 24L26.2222 20.4444L13.1111 0ZM12.6111 2.61111V6.94444L10.4444 6.22222L12.6111 2.61111ZM13.6111 2.61111L15.7778 6.22222L13.6111 6.94444V2.61111Z" fill="url(#paint0_linear_652_9240)"/>
+	                           <defs>
+	                             <linearGradient id="paint0_linear_652_9240" x1="0" y1="12" x2="26.2222" y2="12" gradientUnits="userSpaceOnUse">
+	                               <stop stop-color="#FFD11A"/>
+	                               <stop offset="1" stop-color="#DE772E"/>
+	                            </linearGradient>
+	                           </defs>
+	                         </svg>
+												 </div>
                          <div class="ms-1">
                            <a href="#"><strong><?php echo get_the_title(); ?></strong></a>
                            <span> : <?php echo get_the_content(); ?></span>
@@ -70,8 +72,10 @@ get_header(); ?>
           }
           ?>
         </div>
-        <div class="col-md-4">
-
+        <div class="col-md-4 special-sidebar">
+					<aside class="nsc-home-sidebar">
+						<?php dynamic_sidebar('home-page');?>
+					</aside>
         </div>
       </div>
     </div>

@@ -6,8 +6,13 @@
  */
 ?>
 <section id="nsc-popular-post" class="nsc-popular-post">
-    <h2 class="section-main-head">POPULAR POST</h2>
+    <div class="section-title-wrap">
+      <h2 class="section-main-head">POPULAR POST</h2>
 
+      <a href="javascript:void(0);" onclick="openCategoryPopup()" class="see-more-cat-btn">
+        <?php echo esc_html(get_theme_mod('nsc_blog_category_see_more')); ?>
+      </a>
+    </div>
     <?php $args = array(
       'post_type' => 'post',
       'post_status' => 'publish',

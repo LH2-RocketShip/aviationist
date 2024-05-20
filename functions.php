@@ -71,6 +71,7 @@ if ( !function_exists( 'nsc_blog_theme_setup' )) {
 }
 add_action( 'after_setup_theme', 'nsc_blog_theme_setup' );
 
+require get_template_directory() . '/inc/widgets/recent-posts.php';
 require get_template_directory() . '/inc/widgets/widgets-area.php';
 require get_template_directory() . '/inc/widgets/posts-tags.php';
 require get_template_directory() . '/inc/widgets/social-icons.php';
@@ -757,5 +758,9 @@ function nsc_enqueue_popup_script() {
     <?php
 }
 add_action('wp_footer', 'nsc_enqueue_popup_script');
+
+
+
+
 
 ?>

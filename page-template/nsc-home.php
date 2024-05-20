@@ -28,7 +28,9 @@ get_header(); ?>
 					<?php dynamic_sidebar('home-page');?>
 				</aside>
 			</div>
+		</div>
 			<?php get_template_part('template-parts/home/section-comment-policy'); ?>
+		<div class="custom-container">
 			<?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
 		</div>
 	</main>
