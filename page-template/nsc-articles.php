@@ -139,7 +139,6 @@ get_header(); ?>
   <div class="nsc-post-page-grid">
     <div class="sections">
       <?php get_template_part('template-parts/articles/section-recent-articles'); ?>
-      <?php get_template_part('template-parts/articles/section-video-interview'); ?>
     </div>
 
     <aside class="sidebar">

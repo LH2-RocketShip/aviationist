@@ -63,6 +63,7 @@ jQuery(document).ready(function ($) {
       loop:true,
       margin:24,
       nav:true,
+      navText:["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
       items:3.5,
       responsive:{
           0:{

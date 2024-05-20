@@ -47,7 +47,7 @@
            </div>
        <?php endwhile; ?>
        </div>
-       <a href="<?php echo esc_url(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post_url', '#')); ?>" class="nsc-common-btn mt-5">
+       <a href="<?php echo esc_url(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post_url', '#')); ?>" class="nsc-common-btnn mt-5">
          <?php echo esc_html(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post', 'View All')); ?>
        </a>
 

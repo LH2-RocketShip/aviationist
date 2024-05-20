@@ -12,6 +12,7 @@ function nsc_blog_enqueue_scripts() {
 	wp_enqueue_style( 'nsc-owl-carousel', get_template_directory_uri(). '/assets/css/owl.carousel.css' );
 	wp_enqueue_style( 'nsc-fontawesome', get_template_directory_uri() . '/assets/css/fontawesome.min.css');
 	wp_enqueue_style( 'work-sans-fonts', get_template_directory_uri(). '/assets/fonts/work-sans.css' );
+	wp_enqueue_style( 'work-sans-fonts', get_template_directory_uri(). 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
 
 	wp_enqueue_script('nsc-bootstrap-js', get_template_directory_uri(). '/assets/js/bootstrap.js', false, false);
 	wp_enqueue_script('nsc-jquery-js', get_template_directory_uri(). '/assets/js/jquery-min.js', false, false);
