@@ -25,6 +25,8 @@
     <div class="row mb-5">
       <div class="<?php echo esc_attr($col8); ?>">
         <?php echo nsc_blog_breadcrumb(); ?>
+        
+        <?php // custom_breadcrumbs(); ?>
 
       <?php
         if ( have_posts() ) :
@@ -106,15 +108,46 @@
             <div class="d-flex nsc-post-share gap-2">
               <?php if(get_theme_mod('nsc_blog_single_post_share_button', true) != '0'){ ?>
                 <div class="nsc-popup-container">
-                  <button type="button" name="button" class="copy-link-pop-btn" aria-labelledby="<?php echo esc_attr("Share".$post_id); ?>">
-                    <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    <span class="screen-reader-text">
-                      <?php echo esc_html(get_theme_mod('nsc_blog_single_post_share_button',__('Share Button','nsc-blog')));?>
-                    </span>
-                  </button>
+                    <?php 
+                    if ( is_user_logged_in() ) {
+                        global $wpdb;
+                        $user_id = get_current_user_id();
+                        $post_id = get_the_ID();
+                        $table_name = $wpdb->prefix . 'bookmarks';
+                    
+                        $bookmark = $wpdb->get_row( $wpdb->prepare(
+                            "SELECT id FROM $table_name WHERE user_id = %d AND post_id = %d",
+                            $user_id, $post_id
+                        ));
+                    
+                        if ( $bookmark ) {
+                            echo '<button id="bookmark-btn" data-post-id="' . $post_id . '" class="remove-bookmark">
+                                 <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+                                 </svg>
+                                </button>';
+                        } else {
+                            echo '<button id="bookmark-btn" data-post-id="' . $post_id . '" class="add-bookmark">
+                                 <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                 <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                 <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+                                 </svg>
+                                </button>';
+                        }
+                    }
+                    ?>
+
+                    
+                    
+                  <!--<button type="button" name="button" class="copy-link-pop-btn" aria-labelledby="<?php echo esc_attr("Share".$post_id); ?>">-->
+                  <!--  <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+                  <!--    <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>-->
+                  <!--    <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>-->
+                  <!--  </svg>-->
+                  <!--  <span class="screen-reader-text">-->
+                   <?php /* echo esc_html(get_theme_mod('nsc_blog_single_post_share_button',__('Share Button','nsc-blog'))); */ ?>
+                  <!--  </span>-->
+                  <!--</button>-->
                   <div class="nsc-popups" id="<?php echo esc_attr("Share".$post_id); ?>">
                     <!-- <div class="d-flex flex-column"> -->
                       <?php  $post_url = get_permalink();
@@ -360,11 +393,12 @@
 
           <h3 class="section-main-head mt-5">other articles</h3>
           <nav class="nsc-post-navigation">
-            <div class="nav-previous">
+			  <div class="d-lg-flex">
+				         <div class="nav-previous">
                 <?php
                 $prev_post = get_adjacent_post(false, '', true);
                 if (!empty($prev_post)): ?>
-                    <div class="d-flex">
+                    <div class="d-flex" style="gap: 10px;">
                       <?php echo get_the_post_thumbnail($prev_post->ID, 'thumbnail'); ?>
                       <div>
                         <?php
@@ -399,17 +433,16 @@
                             </ul>
                           </div>
                         </div>
-                        <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nsc-nav-btn d-block">
-                          <?php echo esc_html('<< Previous', 'nsc-blog'); ?>
-                        </a>
+                       
                 <?php endif; ?>
             </div>
+			
             <div class="nav-next">
               <?php
               $next_post = get_adjacent_post(false, '', false);
               if (!empty($next_post)): ?>
               <!-- <a href="<?php // echo get_permalink($next_post->ID); ?>"> -->
-              <div class="d-flex">
+              <div class="d-flex" style="gap: 10px;">
                 <?php echo get_the_post_thumbnail($next_post->ID, 'thumbnail'); ?>
                 <div>
                   <?php
@@ -444,11 +477,23 @@
                     </ul>
                   </div>
                 </div>
-                <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-btn text-end d-block">
-                  <?php echo esc_html('Next >>', 'nsc-blog'); ?>
-                </a>
+                
                 <?php endif; ?>
             </div>
+			  </div>
+              <div class="prev-next">
+                  <div class="post-prev">
+                    <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nsc-nav-btn d-block">
+                         <?php echo esc_html('<< Previous', 'nsc-blog'); ?>
+                    </a>
+                  </div>
+    			  <div class="next-post">
+                    <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-btn text-end d-block">
+                      <?php echo esc_html('Next >>', 'nsc-blog'); ?>
+                    </a>
+                    </div>
+              </div>
+		
           </nav>
 
           <?php
@@ -468,10 +513,11 @@
     <?php } ?>
     </div>
 
+    <div class="custom-container">
     <?php if(get_theme_mod('nsc_blog_single_post_related_posts', true) != '0'){
       get_template_part('template-parts/related-posts');
     } ?>
-
+    
     <?php
       if(get_theme_mod('nsc_blog_single_post_comments_form', true) != '0'){
         if ( comments_open() || '0' != get_comments_number() ){
@@ -479,10 +525,48 @@
         }
       }
     ?>
-    <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+    </div>
+
+
+    </div>
+    <div class="container-fluid">
+        <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+    </div>
+    <div class="custom-container">
     <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
+    
+    <a href="<?php echo esc_url($all_articles_url); ?>" class="nsc-common-btnn mt-4">
+        <?php esc_html_e('View All Articles', 'nsc-blog'); ?>
+    </a>
+    
   </div>
 
 </article>
 
 <?php get_footer(); ?>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $('#bookmark-btn').on('click', function() {
+        var post_id = $(this).data('post-id');
+        var action = $(this).hasClass('add-bookmark') ? 'add_bookmark' : 'remove_bookmark';
+
+        $.ajax({
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            type: 'post',
+            data: {
+                action: action,
+                post_id: post_id
+            },
+            success: function(response) {
+                if (action == 'add_bookmark') {
+                    $('#bookmark-btn').removeClass('add-bookmark').addClass('remove-bookmark').text('Remove Bookmark');
+                } else {
+                    $('#bookmark-btn').removeClass('remove-bookmark').addClass('add-bookmark').text('Add Bookmark');
+                }
+            }
+        });
+    });
+});
+</script>

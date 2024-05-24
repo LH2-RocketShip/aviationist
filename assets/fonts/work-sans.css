@@ -1,7 +1,6 @@
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-ExtraBold.woff2') format('woff2'),
-        url('WorkSans-ExtraBold.woff') format('woff');
+    src:url('WorkSans-ExtraBold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -9,8 +8,7 @@
 
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-Light.woff2') format('woff2'),
-        url('WorkSans-Light.woff') format('woff');
+    src:url('WorkSans-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -18,8 +16,7 @@
 
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-Bold.woff2') format('woff2'),
-        url('WorkSans-Bold.woff') format('woff');
+    src:url('WorkSans-Bold.woff') format('woff');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -27,8 +24,7 @@
 
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-Regular.woff2') format('woff2'),
-        url('WorkSans-Regular.woff') format('woff');
+    src:url('WorkSans-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -36,8 +32,7 @@
 
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-Medium.woff2') format('woff2'),
-        url('WorkSans-Medium.woff') format('woff');
+    src:url('WorkSans-Medium.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -45,9 +40,40 @@
 
 @font-face {
     font-family: 'Work Sans';
-    src: url('WorkSans-SemiBold.woff2') format('woff2'),
-        url('WorkSans-SemiBold.woff') format('woff');
+    src:url('WorkSans-SemiBold.woff') format('woff');
     font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src:url('Inter-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src:url('Inter-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src:url('Inter-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src:url('Inter-Regular.woff') format('woff');
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }

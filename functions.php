@@ -10,20 +10,22 @@ function nsc_blog_enqueue_scripts() {
 	wp_enqueue_style( 'nsc-style', get_stylesheet_uri());
 	wp_enqueue_style( 'bootstrap', get_template_directory_uri(). '/assets/css/bootstrap.css' );
 	wp_enqueue_style( 'nsc-owl-carousel', get_template_directory_uri(). '/assets/css/owl.carousel.css' );
+	wp_enqueue_style( 'nsc-owl-carousel', get_template_directory_uri(). '/assets/css/owl.carousel.min.css' );
 	wp_enqueue_style( 'nsc-fontawesome', get_template_directory_uri() . '/assets/css/fontawesome.min.css');
+	wp_enqueue_style( 'nsc-fontawesome', get_template_directory_uri() . '/assets/css/all.min.css');
 	wp_enqueue_style( 'work-sans-fonts', get_template_directory_uri(). '/assets/fonts/work-sans.css' );
-	wp_enqueue_style( 'work-sans-fonts', get_template_directory_uri(). 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' );
 
 	wp_enqueue_script('nsc-bootstrap-js', get_template_directory_uri(). '/assets/js/bootstrap.js', false, false);
 	wp_enqueue_script('nsc-jquery-js', get_template_directory_uri(). '/assets/js/jquery-min.js', false, false);
 	wp_enqueue_script('nsc-owl-carousel-js', get_template_directory_uri(). '/assets/js/owl.carousel.js',  array('jquery'), false, false);
+	wp_enqueue_script('nsc-owl-carousel-js', get_template_directory_uri(). '/assets/js/owl.carousel.min.js',  array('jquery'), false, false);
 	wp_enqueue_script('nsc-fontawesome-js', get_template_directory_uri(). '/assets/js/fontawesome-all-min.js', false, false);
 	wp_enqueue_script('nsc-custom-js', get_template_directory_uri() . '/assets/js/nsc-custom.js', array('jquery'), null, false);
-
-	 wp_localize_script('nsc-custom-js', 'ajax_search_params', array(
-			 'ajaxurl' => admin_url('admin-ajax.php'),
-			 'nonce' => wp_create_nonce('ajax-search-nonce'),
-	 ));
+    wp_enqueue_script('nsc-popup-script', get_template_directory_uri() . '/assets/js/nsc-popup.js', array('jquery'), null, false);
+    wp_localize_script('nsc-popup-script', 'ajax_object', array(
+        'ajax_url' => admin_url('admin-ajax.php')
+    ));
+        wp_localize_script( 'nsc-custom-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
 	 if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 	 	wp_enqueue_script( 'comment-reply' );
@@ -31,6 +33,17 @@ function nsc_blog_enqueue_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'nsc_blog_enqueue_scripts' );
+
+
+
+function enqueue_slick_slider() {
+    wp_enqueue_style('slick-css', get_template_directory_uri() . '/assets/slick/slick.css');
+    wp_enqueue_style('slick-theme-css', get_template_directory_uri() . '/assets/slick/slick-theme.css');
+    wp_enqueue_script('slick-js', get_template_directory_uri() . '/assets/slick/slick.min.js', array('jquery'), '1.8.1', true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_slick_slider');
+
+
 
 if ( !function_exists( 'nsc_blog_theme_setup' )) {
   function nsc_blog_theme_setup(){
@@ -214,53 +227,55 @@ function nsc_blog_comment_form_add_placeholder($comment_field) {
 }
 add_filter('comment_form_field_comment', 'nsc_blog_comment_form_add_placeholder');
 
-// callback function to modify comment list HTML
+// Enqueue RateYo library and initialize star rating feature
+function nsc_blog_enqueue_rateyo() {
+    wp_enqueue_script('rateyo-js', 'https://cdn.jsdelivr.net/npm/rateyo@2.3.2/lib/jquery.rateyo.min.js', array('jquery'), '2.3.2', true);
+    wp_enqueue_style('rateyo-css', 'https://cdn.jsdelivr.net/npm/rateyo@2.3.2/lib/jquery.rateyo.min.css', array(), '2.3.2');
+}
+add_action('wp_enqueue_scripts', 'nsc_blog_enqueue_rateyo');
+
+// Callback function to modify comment list HTML
 function nsc_blog_custom_comment_list($comment, $args, $depth) {
     $tag = ($args['style'] === 'div') ? 'div' : 'li';
     ?>
     <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class('comment'); ?>>
         <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
-					<div class="comment-author vcard flex-shrink-0">
-						<?php if ($args['avatar_size'] != 0) echo get_avatar($comment, $args['avatar_size']); ?>
-					</div>
-
-					<div class="nsc-comment-content">
-						<div class="d-flex align-items-center gap-2">
-								<?php printf(__('<b class="fn nsc-comment-author">%s</b>', 'nsc-blog'), get_comment_author_link()); ?>
-
-								<div class="comment-metadata">
-                    <a href="<?php echo esc_url(get_comment_link($comment, $args)); ?>">
-                        <time datetime="<?php comment_time('c'); ?>">
-                            <?php printf(__('%1$s at %2$s', "nsc-blog"), get_comment_date(), get_comment_time()); ?>
-                        </time>
-                    </a>
-                    <?php edit_comment_link(__('(Edit)', "nsc-blog"), '<span class="edit-link">', '</span>'); ?>
-
-                </div>
-						</div>
-
-						<div class="comment-content">
+            <div class="comment-text">
                 <?php comment_text(); ?>
             </div>
-
-						<a href="<?php echo get_permalink() . '?comment_like=' . get_comment_ID(); ?>" class="comment-like">Like
-							<?php echo get_comment_meta(get_comment_ID(), 'comment_likes', true); ?>
-						</a>
-
-						<?php comment_reply_link(array_merge($args, array('depth' => $depth, 'max_depth' => $args['max_depth']))); ?>
-
-					</div>
-
-					<?php if ($comment->comment_approved == '0') : ?>
-						<div class="comment-awaiting-moderation">
-							<?php _e('Your comment is awaiting moderation.', "nsc-blog"); ?>
-						</div>
-					<?php endif; ?>
-
+            <div class="comment-author-info">
+                <div class="nsc-comment-content ms-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="comment-author vcard flex-shrink-0">
+                            <?php if ($args['avatar_size'] != 0) echo get_avatar($comment, $args['avatar_size']); ?>
+                        </div>
+                        <?php printf(__('<b class="fn nsc-comment-author">%s</b>', 'nsc-blog'), get_comment_author_link()); ?>
+                        <div class="star-rating">
+                            <?php
+                            // Assuming you have stored star rating value in comment meta with key 'star_rating'
+                            $star_rating = get_comment_meta($comment->comment_ID, 'star_rating', true);
+                            echo 'Star Rating: ' . $star_rating;
+                            ?>
+                        </div>
+                        <a href="<?php echo get_permalink() . '?comment_like=' . get_comment_ID(); ?>" class="comment-like">
+                            <i class="fas fa-thumbs-up"></i> <!-- Font Awesome icon for like -->
+                            <?php echo get_comment_meta(get_comment_ID(), 'comment_likes', true); ?>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            <?php if ($comment->comment_approved == '0') : ?>
+                <div class="comment-awaiting-moderation">
+                    <?php _e('Your comment is awaiting moderation.', "nsc-blog"); ?>
+                </div>
+            <?php endif; ?>
         </article>
     </<?php echo $tag; ?>>
     <?php
 }
+
+
 
 function nsc_blog_breadcrumb() {
     $separator = '<span class="breadcrumb-arrow"> > </span>';
@@ -275,7 +290,7 @@ function nsc_blog_breadcrumb() {
 			}
         if (is_single()) {
             echo $separator;
-            the_title();
+            echo the_title();
         }
     }
 		echo '</nav>';
@@ -344,6 +359,36 @@ function nsc_blog_breadcrumb1() {
     }
     echo '</nav>';
 }
+
+
+function nsc_blog_breadcrumb2() {
+    $separator = '<span class="breadcrumb-arrow"> > </span>';
+    $home_title = 'Home';
+    echo '<nav class="nsc-breadcrumb">';
+    echo '<a href="' . get_home_url() . '">' . $home_title . '</a>' . $separator;
+    if (is_category() || is_single()) {
+        $post_categories = get_the_category();
+        if ( ! empty( $post_categories ) ) {
+            $first_category = $post_categories[0];
+            echo '<a href="' . esc_url( get_category_link( $first_category->term_id ) ) . '">' . esc_html( $first_category->name ) . '</a>' . $separator;
+        }
+        if (is_single()) {
+            echo '<span>' . get_the_title() . '</span>';
+        }
+    }
+    echo '</nav>';
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Add custom fields to user profile
@@ -763,5 +808,127 @@ add_action('wp_footer', 'nsc_enqueue_popup_script');
 
 
 
+function create_bookmark_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'bookmarks';
+    $charset_collate = $wpdb->get_charset_collate();
 
+    $sql = "CREATE TABLE $table_name (
+        id mediumint(9) NOT NULL AUTO_INCREMENT,
+        user_id bigint(20) NOT NULL,
+        post_id bigint(20) NOT NULL,
+        PRIMARY KEY (id)
+    ) $charset_collate;";
+
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($sql);
+}
+add_action('after_switch_theme', 'create_bookmark_table');
+
+function add_bookmark() {
+    if ( is_user_logged_in() && isset($_POST['post_id']) ) {
+        global $wpdb;
+        $user_id = get_current_user_id();
+        $post_id = intval($_POST['post_id']);
+        $table_name = $wpdb->prefix . 'bookmarks';
+
+        $wpdb->insert(
+            $table_name,
+            array(
+                'user_id' => $user_id,
+                'post_id' => $post_id
+            ),
+            array(
+                '%d',
+                '%d'
+            )
+        );
+        echo 'Bookmark added';
+    }
+    wp_die();
+}
+add_action('wp_ajax_add_bookmark', 'add_bookmark');
+
+function remove_bookmark() {
+    if ( is_user_logged_in() && isset($_POST['post_id']) ) {
+        global $wpdb;
+        $user_id = get_current_user_id();
+        $post_id = intval($_POST['post_id']);
+        $table_name = $wpdb->prefix . 'bookmarks';
+
+        $wpdb->delete(
+            $table_name,
+            array(
+                'user_id' => $user_id,
+                'post_id' => $post_id
+            ),
+            array(
+                '%d',
+                '%d'
+            )
+        );
+        echo 'Bookmark removed';
+    }
+    wp_die();
+}
+add_action('wp_ajax_remove_bookmark', 'remove_bookmark');
+
+
+function nsc_load_more_categories() {
+    $cats_num = $_POST['cats_num'];
+    $cat_args = array(
+        'orderby' => 'slug',
+        'parent' => 0,
+        'number' => $cats_num,
+    );
+    $categories = get_categories($cat_args);
+    foreach ($categories as $category) {
+        echo '<li class="nsc-posts-cat-item">
+                    <a href="' . esc_url(get_category_link($category->term_id)) . '" rel="bookmark" aria-label="'.esc_attr('Visit the ' . $category->name . ' category page').'" title="'. $category->name .'">' . esc_html($category->name) . '</a>
+                </li>';
+    }
+    wp_die();
+}
+add_action('wp_ajax_nsc_load_more_categories', 'nsc_load_more_categories');
+add_action('wp_ajax_nopriv_nsc_load_more_categories', 'nsc_load_more_categories');
+
+
+// Load all taxonomies via AJAX
+add_action('wp_ajax_load_all_taxonomies', 'nsc_load_all_taxonomies');
+add_action('wp_ajax_nopriv_load_all_taxonomies', 'nsc_load_all_taxonomies'); // For non-logged-in users
+
+function nsc_load_all_taxonomies() {
+    $taxonomies = get_taxonomies(array('public' => true), 'objects'); // Get all public taxonomies
+    ob_start();
+    foreach ($taxonomies as $taxonomy) {
+        echo '<h4>' . esc_html($taxonomy->label) . '</h4>'; // Display taxonomy title
+        $categories = get_terms(array(
+            'taxonomy'   => $taxonomy->name,
+            'hide_empty' => false,
+        ));
+        echo '<ul>';
+        foreach ($categories as $category) {
+            echo '<li><a href="' . esc_url(get_term_link($category->term_id)) . '">' . esc_html($category->name) . '</a></li>';
+        }
+        echo '</ul>';
+    }
+    $taxonomy_markup = ob_get_clean();
+    echo $taxonomy_markup;
+    wp_die();
+}
+
+
+
+
+
+
+
+
+function fetch_more_categories() {
+    $more_categories_html = '<ul><li><a href="#">Category 4</a></li><li><a href="#">Category 5</a></li></ul>';
+    echo $more_categories_html;
+    wp_die();
+}
+add_action('wp_ajax_fetch_more_categories', 'fetch_more_categories');
+add_action('wp_ajax_nopriv_fetch_more_categories', 'fetch_more_categories');
 ?>

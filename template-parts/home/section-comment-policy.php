@@ -10,7 +10,7 @@
 <section class="nsc-comments-policy" style="background-image: url(<?php echo $bgimage ?>)">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 d-flex justify-content-end">
+      <div class="col-md-12 d-flex justify-content-start">
         <div class="">
           <?php if (get_theme_mod('nsc_blog_comment_policy_heading') !='') { ?>
               <h2 class="section-heading"><?php echo esc_html(get_theme_mod('nsc_blog_comment_policy_heading')); ?></h2>
@@ -26,8 +26,6 @@
             </a>
           <?php } ?>
         </div>
-      </div>
-      <div class="col-md-6">
       </div>
     </div>
   </div>

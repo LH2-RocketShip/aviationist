@@ -17,6 +17,7 @@
 .videos-container ul.top-videos,.videos-container ul.tvinterviews {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 .videos-container ul.top-videos li,.videos-container ul.tvinterviews li {
     width: calc(100% / 3 - 20px);
@@ -27,7 +28,7 @@ p.video-desc {
 }
 </style>
 
-<div id="primary" class="content-area col-md-8">
+<div id="primary" class="content-area col-md-12 col-12">
     <main id="main" class="site-main" role="main">
 
         <section class="top-videos">
@@ -57,7 +58,7 @@ p.video-desc {
 
                           <li>
                             <div class="video-wrapper">
-                                <iframe width="300" height="169" src="<?php echo esc_url($video_url); ?>?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                                <iframe width="440" height="300" src="<?php echo esc_url($video_url); ?>?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
                                 <?php if ($video_details) : ?>
                                     <h4><?php echo esc_html($video_details['title']); ?></h4>
                                     <?php if (!empty($video_details['duration'])): ?>

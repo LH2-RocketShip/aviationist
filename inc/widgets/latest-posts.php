@@ -1,4 +1,5 @@
 <?php
+// Updated Widget Code
 /**
  * Custom Latest Posts Widget with Title in H3
  */
@@ -50,7 +51,6 @@ class NSC_Latest_Posts_Widget extends WP_Widget {
                                src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
                                alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
                                title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
-                            <?php  //the_post_thumbnail('thumbnail'); ?>
                         </a>
                     <?php } ?>
 
@@ -85,15 +85,40 @@ class NSC_Latest_Posts_Widget extends WP_Widget {
                     <span class="nsc-popup-close" onclick="closeCategoryPopup()">&times;</span>
                     <?php echo do_shortcode('[custom_search]'); ?>
 
-                    <h3 class="section-main-head"><?php esc_html_e('All Categories', 'nsc-blog'); ?></h3>
-                    <ul>
-                        <?php
-                        $categories = get_categories();
-                        foreach ($categories as $category) {
-                            echo '<li><a href="' . esc_url(get_category_link($category->term_id)) . '">' . esc_html($category->name) . '</a></li>';
+                    <?php
+                    $args = array(
+                        'public'   => true,
+                        '_builtin' => false // Exclude built-in post types
+                    );
+                    $post_types = get_post_types($args, 'objects');
+
+                    // Include 'post' post type explicitly
+                    $post_types['post'] = get_post_type_object('post');
+
+                    foreach ($post_types as $post_type) {
+                        $taxonomies = get_object_taxonomies($post_type->name, 'objects');
+
+                        echo '<h3 class="section-main-head">' . esc_html($post_type->label) . '</h3>'; // Display post type title
+
+                        foreach ($taxonomies as $taxonomy) {
+                            if ($taxonomy->hierarchical) { // Only include hierarchical taxonomies
+                                $categories = get_terms(array(
+                                    'taxonomy'   => $taxonomy->name,
+                                    'hide_empty' => false,
+                                ));
+
+                                echo '<ul>';
+
+                                foreach ($categories as $category) {
+                                    echo '<li><a href="' . esc_url(get_term_link($category->term_id)) . '">' . esc_html($category->name) . '</a></li>';
+                                }
+
+                                echo '</ul>';
+                            }
                         }
-                        ?>
-                    </ul>
+                    }
+                    ?>
+                    <button class="view-more-categories-btn" onclick="toggleMoreCategories()">View More Categories</button>
                 </div>
             </div>
             <?php
@@ -158,3 +183,10 @@ function nsc_load_latest_posts_widget() {
 
 // Hook to register the widget with `widgets_init`
 add_action('widgets_init', 'nsc_load_latest_posts_widget');
+
+// Enqueue the necessary scripts for the popup functionality
+function nsc_enqueue_scripts() {
+    wp_enqueue_script('nsc-popup-script', get_template_directory_uri() . '/js/nsc-popup.js', array('jquery'), null, true);
+}
+add_action('wp_enqueue_scripts', 'nsc_enqueue_scripts');
+?>

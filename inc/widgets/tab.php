@@ -134,33 +134,37 @@ class NSC_Tabbed_Widget extends WP_Widget {
             </div>
 
             <div class="nsc-tab-content" id="nsc-comments" style="display: none;">
-                <div class="nsc-tab-contentt">
-                    <?php
-                    $recent_comments = get_comments(array(
-                        'number' => 5, // Number of comments to fetch
-                        'status' => 'approve', // Only approved comments
-                        'post_status' => 'publish' // Only comments from published posts
-                    ));
+    <div class="nsc-tab-contentt">
+        <?php
+        $recent_comments = get_comments(array(
+            'number' => 5, // Number of comments to fetch
+            'status' => 'approve', // Only approved comments
+            'post_status' => 'publish' // Only comments from published posts
+        ));
 
-                    if (!empty($recent_comments)) {
-                        foreach ($recent_comments as $comment) {
-                            ?>
-                              <div class="nsc-comment">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>
-                                <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>" title="<?php echo esc_attr($comment->comment_author); ?>">
-                                    <?php echo esc_html($comment->comment_author); ?>
-                                </a> on
-                                <a href="<?php echo esc_url(get_permalink($comment->comment_post_ID)); ?>" title="<?php echo esc_attr(get_permalink($comment->comment_post_ID)); ?>">
-                                    <?php echo get_the_title($comment->comment_post_ID); ?>
-                                </a>
-                              </div>
-                            <?php
-                        }
-                    } else {
-                        echo '<p>No recent comments found.</p>';
-                    }
-                    ?>
+        if (!empty($recent_comments)) {
+            foreach ($recent_comments as $comment) {
+                ?>
+                <div class="nsc-comment">
+                    <div class="comment-content">
+                        <p class="comment-text">
+                            <?php echo wp_kses_post($comment->comment_content); ?> <!-- Display comment content -->
+                        </p>
+                        <p class="comment-author">
+                            <?php echo get_avatar($comment, 50); // Display commenter's avatar ?>
+                            <strong><?php echo esc_html($comment->comment_author); ?></strong> <!-- Display commenter's name -->
+                        </p>
+                    </div>
                 </div>
+                <?php
+            }
+        } else {
+            echo '<p>No recent comments found.</p>';
+        }
+        ?>
+    </div>
+</div>
+
 
             </div>
         </div>

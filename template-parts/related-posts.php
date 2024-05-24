@@ -26,7 +26,7 @@ if ( $nsc_blog_related_posts->have_posts() ) : ?>
         <h2 class="section-main-head">
           <?php echo esc_html(get_theme_mod('nsc_blog_related_post_title','Related Articles')); ?>
         </h2>
-        <div class="nsc-related-article">
+        <div class="nsc-related-article multiple-items">
           <?php while ( $nsc_blog_related_posts->have_posts() ) : $nsc_blog_related_posts->the_post(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class('nsc-related-article-container'); ?>>
               <?php

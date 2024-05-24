@@ -60,35 +60,50 @@ jQuery(document).ready(function ($) {
   });
 
     $('.nsc-owl-carousel').owlCarousel({
-      loop:true,
-      margin:24,
-      nav:true,
-      navText:["<div class='nav-btn prev-slide'></div>","<div class='nav-btn next-slide'></div>"],
-      items:3.5,
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:2.5
-          }
-      }
-  });
+        loop: true,
+        margin: 24,
+        nav: true,  // Ensure this is set to true
+        navText: ["<div class='nav-btn prev-slide'></div>", "<div class='nav-btn next-slide'></div>"],
+        items: 3.5,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2.5
+            }
+        }
+    });
 
-  $('.nsc-related-article').owlCarousel({
-      loop:true,
-      margin:18,
-      nav:true,
-      items:3.5,
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:2.5
-          }
+
+$('.multiple-items').slick({
+  centerMode: true,
+  centerPadding: '0px',
+  slidesToShow: 3,
+   arrows: true,
+  responsive: [
+    {
+      breakpoint: 768,
+      settings: {
+        arrows: true,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1
       }
-  });
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        arrows: true,
+        centerMode: true,
+        centerPadding: '40px',
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+
+
 
     //  copy link
     let copy_button = $('#nsc-copy-link');
@@ -143,8 +158,8 @@ jQuery(document).ready(function ($) {
                     post_id: ajax_search_params.post_id
                 },
                 success: function(response) {
-                    console.log('Reading count increased.');
-                    console.log(response);
+                    // console.log('Reading count increased.');
+                    // console.log(response);
 
                 }
             });
@@ -301,3 +316,79 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+
+
+jQuery(document).ready(function($) {
+    $('.view-all-category-btn').click(function(e) {
+        e.preventDefault();
+
+        var button = $(this);
+        var container = button.prev('.nsc-posts-cats');
+        var cats_num = container.children().length + 3; // Increase by 3
+        var data = {
+            action: 'nsc_load_more_categories',
+            cats_num: cats_num,
+        };
+
+        $.ajax({
+            url: ajax_object.ajax_url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                container.html(response);
+                if (response.trim() == '') {
+                    button.text('Show Less');
+                    button.addClass('show-less-categories');
+                } else {
+                    button.text('Show More');
+                    button.removeClass('show-less-categories');
+                }
+            }
+        });
+    });
+
+    // Show less functionality
+    $(document).on('click', '.show-less-categories', function(e) {
+        e.preventDefault();
+
+        var button = $(this);
+        var container = button.prev('.nsc-posts-cats');
+        var cats_num = container.children().length - 3; // Decrease by 3
+        var data = {
+            action: 'nsc_load_more_categories',
+            cats_num: cats_num,
+        };
+
+        $.ajax({
+            url: ajax_object.ajax_url,
+            type: 'POST',
+            data: data,
+            success: function(response) {
+                container.html(response);
+                button.text('Show More');
+                button.removeClass('show-less-categories');
+            }
+        });
+    });
+});
+
+
+   function toggleMoreCategories() {
+       console.log("hit")
+    jQuery.ajax({
+        url: ajaxurl, // WordPress AJAX URL
+        type: 'POST',
+        data: {
+            action: 'load_all_taxonomies' // Action to trigger PHP function
+        },
+        success: function(response) {
+            jQuery('.nsc-popup-content').append(response); // Append the HTML response to the popup content
+            jQuery('.view-more-categories-btn').remove(); // Remove the button after loading taxonomies
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+

@@ -78,6 +78,8 @@ get_header(); ?>
 					</aside>
         </div>
       </div>
+       	 <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+  	 <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
     </div>
   </main>
 <?php

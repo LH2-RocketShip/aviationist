@@ -21,13 +21,13 @@
     );
      $query = new WP_Query($args);
      if ( $query->have_posts() ) { ?>
-        <div class="nsc-owl-carousel">
+        <div class="multiple-items">
          <?php while ($query->have_posts()) : $query->the_post();
              $image_id = get_post_thumbnail_id();
              $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
              $image_title = get_the_title($image_id); ?>
           <div class="">
-            <div class="">
+            <div class="m-3">
               <img class=""
               src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
               alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
@@ -47,9 +47,6 @@
            </div>
        <?php endwhile; ?>
        </div>
-       <a href="<?php echo esc_url(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post_url', '#')); ?>" class="nsc-common-btnn mt-5">
-         <?php echo esc_html(get_theme_mod('nsc_blog_also_on_aviationist_view_all_post', 'View All')); ?>
-       </a>
 
      <?php }else { ?>
       <h4> <?php echo esc_html_e('Please add the post to see this section', 'nsc-blog'); ?> </h4>
