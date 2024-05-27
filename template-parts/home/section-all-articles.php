@@ -52,7 +52,7 @@
                             </a>
                         </h3>
                         <div class="nsc-post-para">
-                            <?php the_excerpt(); ?>
+                           <?php echo get_the_content(); ?>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <?php

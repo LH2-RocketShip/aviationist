@@ -2376,3 +2376,16 @@ button.slick-next.slick-arrow {
 #page-id-187, div#search-5 {
     margin-bottom: 30px;
 }
+
+.dark-mode .nsc-news-bar>span:first-child:after {    
+    border-left: 9px solid #f2f3f5;  
+}
+
+
+.dark-mode .nsc-news-bar>span:first-child {
+    background-color: #f2f3f5;    
+}
+
+.dark-mode .nsc-news-bar {
+    background-color: #fc0;    
+}
