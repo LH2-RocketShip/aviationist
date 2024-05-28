@@ -22,11 +22,11 @@ if ( post_password_required() ) {
 
 <div id="comments" class="comments-area">
     <?php if ( have_comments() ) : ?>
-        <h3 class="nsc-comment-title">
+        <h3 class="section-main-head">
             <?php
             $nsc_blog_comments_number = get_comments_number();
             printf(
-                esc_html__( 'Responses (%d)', 'nsc-blog' ),
+                esc_html__( 'RATE AND COMMENT', 'nsc-blog' ),
                 $nsc_blog_comments_number
             );
             ?>
@@ -34,14 +34,14 @@ if ( post_password_required() ) {
 
         <?php the_comments_navigation(); ?>
 
-        <ol class="comment-list">
-        <?php
-            $args = array(
-                'callback' => 'nsc_blog_custom_comment_list',
-            );
-            wp_list_comments($args);
-        ?>
-        </ol>
+<ol class="comment-list">
+    <?php
+    $args = array(
+        'callback' => 'nsc_blog_custom_comment_list',
+    );
+    wp_list_comments($args);
+    ?>
+</ol>
 
         <?php the_comments_navigation(); ?>
 
@@ -58,7 +58,7 @@ if ( post_password_required() ) {
             'title_reply_before' => '<h2 id="reply-title" class="comment-reply-title">',
             'title_reply_after'  => '</h2>',
             'title_reply' => esc_html(get_theme_mod('nsc_blog_single_blog_comment_title',__('','nsc-blog' )) ),
-            'label_submit' => esc_html(get_theme_mod('nsc_blog_single_blog_comment_button_text',__('Submit','nsc-blog' )) ),
+            'label_submit' => esc_html(get_theme_mod('nsc_blog_single_blog_comment_button_text',__('Comment','nsc-blog' )) ),
         ) );
     ?>
 </div>

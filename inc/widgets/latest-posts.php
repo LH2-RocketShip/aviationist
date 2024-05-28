@@ -47,10 +47,7 @@ class NSC_Latest_Posts_Widget extends WP_Widget {
                 <div class="nsc-latest-post">
                     <?php if (has_post_thumbnail()) { ?>
                         <a href="<?php the_permalink(); ?>" class="nsc-latest-post-thumbnail" title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
-                          <img
-                               src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
-                               alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
-                               title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
+                          <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
                         </a>
                     <?php } ?>
 
@@ -104,7 +101,7 @@ class NSC_Latest_Posts_Widget extends WP_Widget {
                             if ($taxonomy->hierarchical) { // Only include hierarchical taxonomies
                                 $categories = get_terms(array(
                                     'taxonomy'   => $taxonomy->name,
-                                    'hide_empty' => false,
+                                    'hide_empty' => true,
                                 ));
 
                                 echo '<ul>';

@@ -22,10 +22,21 @@ function nsc_blog_enqueue_scripts() {
 	wp_enqueue_script('nsc-fontawesome-js', get_template_directory_uri(). '/assets/js/fontawesome-all-min.js', false, false);
 	wp_enqueue_script('nsc-custom-js', get_template_directory_uri() . '/assets/js/nsc-custom.js', array('jquery'), null, false);
     wp_enqueue_script('nsc-popup-script', get_template_directory_uri() . '/assets/js/nsc-popup.js', array('jquery'), null, false);
+    wp_enqueue_script('like-comment-script', get_template_directory_uri() . '/assets/js/like-comment.js', array('jquery'), null, false);
+    
+    wp_localize_script('like-comment-script', 'nscBlogAjax', array(
+        'ajaxurl' => admin_url('admin-ajax.php')
+    ));
+
+    
     wp_localize_script('nsc-popup-script', 'ajax_object', array(
         'ajax_url' => admin_url('admin-ajax.php')
     ));
-        wp_localize_script( 'nsc-custom-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    
+    // wp_localize_script('like-comment-script', 'ajaxurl', admin_url('admin-ajax.php'));
+
+    wp_localize_script( 'nsc-custom-js', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    wp_localize_script('nsc-custom', 'ajax_search_params', $ajax_params);
 
 	 if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 	 	wp_enqueue_script( 'comment-reply' );
@@ -33,8 +44,6 @@ function nsc_blog_enqueue_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'nsc_blog_enqueue_scripts' );
-
-
 
 function enqueue_slick_slider() {
     wp_enqueue_style('slick-css', get_template_directory_uri() . '/assets/slick/slick.css');
@@ -220,19 +229,12 @@ add_action('wp_ajax_nopriv_ajax_search', 'ajax_search');
 function nsc_blog_comment_form_add_placeholder($comment_field) {
     $comment_field = str_replace(
         '<textarea ',
-        '<textarea placeholder="' . __('Add to discussion', 'nsc-blog') . '" ',
+        '<textarea placeholder="' . __('Add your comment...', 'nsc-blog') . '" ',
         $comment_field
     );
     return $comment_field;
 }
 add_filter('comment_form_field_comment', 'nsc_blog_comment_form_add_placeholder');
-
-// Enqueue RateYo library and initialize star rating feature
-function nsc_blog_enqueue_rateyo() {
-    wp_enqueue_script('rateyo-js', 'https://cdn.jsdelivr.net/npm/rateyo@2.3.2/lib/jquery.rateyo.min.js', array('jquery'), '2.3.2', true);
-    wp_enqueue_style('rateyo-css', 'https://cdn.jsdelivr.net/npm/rateyo@2.3.2/lib/jquery.rateyo.min.css', array(), '2.3.2');
-}
-add_action('wp_enqueue_scripts', 'nsc_blog_enqueue_rateyo');
 
 // Callback function to modify comment list HTML
 function nsc_blog_custom_comment_list($comment, $args, $depth) {
@@ -252,17 +254,28 @@ function nsc_blog_custom_comment_list($comment, $args, $depth) {
                         <?php printf(__('<b class="fn nsc-comment-author">%s</b>', 'nsc-blog'), get_comment_author_link()); ?>
                         <div class="star-rating">
                             <?php
-                            // Assuming you have stored star rating value in comment meta with key 'star_rating'
-                            $star_rating = get_comment_meta($comment->comment_ID, 'star_rating', true);
-                            echo 'Star Rating: ' . $star_rating;
+                            $rating = get_comment_meta($comment->comment_ID, 'rating', true);
                             ?>
                         </div>
-                        <a href="<?php echo get_permalink() . '?comment_like=' . get_comment_ID(); ?>" class="comment-like">
-                            <i class="fas fa-thumbs-up"></i> <!-- Font Awesome icon for like -->
-                            <?php echo get_comment_meta(get_comment_ID(), 'comment_likes', true); ?>
-                        </a>
+                        <div class="comment-likes">
+                            <?php
+                            $likes = get_comment_meta($comment->comment_ID, 'comment_likes', true);
+                            $likes = $likes ? $likes : 0;
+                            ?>
+                            <a href="#" data-comment-id="<?php echo get_comment_ID(); ?>" class="comment-like">
+                                <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.4753 18.6998C9.99525 18.6998 6.09525 17.8798 5.13525 17.1998C4.91525 17.0398 4.79526 16.7998 4.79526 16.5398V8.7198C4.79526 8.4798 4.91526 8.23981 5.09526 8.09981C5.15526 8.05981 6.55525 6.9598 8.01525 6.1398C9.83525 5.1398 11.0953 3.73981 11.3953 2.85981C11.7553 1.77981 12.2753 0.299805 13.9153 0.299805C14.6953 0.299805 15.3353 0.739805 15.6753 1.4998C16.3553 3.0598 15.6352 5.2198 14.4352 6.9198C15.2352 7.0998 16.2352 7.3598 16.8352 7.5398C17.9352 7.8798 18.6553 8.67982 18.8153 9.65981C18.9553 10.6598 18.4553 11.6798 17.3953 12.4598C16.6153 14.5598 15.2753 17.8798 14.2953 18.4198C13.9153 18.6198 13.2553 18.6998 12.4753 18.6998ZM6.39526 16.0598C7.91526 16.6998 12.5953 17.3598 13.4753 17.0198C13.9353 16.5998 15.1152 13.9198 15.9352 11.6598C15.9952 11.4998 16.0952 11.3598 16.2352 11.2598C16.8953 10.8198 17.2353 10.2998 17.1753 9.85982C17.1153 9.49981 16.7953 9.1998 16.3153 9.0398C15.3153 8.7198 12.8353 8.17981 12.7953 8.17981C12.5153 8.11981 12.2953 7.9198 12.1953 7.6398C12.0953 7.3598 12.1753 7.05981 12.3753 6.85982C14.1753 4.91982 14.4953 2.9398 14.1553 2.1398C14.0553 1.8998 13.9353 1.8998 13.8753 1.8998C13.4753 1.8998 13.2953 2.17981 12.8753 3.37981C12.3953 4.77981 10.7353 6.4598 8.75526 7.5398C7.79526 8.0598 6.83526 8.7598 6.35526 9.1198V16.0598H6.39526ZM3.23525 16.6198V8.6398C3.23525 7.9198 2.65525 7.3398 1.93525 7.3398C1.21525 7.3398 0.635249 7.9198 0.635249 8.6398V16.6198C0.635249 17.3398 1.21525 17.9198 1.93525 17.9198C2.63525 17.9198 3.23525 17.3198 3.23525 16.6198Z" fill="url(#paint0_linear_959_287)"/>
+                                <defs>
+                                <linearGradient id="paint0_linear_959_287" x1="0.635254" y1="9.49981" x2="18.8383" y2="9.49981" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FFD11A"/>
+                                <stop offset="1" stop-color="#DE772E"/>
+                                </linearGradient>
+                                </defs>
+                                </svg>&nbsp; <!-- Font Awesome icon for like -->
+                                <span><strong class="like-count"> <?php echo ($likes); ?> </strong> Likes</span>
+                            </a>
+                        </div>
                     </div>
-                    
                 </div>
             </div>
             <?php if ($comment->comment_approved == '0') : ?>
@@ -277,21 +290,62 @@ function nsc_blog_custom_comment_list($comment, $args, $depth) {
 
 
 
+function nsc_blog_like_comment() {
+    // Check if the comment_id is set and is valid
+    if (isset($_POST['comment_id']) && is_numeric($_POST['comment_id'])) {
+        $comment_id = intval($_POST['comment_id']);
+        
+        // Get the current number of likes
+        $likes = get_comment_meta($comment_id, 'comment_likes', true);
+        $likes = $likes ? intval($likes) : 0;
+        
+        // Increment the number of likes
+        $likes++;
+        
+        // Update the comment meta with the new like count
+        update_comment_meta($comment_id, 'comment_likes', $likes);
+        
+        // Return the new like count
+        echo $likes;
+    }
+    wp_die(); // Properly terminate the AJAX request
+}
+add_action('wp_ajax_nsc_blog_like_comment', 'nsc_blog_like_comment');
+add_action('wp_ajax_nopriv_nsc_blog_like_comment', 'nsc_blog_like_comment');
+
+
+
 function nsc_blog_breadcrumb() {
     $separator = '<span class="breadcrumb-arrow"> > </span>';
     $home_title = 'Home';
+    $page_title = get_query_var( 'name' );
+  
+    function transform_string($string) {
+        $string_no_hyphen = str_replace('-', ' ', $string);
+        $string_transformed = ucfirst($string_no_hyphen);
+        return $string_transformed;
+    }
+    
+    $original_string = $page_title;
+    $transformed_string = transform_string($original_string);
+    
     echo '<nav class="nsc-breadcrumb">';
-    echo '<a href="' . get_home_url() . '">' . $home_title . '</a>' . $separator;
+    
     if (is_category() || is_single()) {
-			$post_categories = get_the_category();
+		$post_categories = get_the_category();
 			if ( ! empty( $post_categories ) ) {
 			    $first_category = $post_categories[0];
-			    echo esc_html( $first_category->name );
+			 //   echo esc_html( $first_category->name );
 			}
         if (is_single()) {
+            echo '<a href="' . get_home_url() . '">' . $home_title . '</a>';
             echo $separator;
-            echo the_title();
+            // echo esc_html( $first_category->name );
+            // echo $separator;
+            echo $transformed_string;
         }
+    }else {
+       echo '<a href="' . get_home_url() . '">' . $home_title . '</a>' . $separator .'<a href="">' . $transformed_string . '</a>'; 
     }
 		echo '</nav>';
 }
@@ -455,7 +509,7 @@ function save_custom_user_profile_fields($user_id) {
 add_action('personal_options_update', 'save_custom_user_profile_fields');
 add_action('edit_user_profile_update', 'save_custom_user_profile_fields');
 
-//  regster the post type
+//  register the post type
 function nsc_blog_register_post_type_special_report() {
 	register_post_type('special_report',
 		array(
@@ -463,17 +517,38 @@ function nsc_blog_register_post_type_special_report() {
 				'name'          => __('Special Report', "nsc-blog"),
 				'singular_name' => __('Special Reports', "nsc-blog"),
 			),
-				'public'      => true,
-				'has_archive' => true,
+			'public'      => true,
+			'has_archive' => true, // Enable archive
+			'rewrite'     => array('slug' => 'special-report'),
+			'supports'    => array('title', 'editor', 'thumbnail', 'excerpt', 'comments'),
 		)
 	);
 }
 add_action('init', 'nsc_blog_register_post_type_special_report');
 
+
 function nsc_blog_register_custom_taxonomy() {
 	$labels = array(
 			 'name'                       => _x( 'Categories', 'Special Report', "nsc-blog" ),
 			 'singular_name'              => _x( 'Category', 'Special Reports', "nsc-blog" ),
+	         'menu_name'                  => __('Categories', "nsc-blog"),
+            'all_items'                  => __('All Categories', "nsc-blog"),
+            'parent_item'                => __('Parent Category', "nsc-blog"),
+            'parent_item_colon'          => __('Parent Category:', "nsc-blog"),
+            'new_item_name'              => __('New Category Name', "nsc-blog"),
+            'add_new_item'               => __('Add New Category', "nsc-blog"),
+            'edit_item'                  => __('Edit Category', "nsc-blog"),
+            'update_item'                => __('Update Category', "nsc-blog"),
+            'view_item'                  => __('View Category', "nsc-blog"),
+            'separate_items_with_commas' => __('Separate categories with commas', "nsc-blog"),
+            'add_or_remove_items'        => __('Add or remove categories', "nsc-blog"),
+            'choose_from_most_used'      => __('Choose from the most used', "nsc-blog"),
+            'popular_items'              => __('Popular Categories', "nsc-blog"),
+            'search_items'               => __('Search Categories', "nsc-blog"),
+            'not_found'                  => __('Not Found', "nsc-blog"),
+            'no_terms'                   => __('No categories', "nsc-blog"),
+            'items_list'                 => __('Categories list', "nsc-blog"),
+            'items_list_navigation'      => __('Categories list navigation', "nsc-blog"),
 	 );
 	$args = array(
 			'hierarchical'          => true,
@@ -487,6 +562,15 @@ function nsc_blog_register_custom_taxonomy() {
 	register_taxonomy( 'special_report', array( 'special_report' ), $args );
 }
 add_action( 'init', 'nsc_blog_register_custom_taxonomy', 0 );
+
+
+
+
+
+
+
+
+
 
 //  Add roles
 function add_custom_roles() {
@@ -843,7 +927,9 @@ function add_bookmark() {
                 '%d'
             )
         );
-        echo 'Bookmark added';
+
+        // Return the bookmark added icon
+        echo '<i class="fas fa-bookmark"></i>'; // Assuming Font Awesome icons
     }
     wp_die();
 }
@@ -867,11 +953,14 @@ function remove_bookmark() {
                 '%d'
             )
         );
-        echo 'Bookmark removed';
+
+        // Return the bookmark removed icon
+        echo '<i class="far fa-bookmark"></i>'; // Assuming Font Awesome icons
     }
     wp_die();
 }
 add_action('wp_ajax_remove_bookmark', 'remove_bookmark');
+
 
 
 function nsc_load_more_categories() {
@@ -917,13 +1006,6 @@ function nsc_load_all_taxonomies() {
     wp_die();
 }
 
-
-
-
-
-
-
-
 function fetch_more_categories() {
     $more_categories_html = '<ul><li><a href="#">Category 4</a></li><li><a href="#">Category 5</a></li></ul>';
     echo $more_categories_html;
@@ -931,4 +1013,53 @@ function fetch_more_categories() {
 }
 add_action('wp_ajax_fetch_more_categories', 'fetch_more_categories');
 add_action('wp_ajax_nopriv_fetch_more_categories', 'fetch_more_categories');
+
+
+// Different resolution featured image
+function nsc_blog_add_image_sizes() {
+    add_image_size('nsc_blog_small', 320, 180, true);   // Small size
+    add_image_size('nsc_blog_medium', 640, 360, true);  // Medium size
+    add_image_size('nsc_blog_large', 1280, 720, true);  // Large size
+    add_image_size('nsc_blog_xlarge', 1920, 1080, true); // Extra Large size
+}
+add_action('after_setup_theme', 'nsc_blog_add_image_sizes');
+
+function nsc_blog_featured_image_with_srcset($post_id) {
+    if (has_post_thumbnail($post_id)) {
+        $thumbnail_id = get_post_thumbnail_id($post_id);
+        $thumbnail_srcset = wp_get_attachment_image_srcset($thumbnail_id, 'full');
+        $thumbnail_sizes = wp_get_attachment_image_sizes($thumbnail_id, 'full');
+
+        $thumbnail_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+        if (empty($thumbnail_alt)) {
+            $thumbnail_alt = get_the_title($post_id);
+        }
+
+        echo '<img src="' . esc_url(get_the_post_thumbnail_url($post_id, 'full')) . '" 
+                  srcset="' . esc_attr($thumbnail_srcset) . '" 
+                  sizes="' . esc_attr($thumbnail_sizes) . '" 
+                  alt="' . esc_attr($thumbnail_alt) . '">';
+    }
+}
+
+function nsc_blog_featured_image_with_custom_sizes($post_id) {
+    if (has_post_thumbnail($post_id)) {
+        $thumbnail_id = get_post_thumbnail_id($post_id);
+        $thumbnail_srcset = wp_get_attachment_image_srcset($thumbnail_id, 'full');
+
+        // Define custom sizes attribute
+        $thumbnail_sizes = '(max-width: 320px) 280px, (max-width: 640px) 600px, (max-width: 1280px) 1200px, 1920px';
+
+        $thumbnail_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+        if (empty($thumbnail_alt)) {
+            $thumbnail_alt = get_the_title($post_id);
+        }
+
+        echo '<img src="' . esc_url(get_the_post_thumbnail_url($post_id, 'full')) . '" 
+                  srcset="' . esc_attr($thumbnail_srcset) . '" 
+                  sizes="' . esc_attr($thumbnail_sizes) . '" 
+                  alt="' . esc_attr($thumbnail_alt) . '"
+                  title="' . esc_attr(get_the_title($post_id)) . '">';
+    }
+}
 ?>

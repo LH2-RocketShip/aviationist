@@ -25,6 +25,9 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .alignnone {
   margin: 5px 20px 20px 0;
 }
+input {
+    color: #ffcc00 !important;
+}
 .aligncenter,
 div.aligncenter {
   display: block;
@@ -169,7 +172,12 @@ p, .post-author, .post-date {
   color: var(--para-color);
   font: 400 clamp(12px, 3vw, 18px)/1.2 "Inter" ;
 }
-
+body.dark-mode h2, body.dark-mode div {
+    color: #fff;
+}
+.single-post h2, .single-post .nsc-content-single img{
+    margin: 10px 0;
+}
 /* common css START */
 .custom-container{
   max-width: calc(100% - clamp(15px, 4vw, 62px));
@@ -226,11 +234,33 @@ p, .post-author, .post-date {
     background: #1A1A1A;
 }
 #commentform p.form-submit {
-    text-align: left;
+    text-align: right;
+}
+#commentform p.form-submit input{
+    border-color: transparent;
+}
+#commentform p.comment-form-comment label {
+    display: none;
+}
+ol.comment-list li {
+    background: transparent;
+    border-color: transparent;
+}
+ol.comment-list li .nsc-comment-content {
+    margin-left: 0 !important;
+}
+div#comments {
+    margin: 20px 0;
 }
 .dark-mode #commentform p.form-submit input#submit {
     background: #fff;
     color: #000;
+}
+.comments-area form textarea#comment {
+    background: transparent;
+    border-radius: 6px;
+    margin: 5px 0;
+    padding: 15px;
 }
 .nsc-post-para, .nsc-post-title a, .nsc-tab-post a, .nsc-comment{
   overflow: hidden;
@@ -1050,6 +1080,13 @@ aside > div{
     position: absolute;
     right: 32%;
 }
+
+@media (max-width: 435px) {
+    .nsc-contact-us form button[type=submit]::before {
+       right: 20%;
+    }
+}
+
 .custom-container .row {
     padding: 0 10px;
 }
@@ -1162,8 +1199,9 @@ body.dark-mode .post-container{
 }
 .nsc-content-single p{
   font: 400 clamp(12px, 2vw, 18px)/1.2 Inter;
-  color: var(--para-color);
+  color: #fff;
 }
+
 .nsc-content-single .wp-block-cover{
   margin-block: clamp(18px, 4vw, 64px) clamp(28px, 3vw, 34px);
   position: relative;
@@ -1216,7 +1254,7 @@ blockquote p{
 blockquote p::after{
   bottom: 0;
   right: -10px;
-  transform: translateY(100%);
+  transform: translateY(50%);
 }
 blockquote p::before{
   top: 0;
@@ -1470,6 +1508,8 @@ blockquote:not(:has(cite)){
     border-radius: 20px;
     padding: 48px 30px 48px 30px;
     position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .nsc-popup-content .search-container #searchForm .swrap {
@@ -1604,7 +1644,7 @@ article.nsc-single-post-page {
   display: none;
 }
 #patch {
-    max-width: 100%;
+    max-width: 100% !important;
     width: 100%;
     background: #FFCC00;
     padding: 15px 25px;
@@ -1888,7 +1928,7 @@ main#nsc-primary {
    }
 }
 @media (min-width: 641px){
-    .nsc-foot-column:nth-child(1) div#block-9,.nsc-foot-column:nth-child(3) .widget12,.page-template-nsc-about-us nav.nsc-breadcrumb{
+    .nsc-foot-column:nth-child(1) div#block-9,.nsc-foot-column:nth-child(3) .widget12{
         display: none;
     }
     .page-template-nsc-about-us img.about-banner{
@@ -1896,6 +1936,9 @@ main#nsc-primary {
     }
 }
 @media (max-width: 641px){
+    .nsc-footer-grid .nsc-foot-column #nsc-blog-posts-cats-4 {
+    margin: 0 0 20px;
+    }
     .nsc-footer-grid .nsc-foot-column:nth-child(1) .widget_block form {
         width: 60%;
         margin: 0 auto;
@@ -1956,7 +1999,7 @@ nav.nsc-post-navigation p.nsc-post-nav-cat {
     display: none;
 }
     section.nsc-comments-policy {
-    margin: 20px;
+    margin: 10px;
     border-radius: 6px;
 }
 .nsc-footer .nsc-custom-social-icons a {
@@ -2100,6 +2143,10 @@ section{
   display: none;
 }
 
+.nsc-content{
+    overflow:hidden;
+}
+
 
 
 
@@ -2208,7 +2255,7 @@ input.search-field {
 }
 .nsc-comment .comment-content {
     width: 95%;
-    background: #FFCC00;
+    background: rgba(255, 240, 182, 1);
     padding: 10px 20px;
     border-radius: 8px;
     position: relative;
@@ -2228,7 +2275,7 @@ input.search-field {
     left: 6px;
     width: 23.09px;
     height: 11.9px;
-    background: #FFCC00;
+    background: rgba(255, 240, 182, 1);
     rotate: 154deg;
 }
 .nsc-tab-contentt .nsc-comment:nth-child(even) .comment-content:before {
@@ -2238,7 +2285,7 @@ input.search-field {
     right: 6px;
     width: 23.09px;
     height: 11.9px;
-    background: #fc0;
+    background: rgba(255, 240, 182, 1);
     rotate: -157deg;
 }
 
@@ -2388,4 +2435,12 @@ button.slick-next.slick-arrow {
 
 .dark-mode .nsc-news-bar {
     background-color: #fc0;    
+}
+
+.comment-likes a span {
+    color: #000;
+}
+button#bookmark-btn svg {
+    width: 18px;
+    height: 18px;
 }

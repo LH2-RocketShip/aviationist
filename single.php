@@ -26,7 +26,6 @@
       <div class="<?php echo esc_attr($col8); ?>">
         <?php echo nsc_blog_breadcrumb(); ?>
         
-        <?php // custom_breadcrumbs(); ?>
 
       <?php
         if ( have_posts() ) :
@@ -122,16 +121,11 @@
                     
                         if ( $bookmark ) {
                             echo '<button id="bookmark-btn" data-post-id="' . $post_id . '" class="remove-bookmark">
-                                 <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-                                 </svg>
+                                 <i class="far fa-bookmark"></i>
                                 </button>';
                         } else {
                             echo '<button id="bookmark-btn" data-post-id="' . $post_id . '" class="add-bookmark">
-                                 <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                 <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
-                                 </svg>
+                                 <i class="far fa-bookmark"></i>
                                 </button>';
                         }
                     }
@@ -139,15 +133,12 @@
 
                     
                     
-                  <!--<button type="button" name="button" class="copy-link-pop-btn" aria-labelledby="<?php echo esc_attr("Share".$post_id); ?>">-->
-                  <!--  <svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-                  <!--    <path d="M10.0833 2.33331C6.62636 2.33331 4.89789 2.33331 3.82394 3.36799C2.75 4.40267 2.75 6.06796 2.75 9.39855V16.9824C2.75 19.0961 2.75 20.1529 3.45845 20.5313C4.83035 21.2638 7.40373 18.8197 8.62583 18.0838C9.3346 17.657 9.68898 17.4436 10.0833 17.4436C10.4777 17.4436 10.8321 17.657 11.5408 18.0838C12.7629 18.8197 15.3363 21.2638 16.7083 20.5313C17.4167 20.1529 17.4167 19.0961 17.4167 16.9824V12.4166" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>-->
-                  <!--    <path d="M15.5832 9.66665V2.33331M11.9165 5.99998H19.2498" stroke="black" stroke-width="1.5" stroke-linecap="round"/>-->
-                  <!--  </svg>-->
-                  <!--  <span class="screen-reader-text">-->
-                   <?php /* echo esc_html(get_theme_mod('nsc_blog_single_post_share_button',__('Share Button','nsc-blog'))); */ ?>
-                  <!--  </span>-->
-                  <!--</button>-->
+                  <button type="button" name="button" class="copy-link-pop-btn" aria-labelledby="<?php echo esc_attr("Share".$post_id); ?>">
+                    <i class="fa fa-share-alt" aria-hidden="true"></i>
+                    <span class="screen-reader-text">
+                   <?php echo esc_html(get_theme_mod('nsc_blog_single_post_share_button',__('Share Button','nsc-blog'))); ?>
+                    </span>
+                  </button>
                   <div class="nsc-popups" id="<?php echo esc_attr("Share".$post_id); ?>">
                     <!-- <div class="d-flex flex-column"> -->
                       <?php  $post_url = get_permalink();
@@ -195,27 +186,24 @@
                   <div class="nsc-popups" id="<?php echo esc_attr("copy".$post_id); ?>">
                     <div class="d-flex flex-column">
                       <ul class="mb-0">
-                        <li>
-                          <button type="button" id="nsc-copy-link" class="copy-link" data-url="<?php echo get_the_permalink(); ?>">
-                            <i class="fa-regular fa-paste"></i>
-                            <span class="normal-text">
-                              <?php echo esc_html('Copy link', 'nsc-blog'); ?>
-                            </span>
-                            <span class="copied-text">
-                              <?php echo esc_html('Copied', 'nsc-blog'); ?>
-                            </span>
-                            <span class="screen-reader-text">
-                              <?php echo esc_html(get_theme_mod('nsc_blog_single_post_copy_link_button',__('Copy Link','nsc-blog')));?>
-                            </span>
-                          </button>
-                        </li>
-                        <li>
-                          <a href="#comments" title="<?php echo esc_attr('Comment this article', 'nsc-blog'); ?>">
-                            <i class="fa-regular fa-message"></i>
-                            <?php echo esc_html('Comment this article', 'nsc-blog'); ?>
-                          </a>
-                        </li>
-                      </ul>
+                          <li>
+                            <button type="button" id="nsc-copy-link" class="copy-link" data-url="<?php echo esc_url(get_the_permalink()); ?>">
+                              <i class="fa-regular fa-paste"></i>
+                              <span class="normal-text">
+                                <?php echo esc_html__('Copy link', 'nsc-blog'); ?>
+                              </span>
+                              <span class="copied-text">
+                                <?php echo esc_html__('Copied', 'nsc-blog'); ?>
+                              </span>
+                            </button>
+                          </li>
+                          <li>
+                            <a href="#comments" title="<?php echo esc_attr__('Comment this article', 'nsc-blog'); ?>">
+                              <i class="fa-regular fa-message"></i>
+                              <?php echo esc_html__('Comment this article', 'nsc-blog'); ?>
+                            </a>
+                          </li>
+                        </ul>
                     </div>
                   </div>
                 </div>
@@ -223,15 +211,19 @@
             </div>
           </div>
 
-          <?php
-              $image_id = get_post_thumbnail_id();
-              $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
-              $image_title = get_the_title($image_id);
-              ?>
-          <img class=""
-          src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
-          alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
-          title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>" >
+            <?php
+                $video_url = get_post_meta(get_the_ID(), '_video_url', true);
+                
+                if (!empty($video_url)) {
+                    // If a video URL is found in the custom field
+                    echo '<div class="video-wrapper">';
+                    echo '<iframe width="440" height="500" src="' . esc_url($video_url) . '?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>';
+                    echo '</div>';
+                } else {
+                    // If no video URL is found, display the featured image
+                    nsc_blog_featured_image_with_custom_sizes(get_the_ID());
+                }
+             ?>
 
 
           <?php if(get_theme_mod('nsc_blog_single_post_content', true) != '0'){ ?>
@@ -399,7 +391,7 @@
                 $prev_post = get_adjacent_post(false, '', true);
                 if (!empty($prev_post)): ?>
                     <div class="d-flex" style="gap: 10px;">
-                      <?php echo get_the_post_thumbnail($prev_post->ID, 'thumbnail'); ?>
+                      <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
                       <div>
                         <?php
                         $categories = get_the_category();
@@ -546,6 +538,58 @@
 <?php get_footer(); ?>
 
 
+
+<style>
+  .mb-0 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .mb-0 li {
+    display: inline-block;
+    margin-right: 10px; /* Adjust spacing between list items */
+  }
+  
+  .single .copy-link, .single .nsc-popups ul li a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .copy-link:hover, a:hover {
+    /*background-color: transparent;*/
+  }
+  
+  /* Icon styles */
+  .copy-link i, a i {
+    margin-right: 5px;
+  }
+  
+  /* Hide the "Copied" text by default */
+  .copied-text {
+    display: none;
+  }
+  
+  /* Show the "Copied" text when the button is clicked */
+  .copy-link.clicked .normal-text {
+    display: none;
+  }
+  
+  .copy-link.clicked .copied-text {
+    display: inline;
+  }
+  .dark-mode .nsc-post-share #bookmark-btn svg,.dark-mode .nsc-popup-container .copy-link-pop-btn svg{
+    color: #fff;
+    fill: #fff;
+    }
+</style>
+
+
 <script type="text/javascript">
 jQuery(document).ready(function($) {
     $('#bookmark-btn').on('click', function() {
@@ -561,12 +605,13 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (action == 'add_bookmark') {
-                    $('#bookmark-btn').removeClass('add-bookmark').addClass('remove-bookmark').text('Remove Bookmark');
+                    $('#bookmark-btn').removeClass('add-bookmark').addClass('remove-bookmark').html('<i class="fas fa-bookmark"></i>');
                 } else {
-                    $('#bookmark-btn').removeClass('remove-bookmark').addClass('add-bookmark').text('Add Bookmark');
+                    $('#bookmark-btn').removeClass('remove-bookmark').addClass('add-bookmark').html('<i class="far fa-bookmark"></i>');
                 }
             }
         });
     });
 });
 </script>
+

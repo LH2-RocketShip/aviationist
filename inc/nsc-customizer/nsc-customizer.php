@@ -264,11 +264,33 @@ function nsc_blog_customizer_register( $wp_customize ){
 	    'sanitize_callback' => 'esc_url_raw',
 	  ));
   $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize,'nsc_blog_comments_policy_bgimage',array(
-      'label' => __('Background Image ','nsc-blog'),
+      'label' => __('Light Mode Background Image ','nsc-blog'),
       'description' => __('Dimension (1600px * 700px)','nsc-blog'),
       'section' => 'nsc_blog_comment_policy',
       'settings' => 'nsc_blog_comments_policy_bgimage'
   )));
+
+
+
+
+	$wp_customize->add_setting('nsc_blog_comments_policy_bgimage_dark',array(
+	    'default'   => '',
+	    'sanitize_callback' => 'esc_url_raw',
+	  ));
+  $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize,'nsc_blog_comments_policy_bgimage_dark',array(
+      'label' => __('Dark Mode Background Image ','nsc-blog'),
+      'description' => __('Dimension (1600px * 700px)','nsc-blog'),
+      'section' => 'nsc_blog_comment_policy',
+      'settings' => 'nsc_blog_comments_policy_bgimage_dark'
+  )));
+
+
+
+
+
+
+
+
 
 	$wp_customize->add_setting('nsc_blog_comment_policy_heading',array(
 		'default'=> 'The Aviationist Comment Policy',

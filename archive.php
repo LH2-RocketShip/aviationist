@@ -85,11 +85,23 @@
           while ( have_posts() ) : the_post(); ?>
           <div class="post-container">
             <?php
-            $image_id = get_post_thumbnail_id();
-            $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
-            $image_title = get_the_title($image_id); ?>
-
-            <img src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'medium' )); ?>" alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>" title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
+                $video_url = get_post_meta(get_the_ID(), '_video_url', true);
+                
+                if (!empty($video_url)) {
+                    // If a video URL is found in the custom field
+                    echo '<div class="video-wrapper">';
+                    echo '<iframe width="440" height="500" src="' . esc_url($video_url) . '?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>';
+                    echo '</div>';
+                } else {
+                    // If no video URL is found, display the featured image
+                    nsc_blog_featured_image_with_custom_sizes(get_the_ID());
+                }
+             ?>
+            
+            
+            
+            
+            
             <div class="">
                 <?php
                 $categories = get_the_category();

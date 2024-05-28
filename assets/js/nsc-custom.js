@@ -86,18 +86,14 @@ $('.multiple-items').slick({
       breakpoint: 768,
       settings: {
         arrows: true,
-        centerMode: true,
-        centerPadding: '40px',
-        slidesToShow: 1
+        slidesToShow: 2
       }
     },
     {
       breakpoint: 480,
       settings: {
         arrows: true,
-        centerMode: true,
-        centerPadding: '40px',
-        slidesToShow: 1
+        slidesToShow: 2
       }
     }
   ]
@@ -341,7 +337,7 @@ jQuery(document).ready(function($) {
                     button.text('Show Less');
                     button.addClass('show-less-categories');
                 } else {
-                    button.text('Show More');
+                    button.text('More Options');
                     button.removeClass('show-less-categories');
                 }
             }
@@ -366,7 +362,7 @@ jQuery(document).ready(function($) {
             data: data,
             success: function(response) {
                 container.html(response);
-                button.text('Show More');
+                button.text('More Options');
                 button.removeClass('show-less-categories');
             }
         });
@@ -391,4 +387,3 @@ jQuery(document).ready(function($) {
         }
     });
 }
-

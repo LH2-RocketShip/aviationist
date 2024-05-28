@@ -80,7 +80,7 @@
           $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
           $image_title = get_the_title($image_id); ?>
 
-          <img src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'medium' )); ?>" alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>" title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
+          <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
           <div class="">
               <?php
               $categories = get_the_category();

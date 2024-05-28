@@ -150,10 +150,36 @@ class NSC_Tabbed_Widget extends WP_Widget {
                         <p class="comment-text">
                             <?php echo wp_kses_post($comment->comment_content); ?> <!-- Display comment content -->
                         </p>
-                        <p class="comment-author">
-                            <?php echo get_avatar($comment, 50); // Display commenter's avatar ?>
-                            <strong><?php echo esc_html($comment->comment_author); ?></strong> <!-- Display commenter's name -->
-                        </p>
+<p class="comment-author">
+    <?php echo get_avatar($comment, 50); // Display commenter's avatar ?>
+    <strong><?php echo esc_html($comment->comment_author); ?></strong> <!-- Display commenter's name -->
+
+    <?php
+    // Get the rating value from comment metadata
+    $rating = get_comment_meta($comment->comment_ID, 'rating', true);
+
+    // Display the rating as stars if it exists
+    if (!empty($rating)) {
+
+        // Calculate the number of filled stars
+        $filled_stars = intval($rating);
+        // Calculate the number of empty stars
+        $empty_stars = 5 - $filled_stars;
+
+        // Output filled stars with custom color
+        for ($i = 0; $i < $filled_stars; $i++) {
+            echo '<span class="star filled-star">&#9733;</span>'; // Filled star
+        }
+
+        // Output empty stars
+        for ($i = 0; $i < $empty_stars; $i++) {
+            echo '<span class="star">&#9734;</span>'; // Empty star
+        }
+    }
+    ?>
+</p>
+
+
                     </div>
                 </div>
                 <?php
@@ -204,3 +230,10 @@ function nsc_load_tabbed_widget() {
 
 // Hook into widgets_init
 add_action('widgets_init', 'nsc_load_tabbed_widget');
+
+?>
+<style>
+.filled-star {
+    color: #FFCC00; /* Filled star color */
+}
+</style>

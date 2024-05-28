@@ -31,12 +31,9 @@
           ?>
 
           <div class="post-container">
-            <img class=""
-            src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
-            alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
-            title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>" >
+            <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
 
-            <div class="">
+            <div class="nsc-content">
                 <?php
                 $categories = get_the_category();
                if ( ! empty( $categories ) ) { ?>

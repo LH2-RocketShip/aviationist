@@ -14,6 +14,9 @@ get_header(); ?>
 			<?php get_template_part('template-parts/home/section-ribbon-news'); ?>
       <div class="row">
         <div class="col-md-8">
+             <div class="custom-container mb-3">
+                 <?php echo nsc_blog_breadcrumb(); ?>
+             </div>
           <p class="special-reports-desc">
 						In this page you can find the link to some special reports/stories posted on The Aviationist and magazines all around the world.
 					</p>

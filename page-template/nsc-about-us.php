@@ -52,9 +52,7 @@ $about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_
 
 
  <main>
-     <div class="custom-container">
-         <?php echo nsc_blog_breadcrumb(); ?>
-     </div>
+     
      <div class="container-fluid">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/About.png" alt="About Image" class="about-banner" />
      </div>
@@ -62,7 +60,10 @@ $about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_
        
      <div class="row">
        <div class="col-md-8 test">
-          
+           <div class="custom-container mb-3">
+                 <?php echo nsc_blog_breadcrumb(); ?>
+             </div>
+                  
           <?php echo get_the_content(); ?>
        </div>
        <div class="col-md-4">

@@ -13,8 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 	<main id="nsc-primary">
 		<div class="custom-container">
+		   
+		         
 			<?php get_template_part('template-parts/home/section-ribbon-news'); ?>
-
+		
 			<div class="nsc-post-page-grid">
 				<div class="">
 					<?php get_template_part('template-parts/home/section-slider'); ?>

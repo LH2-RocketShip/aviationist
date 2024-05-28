@@ -35,7 +35,7 @@ if ( $nsc_blog_related_posts->have_posts() ) : ?>
               $image_title = get_the_title($image_id);
 
               if(has_post_thumbnail()) { ?>
-                <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>" title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>">
+                <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
               <?php }else { ?>
                 <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/dummy-cat-image.jpg'); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" title="<?php echo esc_attr(get_the_title()); ?>">
               <?php } ?>

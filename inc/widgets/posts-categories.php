@@ -46,7 +46,7 @@ class NSC_Blog_Post_Category extends WP_Widget {
 
         if ( count($categories) >= $cats_num ) {
             // If there are more categories than the displayed number, show the "View All" button
-            echo '<a href="#" class="view-all-category-btn" aria-label="Show More Categories">' . esc_html__('Show More', 'nsc-blog') . '</a>';
+            echo '<a href="#" class="view-all-category-btn" aria-label="More Options Categories">' . esc_html__('More Options', 'nsc-blog') . '</a>';
         }
 
         echo $args['after_widget'];
