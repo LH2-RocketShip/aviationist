@@ -32,11 +32,12 @@
           while ( have_posts() ) : the_post(); ?>
         <div class="nsc-custom-container">
 
-          <?php if(get_theme_mod('nsc_blog_single_post_title', true) != '0'){ ?>
-            <?php echo ($headh1 == 0) ? '<h1 class="single-post-title">' : '<h2 class="single-post-title">' ?>
-              <?php echo get_the_title(); ?>
-            <?php echo ($headh1 == 0) ? '</h1>' : '</h2>' ?>
-          <?php } ?>
+         <?php if(get_theme_mod('nsc_blog_single_post_title', true) != '0'){ ?>
+            <h1 class="single-post-title">
+                <?php echo get_the_title(); ?>
+            </h1>
+        <?php } ?>
+
 
           <?php
             if(get_theme_mod('nsc_blog_single_post_except', true) != '0'){
@@ -346,7 +347,7 @@
 
                   foreach ($social_links as $input => $icon) {
                     if(get_user_meta($author_id, $input, true) ){
-                        echo "<a href=" . get_user_meta($author_id, $input, true) .">$icon</a>";
+                        echo "<a href=" . get_user_meta($author_id, $input, true) ." title='" . ucfirst($input) . "'>$icon</a>";
                     }
                   } ?>
               </div>
@@ -527,7 +528,7 @@
     <div class="custom-container">
     <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
     
-    <a href="<?php echo esc_url($all_articles_url); ?>" class="nsc-common-btnn mt-4">
+    <a href="<?php echo esc_url($all_articles_url); ?>" class="nsc-common-btn mt-4">
         <?php esc_html_e('View All Articles', 'nsc-blog'); ?>
     </a>
     

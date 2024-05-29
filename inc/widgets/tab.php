@@ -232,8 +232,3 @@ function nsc_load_tabbed_widget() {
 add_action('widgets_init', 'nsc_load_tabbed_widget');
 
 ?>
-<style>
-.filled-star {
-    color: #FFCC00; /* Filled star color */
-}
-</style>

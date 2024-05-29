@@ -35,10 +35,7 @@
           $image_title = get_the_title($image_id);
          ?>
         <div class="carousel-item <?php if ($i == 1 ) { echo "active"; } ?>">
-          <img class="d-block nsc-slider-image"
-               src="<?php echo esc_url(get_the_post_thumbnail_url( get_the_ID(), 'full' )); ?>"
-               alt="<?php echo esc_attr(($image_alt) ? $image_alt : get_the_title() ); ?>"
-               title="<?php echo esc_attr(($image_title) ? $image_title : get_the_title() ); ?>" >
+          <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
 
           <div class="carousel-caption">
             <?php

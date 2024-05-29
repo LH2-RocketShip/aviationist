@@ -1,63 +1,89 @@
 <?php
-get_header();
+/*
+* Template Name: NSC Special Report
+*
+*
+* @package nsc-blog
+*/
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+get_header(); ?>
+  <main>
+    <div class="custom-container">
+		<?php get_template_part('template-parts/home/section-ribbon-news'); ?>
+      <div class="row">
+        <div class="col-md-8">
+             <div class="custom-container mb-3">
+                 <?php echo nsc_blog_breadcrumb(); ?>
+             </div>
+          <p class="special-reports-desc">
+						In this page you can find the link to some special reports/stories posted on The Aviationist and magazines all around the world.
+					</p>
+          <?php
+          $special_report_cats = get_terms( array(
+            'taxonomy'   => 'special_report',
+            'hide_empty' => false,
+          ) );
 
-$category = get_queried_object();
-?>
+          if ( ! empty( $special_report_cats ) && ! is_wp_error( $special_report_cats ) ) {
+            foreach ( $special_report_cats as $category ) { ?>
+							<div class="nsc-special_report-container">
+            		<?php echo "<p class='special-report-cat'>" . $category->name . "</p>";
+	              $args = array(
+	                  'post_type' => 'special_report',
+	                  'post_status' => 'publish',
+	                  'posts_per_page' => -1,
+	                  'tax_query' => array(
+	                    array(
+	                        'taxonomy' => 'special_report',
+	                        'field'    => 'slug',
+	                        'terms'    => $category->slug,
+	                    ),
+	                  ),
+	                );
+                 $query = new WP_Query($args);
+                   if ( $query->have_posts() ) { ?>
 
-<main id="nsc-archive" class="nsc-archive">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-8">
-				<?php if (have_posts()) : ?>
-					<header class="archive-header">
-						<h1 class="archive-title"><?php echo single_cat_title('', false); ?></h1>
-						<?php if (category_description()) : ?>
-							<div class="archive-description"><?php echo category_description(); ?></div>
-						<?php endif; ?>
-					</header>
+                       <?php while ($query->have_posts()) : $query->the_post(); ?>
+                       <div class="d-flex">
+                         <div class="svg-wrap">
+													 <svg class="me-2" width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	                           <path d="M13.1111 0L0 20.4444L3.33333 24L6.22778 19.7833L8.66667 22.2222L11.4722 19.4167L13.1111 23.1111L14.75 19.4167L17.5556 22.2222L19.9944 19.7833L22.8889 24L26.2222 20.4444L13.1111 0ZM12.6111 2.61111V6.94444L10.4444 6.22222L12.6111 2.61111ZM13.6111 2.61111L15.7778 6.22222L13.6111 6.94444V2.61111Z" fill="url(#paint0_linear_652_9240)"/>
+	                           <defs>
+	                             <linearGradient id="paint0_linear_652_9240" x1="0" y1="12" x2="26.2222" y2="12" gradientUnits="userSpaceOnUse">
+	                               <stop stop-color="#FFD11A"/>
+	                               <stop offset="1" stop-color="#DE772E"/>
+	                            </linearGradient>
+	                           </defs>
+	                         </svg>
+												 </div>
+                         <div class="ms-1">
+                           <a href="#"><strong><?php echo get_the_title(); ?></strong></a>
+                           <span> : <?php echo get_the_content(); ?></span>
+                         </div>
 
-					<div class="nsc-blog-post-grid">
-						<?php while (have_posts()) : the_post(); ?>
-							<div class="post-container">
-								<?php if (has_post_thumbnail()) : ?>
-									<img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'medium')); ?>" alt="<?php the_title_attribute(); ?>">
-								<?php endif; ?>
+                       </div>
+										 	<?php endwhile; ?>
 
-								<h3 class="post-title">
-									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-								</h3>
-
-								<div class="post-excerpt">
-									<?php the_excerpt(); ?>
-								</div>
-
-								<div class="post-meta">
-									<span class="author"><?php the_author(); ?></span>
-									<span class="date"><?php the_date(); ?></span>
-								</div>
+              <?php } ?>
 							</div>
-						<?php endwhile; ?>
-					</div>
-
-					<div class="pagination">
-						<?php
-						echo paginate_links(array(
-							'total' => $wp_query->max_num_pages,
-						));
-						?>
-					</div>
-
-				<?php else : ?>
-					<p><?php esc_html_e('No posts found.', 'nsc-blog'); ?></p>
-				<?php endif; ?>
-			</div>
-
-			<div class="col-md-4">
-				<?php get_sidebar(); ?>
-			</div>
-		</div>
-	</div>
-</main>
-
+							<?php
+            }
+          } else {
+            echo 'No custom categories found.';
+          }
+          ?>
+        </div>
+        <div class="col-md-4 special-sidebar">
+					<aside class="nsc-home-sidebar">
+						<?php dynamic_sidebar('home-page');?>
+					</aside>
+        </div>
+      </div>
+       	 <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+  	 <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
+    </div>
+  </main>
 <?php
 get_footer();

@@ -1062,4 +1062,30 @@ function nsc_blog_featured_image_with_custom_sizes($post_id) {
                   title="' . esc_attr(get_the_title($post_id)) . '">';
     }
 }
+
+function add_lazyload_to_images($content) {
+    // Use regex to find all image tags and add a class or data attribute for lazy loading
+    $content = preg_replace(
+        '/<img(.*?)src=("|\'|)(.*?)("|\'|)(.*?)[\/]?>/i',
+        '<img$1class="lazyload" data-src=$2$3$4$5/>',
+        $content
+    );
+    return $content;
+}
+
+// Apply to post content
+add_filter('the_content', 'add_lazyload_to_images');
+
+// Apply to post thumbnails
+add_filter('post_thumbnail_html', 'add_lazyload_to_images');
+
+// Apply to widgets
+add_filter('widget_text', 'add_lazyload_to_images');
+
+
+
+
+
+
+
 ?>

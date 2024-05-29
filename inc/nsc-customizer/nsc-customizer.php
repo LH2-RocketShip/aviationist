@@ -479,5 +479,41 @@ function nsc_blog_customizer_register( $wp_customize ){
 		'section'=> 'nsc_blog_contact_us_page',
 		'type'=> 'text'
 	));
+	
+	
+	
+	$about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_directory_uri(). '/assets/images/About.png');
+
+    // 	About Us Page
+    	$wp_customize->add_section('nsc_blog_about_us_page' , array(
+		'title' => __( 'About Us Page', 'nsc-blog' ),
+		'panel' => 'nsc_blog_add_panel'
+	));
+	
+	$wp_customize->add_setting('about_banner_background', array(
+        'default' => $about_bgimage,
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'about_banner_background', array(
+        'label' => __('About Banner Background Image', 'nsc-blog'),
+        'section' => 'nsc_blog_about_us_page',
+        'settings' => 'about_banner_background',
+    )));
+
+    // Page Title
+    $wp_customize->add_setting('about_banner_title', array(
+        'default' => 'About Us',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control('about_banner_title', array(
+        'label' => __('About Banner Title', 'nsc-blog'),
+        'section' => 'nsc_blog_about_us_page',
+        'settings' => 'about_banner_title',
+        'type' => 'text',
+    ));
+	
+	
 }
 add_action( 'customize_register', 'nsc_blog_customizer_register' );

@@ -12,11 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header(); ?>
 	<main id="nsc-primary">
+	    
+        <div class="<?php echo ( wp_is_mobile() ) ? 'container-fluid' : 'custom-container'; ?>">
+            <?php get_template_part('template-parts/home/section-ribbon-news'); ?>
+        </div>
+	    
 		<div class="custom-container">
-		   
-		         
-			<?php get_template_part('template-parts/home/section-ribbon-news'); ?>
-		
 			<div class="nsc-post-page-grid">
 				<div class="">
 					<?php get_template_part('template-parts/home/section-slider'); ?>
@@ -25,7 +26,6 @@ get_header(); ?>
 					<?php get_template_part('template-parts/home/section-popular-post'); ?>
 					<?php get_template_part('template-parts/home/section-all-articles'); ?>
 				</div>
-
 				<aside class="nsc-home-sidebar">
 					<?php dynamic_sidebar('home-page');?>
 				</aside>
