@@ -222,16 +222,18 @@
                     echo '</div>';
                 } else {
                     // If no video URL is found, display the featured image
-                    nsc_blog_featured_image_with_custom_sizes(get_the_ID());
+                    nsc_blog_featured_image_with_caption_and_srcset(get_the_ID());
                 }
              ?>
 
 
-          <?php if(get_theme_mod('nsc_blog_single_post_content', true) != '0'){ ?>
-            <div class="nsc-content-single">
-              <?php echo get_the_content(); ?>
-            </div>
-          <?php } ?>
+
+            <?php if (get_theme_mod('nsc_blog_single_post_content', true) !== '0') { ?>
+                <div class="nsc-content-single">
+                    <?php echo apply_filters('the_content', get_the_content()); ?>
+                </div>
+            <?php } ?>
+
 
           <div class="d-lg-flex nsc-single-post-author gap-3">
             <div class="text-center">

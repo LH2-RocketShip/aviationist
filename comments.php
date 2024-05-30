@@ -32,6 +32,20 @@ if ( post_password_required() ) {
             ?>
         </h3>
 
+<?php
+// Retrieve the average rating for the post
+$average_rating = get_post_meta(get_the_ID(), 'average_rating', true);
+
+// Display the average rating if available
+if ($average_rating) {
+    echo '<div class="average-rating">';
+    echo 'Average Rating: ' . esc_html($average_rating);
+    echo '</div>';
+}
+?>
+
+
+
         <?php the_comments_navigation(); ?>
 
 <ol class="comment-list">

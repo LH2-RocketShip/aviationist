@@ -329,10 +329,11 @@ function nsc_blog_breadcrumb() {
     $original_string = $page_title;
     $transformed_string = transform_string($original_string);
     
+
     echo '<nav class="nsc-breadcrumb">';
     
     if (is_category() || is_single()) {
-		$post_categories = get_the_category();
+		echo $post_categories = get_the_category();
 			if ( ! empty( $post_categories ) ) {
 			    $first_category = $post_categories[0];
 			 //   echo esc_html( $first_category->name );
@@ -340,8 +341,8 @@ function nsc_blog_breadcrumb() {
         if (is_single()) {
             echo '<a href="' . get_home_url() . '">' . $home_title . '</a>';
             echo $separator;
-            // echo esc_html( $first_category->name );
-            // echo $separator;
+             echo esc_html( $first_category->name );
+             echo $separator;
             echo $transformed_string;
         }
     }else {
@@ -1024,23 +1025,33 @@ function nsc_blog_add_image_sizes() {
 }
 add_action('after_setup_theme', 'nsc_blog_add_image_sizes');
 
-function nsc_blog_featured_image_with_srcset($post_id) {
+
+function nsc_blog_featured_image_with_caption_and_srcset($post_id) {
     if (has_post_thumbnail($post_id)) {
         $thumbnail_id = get_post_thumbnail_id($post_id);
         $thumbnail_srcset = wp_get_attachment_image_srcset($thumbnail_id, 'full');
         $thumbnail_sizes = wp_get_attachment_image_sizes($thumbnail_id, 'full');
-
         $thumbnail_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+        
         if (empty($thumbnail_alt)) {
             $thumbnail_alt = get_the_title($post_id);
         }
 
-        echo '<img src="' . esc_url(get_the_post_thumbnail_url($post_id, 'full')) . '" 
-                  srcset="' . esc_attr($thumbnail_srcset) . '" 
-                  sizes="' . esc_attr($thumbnail_sizes) . '" 
-                  alt="' . esc_attr($thumbnail_alt) . '">';
+        $caption = wp_get_attachment_caption($thumbnail_id);
+
+        $img_html = '<img src="' . esc_url(get_the_post_thumbnail_url($post_id, 'full')) . '" 
+                      srcset="' . esc_attr($thumbnail_srcset) . '" 
+                      sizes="' . esc_attr($thumbnail_sizes) . '" 
+                      alt="' . esc_attr($thumbnail_alt) . '">';
+
+        if ($caption) {
+            echo '<figure class="wp-image-figure">' . $img_html . '<figcaption class="wp-image-caption">' . esc_html($caption) . '</figcaption></figure>';
+        } else {
+            echo $img_html;
+        }
     }
 }
+
 
 function nsc_blog_featured_image_with_custom_sizes($post_id) {
     if (has_post_thumbnail($post_id)) {
@@ -1087,5 +1098,62 @@ add_filter('widget_text', 'add_lazyload_to_images');
 
 
 
+/**
+ * Append captions to images in post content.
+ *
+ * @param string $content The post content.
+ * @return string The modified content with captions.
+ */
+function append_captions_to_images_in_content($content) {
+    if (empty($content)) {
+        return $content;
+    }
+
+    // Ensure the caption shortcode is parsed
+    $content = do_shortcode($content);
+
+    // Load the content into a DOMDocument
+    $dom = new DOMDocument();
+    libxml_use_internal_errors(true);
+    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
+
+    $images = $dom->getElementsByTagName('img');
+
+    foreach ($images as $img) {
+        $img_src = $img->getAttribute('src');
+        $img_id = attachment_url_to_postid($img_src);
+
+        if ($img_id) {
+            $caption = wp_get_attachment_caption($img_id);
+            if ($caption) {
+                // Create figure and figcaption elements
+                $figure = $dom->createElement('figure');
+                $figure->setAttribute('class', 'wp-image-figure');
+                $figcaption = $dom->createElement('figcaption', esc_html($caption));
+                $figcaption->setAttribute('class', 'wp-image-caption');
+
+                // Clone the image and append to figure
+                $img_clone = $img->cloneNode();
+                $figure->appendChild($img_clone);
+                $figure->appendChild($figcaption);
+
+                // Replace original img with the new figure
+                $img->parentNode->replaceChild($figure, $img);
+            }
+        }
+    }
+
+    // Serialize the DOMDocument back to HTML
+    $updated_content = '';
+    foreach ($dom->documentElement->childNodes as $node) {
+        $updated_content .= $dom->saveHTML($node);
+    }
+
+    return $updated_content;
+}
+
+// Filter the content to include captions for images
+add_filter('the_content', 'append_captions_to_images_in_content');
 
 ?>

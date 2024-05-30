@@ -1271,21 +1271,36 @@ blockquote:not(:has(cite)){
 .nsc-single-post-page blockquote {
   border-inline-start: unset !important;
 }
-.nsc-content-single ul{
-  /*list-style-image: url('./assets/images/list-image.png');*/
-  padding-inline-start: 25px;
+.nsc-content-single ul {
+    margin: 15px 0;
+}
+.nsc-content-single span strong{
+    position: relative;
+}
+.prev-next {
+    margin: 15px 0;
+}
+nav.nsc-post-navigation .d-lg-flex {
+    justify-content: space-between;
+}
+.nsc-content-single span strong::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    background: #ffcc00;
+    left: 0;
 }
 .nsc-content-single ul li {
     font: 400 clamp(12px,2vw,18px)/1.2 Inter;
     margin-bottom: 22px;
     color: var(--para-color);
-    background-image: url('./assets/images/list-image.png');
+    background-image: url(//aviationist.myconcept.website/wp-content/themes/aviationist-main/./assets/images/list-image.png);
+    background-size: auto;
     background-repeat: no-repeat;
-    background-position: center left;
-    padding-left: 35px;
-    display: inline-block;
-    text-align: left;
-    margin-bottom: 10px;
+    padding-left: 25px;
+    background-position: left center;
 }
 .nsc-single-post-author > div:first-child{
   background-color: var(--eerie-black);
@@ -1293,6 +1308,7 @@ blockquote:not(:has(cite)){
   border-radius: 16px;
   padding: clamp(20px, 3vw, 42px) 12px;
   flex: 0 0 238px;
+  width: 50%;
 }
 .nsc-single-post-author img{
   max-width: 80px;
@@ -1368,7 +1384,7 @@ blockquote:not(:has(cite)){
   background-color: #fff;
   padding: 12px;
   border-radius: 12px;
-  margin:10px auto;
+  margin-inline-end: 18px;
 }
 .nsc-related-article img{
   aspect-ratio: 9/5;
@@ -1508,7 +1524,6 @@ blockquote:not(:has(cite)){
 
 .nsc-popup-content {
     background-color: #fff;
-    margin: 15% auto;
     border: 1px solid #888;
     width: 100%;
     max-width: 900px;
@@ -1517,7 +1532,8 @@ blockquote:not(:has(cite)){
     padding: 48px 30px 48px 30px;
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .nsc-popup-content .search-container #searchForm .swrap {
@@ -1944,6 +1960,13 @@ main#nsc-primary {
     }
 }
 @media (max-width: 641px){
+    nav.nsc-post-navigation .d-lg-flex div {
+        margin: 15px 0;
+    }
+    body.dark-mode .nsc-comments-policy{
+        background-size: auto;
+       background-position: bottom;
+    }
     .nsc-popup-content ul li a {
          font-size: 12px;
     }
@@ -2163,7 +2186,7 @@ section{
     display: none;
     align-items: center;
     position: fixed;
-    top: 46px;
+    top: 50px;
     background: #000;
     width: 100%;
     left: 0;
@@ -2835,7 +2858,7 @@ div#preloader {
 
 .nsc-content-single,.nsc-content-single > * {
     position: relative;
-
+    /*padding-left: 0px;*/
 }
 .nsc-content-single h2::before {   
     content: '';
@@ -2882,4 +2905,54 @@ div#preloader {
 
 .home, .nsc-post-para em {
     font-style: normal;
+}
+.dark-mode .comment-likes a span {
+    color: #fff;
+}
+.search-head,.search-post h3.nsc-post-title svg{
+    color: #000;
+}
+.dark-mode .search-head,.dark-mode .search-post h3.nsc-post-title svg{
+    color: #fff;
+}
+.search-post h3.nsc-post-title {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+}
+.single figcaption.wp-image-caption,.nsc-content-single figure figcaption{
+    background: #ffcc00;
+    padding: 5px 25px !important;
+    width: fit-content;
+    display: flex;
+    height: auto;
+    min-height: auto;
+    border-radius: 0;
+    transform: skew(-30deg,0deg);
+    font-family: Libre Baskerville;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 19.84px;
+    text-align: left;
+    color: #000;
+    margin: 0 50px;
+    bottom: -15px;
+}
+.nsc-content-single figure figcaption{
+    bottom: 0px;
+    margin: 0 20px;
+}
+.nsc-content-single span.average-title, .nsc-content-single .stars {
+    display: none;
+}
+.nsc-content-single p {
+    color: #000;
+}
+.dark-mode .nsc-content-single p {
+    color: #fff;
+}
+.nsc-single-post-page blockquote p{
+    color: #fff;
 }
