@@ -44,7 +44,11 @@
            </div>
        <?php endwhile; ?>
        </div>
-
+      <?php if (!is_home() && !is_front_page()) { ?>
+        <a href="<?php echo esc_url($all_articles_url); ?>" class="nsc-common-btn mt-4">
+          <?php esc_html_e('View All Articles', 'nsc-blog'); ?>
+        </a>
+      <?php } ?>
      <?php }else { ?>
       <h4> <?php echo esc_html_e('Please add the post to see this section', 'nsc-blog'); ?> </h4>
      <?php }

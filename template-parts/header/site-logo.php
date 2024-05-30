@@ -74,29 +74,28 @@ if($show_aside == 1) {
    </label>
    
 <!-- Search Icon -->
-<div class="search-icon-container-1">
-
-  <button type="button" id="search-icon">
-    <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-  </button>  
-  <button type="button" id="close-search-form" class="close-btn" style="display: none;">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
-  </button>
-  <form id="search-form" role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
-    <label>
-      <input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:">
-    </label>
-    <button type="submit" class="search-submit">
-      <svg id="search-submit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+  <div class="search-icon-container-1">
+    <button type="button" id="search-icon-btn">
+      <svg id="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
         <circle cx="11" cy="11" r="8"></circle>
         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
       </svg>
+    </button>  
+    <button type="button" id="close-search-form" class="close-btn" style="display: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
     </button>
-  </form>
-</div>
+    <form id="search-form" role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
+      <label>
+        <input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:">
+      </label>
+      <button type="submit" class="search-submit">
+        <svg id="search-submit-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+    </form>
+  </div>
 
 
    
@@ -104,6 +103,22 @@ if($show_aside == 1) {
  </div>
  
  <script>
+ document.getElementById('search-icon-btn').addEventListener('click', function() {
+  document.getElementById('search-form').style.display = 'flex';
+  document.getElementById('search-icon-btn').style.display = 'none';
+  document.getElementById('close-search-form').style.display = 'flex';
+});
+
+document.getElementById('close-search-form').addEventListener('click', function() {
+  document.getElementById('search-form').style.display = 'none';
+  document.getElementById('search-icon-btn').style.display = 'flex';
+  document.getElementById('close-search-form').style.display = 'none';
+});
+ 
+ 
+ 
+ 
+ 
 const searchForm = document.getElementById('search-form');
 const searchField = document.querySelector('#search-form .search-field');
 const searchIcon = document.getElementById('search-icon');

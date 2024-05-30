@@ -14,40 +14,7 @@ $about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_
 ?>
 
 <div class="ribbon-about custom-container">
-  <div class="nsc-news-bar">
-    <?php if (get_theme_mod('nsc_blog_news_ribbon_heading') != '') { ?>
-      <span class="">
-        <?php echo esc_html(get_theme_mod('nsc_blog_news_ribbon_heading')); ?>
-      </span>
-    <?php } ?>
-
-    <?php 
-    $args = array(
-      'post_type' => 'post',
-      'post_status' => 'publish',
-      'posts_per_page' => get_theme_mod('nsc_blog_news_ribbon_post_num', 5), // Provide a default value
-    );
-    $query = new WP_Query($args);
-    if ($query->have_posts()) { ?>
-      <div class="marquee-container"> <!-- Replace <marquee> with a container -->
-        <div class="marquee">
-          <?php while ($query->have_posts()) : $query->the_post(); ?>
-            <span>
-              <?php echo get_the_title(); ?>
-            </span>
-            <strong>
-              <?php
-              $categories = get_the_category();
-              if (!empty($categories)) { ?>
-                <?php echo esc_html($categories[0]->name); ?>
-              <?php } ?>
-            </strong>
-          <?php endwhile; ?>
-        </div>
-      </div>
-      <?php wp_reset_postdata(); // Reset post data ?>
-    <?php } ?>
-  </div>
+    <?php get_template_part('template-parts/home/section-ribbon-news'); ?>
 </div>
 
 <main>
@@ -62,7 +29,19 @@ $about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_
             <h1><?php echo esc_html(get_theme_mod('about_banner_title', 'About Us')); ?></h1>
           </section>
         </div>
-        <?php echo get_the_content(); ?>
+        <?php /* echo get_the_content(); */ ?>
+        <div class="content">
+    <?php
+    if (have_posts()) {
+      while (have_posts()) {
+        the_post();
+        the_content();
+      }
+    } else {
+      echo '<p>No content found.</p>';
+    }
+    ?>
+  </div>
       </div>
       <div class="col-md-4">
         <?php dynamic_sidebar('home-page');?>
@@ -70,7 +49,17 @@ $about_bgimage = get_theme_mod('nsc_blog_comments_policy_bgimage', get_template_
     </div>
     <?php get_template_part('template-parts/nsc-user'); ?>
     <?php get_template_part('template-parts/articles/section-video-interview'); ?>
+    
+        <?php
+            if ( comments_open() || '0' != get_comments_number() ){
+                comments_template();
+            }
+        ?>
+</div>
+<div class="container-fluid">
     <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+</div>
+<div class="custom-container">
     <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
   </div>
 </main>

@@ -1,10 +1,3 @@
-<?php
-/**
- * The template part for category section
- *
- * @package nsc-blog
- */
-?>
 <section id="nsc-home-category" class="nsc-home-category">
 
   <div class="d-flex align-items-center justify-content-between">
@@ -38,12 +31,12 @@
             class="nav-link <?php if($key == 0){ echo "active"; }?>"
             id="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab"
             data-bs-toggle="tab"
-            data-bs-target="#<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane"
+            data-bs-target="#<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>"
             type="button"
             role="tab"
-            aria-controls="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane"
+            aria-controls="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>"
             aria-selected="<?php if($key == 0){ echo "true"; }else { echo "false"; } ?>">
-            <a href="#<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane">
+            <a href="#<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>">
                 <?php echo esc_html($category->name); ?> 
             </a>
         </button>
@@ -68,7 +61,7 @@
      $query = new WP_Query($args);
        if ( $query->have_posts() ) { ?>
          <div class="tab-pane fade <?php if($key == 0){ echo "show active"; }?> nsc-blog-post-grid"
-              id="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab-pane"
+              id="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>"
               role="tabpanel"
               aria-labelledby="<?php echo strtolower(str_replace(" ", "-", $category->name)); ?>-tab"
               tabindex="0">
@@ -192,9 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
   
     if (activeTab) {
       const activeTabIndex = Array.from(tabButtons).indexOf(activeTab); // Get index of active tab
-      const categoryLinks = document.querySelectorAll('.nsc-post-cat'); // Assuming category links have this class
-      if (categoryLinks[activeTabIndex]) {
-        viewMoreBtn.href = categoryLinks[activeTabIndex].getAttribute('href');
+      const categoryLinks = document.querySelectorAll('.tab-pane.show.active .nsc-post-cat'); // Select the visible category link
+      if (categoryLinks.length > 0) {
+        viewMoreBtn.href = categoryLinks[0].getAttribute('href');
       }
     } 
   }

@@ -5,6 +5,18 @@
  * @package nsc-blog
  */
 ?>
+<?php
+$args = array(
+  'post_type'      => 'post',
+  'post_status'    => 'publish',
+  'posts_per_page' => 5,
+);
+
+$query = new WP_Query($args);
+
+if ($query->have_posts()) :
+?>
+
 <section id="nsc-other-articles" class="nsc-other-articles">
     <div class="section-title-wrap">
     <?php if (get_theme_mod('nsc_blog_other_articles_heading') !='') { ?>
@@ -123,3 +135,11 @@
      <?php }
      wp_reset_query(); ?>
 </section>
+
+
+<?php
+else :
+    // If no posts available, do nothing (section won't be displayed).
+endif;
+wp_reset_query();
+?>

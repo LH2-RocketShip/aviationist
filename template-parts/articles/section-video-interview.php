@@ -119,7 +119,7 @@ p.video-desc {
 
 
 
-                                  <iframe width="300" height="169" src="<?php echo esc_url($video_url); ?>?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                                  <iframe width="440" height="300" src="<?php echo esc_url($video_url); ?>?controls=0&amp;showinfo=0&amp;rel=0&amp;modestbranding=1" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
 
                                     <h4><?php echo esc_html($video_details['title']); ?></h4>
                                     <?php if (!empty($video_details['duration'])): ?>

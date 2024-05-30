@@ -639,6 +639,8 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   color: #adadad;
   padding: 6px 10px;
   text-transform: capitalize;
+  width: 100%;
+  text-align: center;
 }
 .nsc-home-category .nav-pills .nav-link a{
   color: #adadad;    
@@ -1270,13 +1272,20 @@ blockquote:not(:has(cite)){
   border-inline-start: unset !important;
 }
 .nsc-content-single ul{
-  list-style-image: url('./assets/images/list-image.png');
+  /*list-style-image: url('./assets/images/list-image.png');*/
   padding-inline-start: 25px;
 }
-.nsc-content-single ul li{
-  font: 400 clamp(12px, 2vw, 18px)/1.2 Inter;
-  margin-bottom: 22px;
-  color: var(--para-color);
+.nsc-content-single ul li {
+    font: 400 clamp(12px,2vw,18px)/1.2 Inter;
+    margin-bottom: 22px;
+    color: var(--para-color);
+    background-image: url('./assets/images/list-image.png');
+    background-repeat: no-repeat;
+    background-position: center left;
+    padding-left: 35px;
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 10px;
 }
 .nsc-single-post-author > div:first-child{
   background-color: var(--eerie-black);
@@ -1359,7 +1368,7 @@ blockquote:not(:has(cite)){
   background-color: #fff;
   padding: 12px;
   border-radius: 12px;
-  margin-inline-end: 18px;
+  margin:10px auto;
 }
 .nsc-related-article img{
   aspect-ratio: 9/5;
@@ -1433,7 +1442,7 @@ blockquote:not(:has(cite)){
   font: 400 clamp(14px, 3vw, 20px)/1.2 "Inter";
   color: var(--para-color);
 }
-.special-report-cat{
+.special-report-cat a{
   font: italic 400 clamp(18px, 2vw, 24px) / 1.1 "Libre Baskerville";
   color: #000;
   background-color: #FFCC00;
@@ -2146,13 +2155,22 @@ section{
   align-items: center;
   position: relative;
   right: 100px;
+  width: 100%;
   flex-direction: row-reverse;
 }
 
 #search-form {
-  display: flex;
-  align-items: center;
-  position: relative;
+    display: none;
+    align-items: center;
+    position: fixed;
+    top: 46px;
+    background: #000;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 .search-icon-container-1 #search-icon .feather-search {
     color: #fff;
@@ -2190,10 +2208,12 @@ section{
   display: block;
 }
 
-.search-submit {
-  display: none;
+/*.search-submit {*/
+/*  display: none;*/
+/*}*/
+.search-submit #search-submit-icon {
+    color: #ffcc00;
 }
-
 .nsc-content{
     overflow:hidden;
 }
@@ -2815,7 +2835,7 @@ div#preloader {
 
 .nsc-content-single,.nsc-content-single > * {
     position: relative;
-    padding-left: 20px;
+
 }
 .nsc-content-single h2::before {   
     content: '';
@@ -2832,13 +2852,14 @@ div#preloader {
 }
 .single .nsc-content-single h2 {
     font-family: 'Work Sans';
+    padding-left: 20px !important;
 }
-.single .nsc-content-single strong > p {
+.single .nsc-content-single em {
     background: rgba(255, 204, 0, 1);
     color: #000;
     padding: 5px 15px;
     position: relative;
-    top: -50px;
+    top: -25px;
     font-family: Libre Baskerville;
     font-size: 16px;
     font-style: italic;
@@ -2851,4 +2872,14 @@ div#preloader {
 }
 .nsc-single-post-author {
     margin: 30px 0;
+}
+#nsc-home-tab-container {
+    /* Ensure the container has a proper layout */
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.home, .nsc-post-para em {
+    font-style: normal;
 }

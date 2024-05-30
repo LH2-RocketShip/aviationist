@@ -233,7 +233,7 @@
             </div>
           <?php } ?>
 
-          <div class="d-flex nsc-single-post-author gap-3">
+          <div class="d-lg-flex nsc-single-post-author gap-3">
             <div class="text-center">
               <?php
               $avatar_html = get_avatar(get_the_author_meta('ID'));
@@ -526,12 +526,7 @@
         <?php get_template_part('template-parts/home/section-comment-policy'); ?>
     </div>
     <div class="custom-container">
-    <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
-    
-    <a href="<?php echo esc_url($all_articles_url); ?>" class="nsc-common-btn mt-4">
-        <?php esc_html_e('View All Articles', 'nsc-blog'); ?>
-    </a>
-    
+        <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
   </div>
 
 </article>

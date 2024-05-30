@@ -29,7 +29,13 @@ get_header(); ?>
           if ( ! empty( $special_report_cats ) && ! is_wp_error( $special_report_cats ) ) {
             foreach ( $special_report_cats as $category ) { ?>
 							<div class="nsc-special_report-container">
-            		<?php echo "<p class='special-report-cat'>" . $category->name . "</p>";
+            		<?php
+$category_link = get_category_link($category->term_id);
+if($category_link){
+    echo "<p class='special-report-cat'>" . esc_html($category->name) . "</p>";
+}
+
+
 	              $args = array(
 	                  'post_type' => 'special_report',
 	                  'post_status' => 'publish',
@@ -59,7 +65,7 @@ get_header(); ?>
 	                         </svg>
 												 </div>
                          <div class="ms-1">
-                           <a href="#"><strong><?php echo get_the_title(); ?></strong></a>
+                           <a href="<?php echo the_permalink(); ?>"><strong><?php echo get_the_title(); ?></strong></a>
                            <span> : <?php echo get_the_content(); ?></span>
                          </div>
 
@@ -81,7 +87,11 @@ get_header(); ?>
 					</aside>
         </div>
       </div>
-       	 <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+</div>
+        <div class="container-fluid">
+                   	 <?php get_template_part('template-parts/home/section-comment-policy'); ?>
+        </div>
+    <div class="custom-container">
   	 <?php get_template_part('template-parts/home/section-aviationist-carousel'); ?>
     </div>
   </main>

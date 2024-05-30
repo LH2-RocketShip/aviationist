@@ -59,21 +59,55 @@ jQuery(document).ready(function ($) {
       localStorage.setItem('darkMode', isChecked);
     });
 
-    $('#nsc-home-tab-container').owlCarousel({
-      loop:false,
-      margin:10,
-      nav:true,
-      autoWidth:true,
-      items:7,
-      responsive:{
-          0:{
-              items:2
-          },
-          600:{
-              items:4
-          }
-      }
-  });
+//     $('#nsc-home-tab-container').owlCarousel({
+//       loop:false,
+//       margin:10,
+//       nav:true,
+//       autoWidth:true,
+//       items:7,
+//       responsive:{
+//           0:{
+//               items:2
+//           },
+//           600:{
+//               items:4
+//           }
+//       }
+//   });
+
+
+jQuery(window).on('load', function() {
+    jQuery('#nsc-home-tab-container').slick({
+        infinite: true,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        arrows: false,
+        nav: false,
+        draggable: true,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 1
+                }
+            }
+        ]
+    });
+});
+
+
 
     $('.nsc-owl-carousel').owlCarousel({
         loop: true,
