@@ -189,6 +189,37 @@ $(document).ready(function() {
 
 
 
+jQuery(document).ready(function($) {
+    function initSlick() {
+        if ($(window).width() < 641) {
+            if (!$('.nsc-blog-post-grid').hasClass('slick-initialized')) {
+                $('.nsc-blog-post-grid').slick({
+                    dots: true,
+                    arrows: false,
+                    infinite: true,
+                    speed: 300,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    adaptiveHeight: true
+                });
+            }
+        } else {
+            if ($('.nsc-blog-post-grid').hasClass('slick-initialized')) {
+                $('.nsc-blog-post-grid').slick('unslick');
+            }
+        }
+    }
+
+    // Initialize Slick on document ready and on window resize
+    initSlick();
+    $(window).resize(function() {
+        initSlick();
+    });
+});
+
+
+
+
     //  copy link
     let copy_button = $('#nsc-copy-link');
     if (copy_button.length > 0) {

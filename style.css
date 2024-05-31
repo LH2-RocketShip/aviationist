@@ -482,7 +482,7 @@ label[for="nsc-theme-modes"] :is(.dark, .light){
   background-color: #F2F3F5;
   border-radius: 6px;
   padding: 8px;
-  display: flex;
+  /*display: flex;*/
   align-items: center;
   gap: 10px;
 }
@@ -1308,7 +1308,7 @@ nav.nsc-post-navigation .d-lg-flex {
   border-radius: 16px;
   padding: clamp(20px, 3vw, 42px) 12px;
   flex: 0 0 238px;
-  width: 50%;
+
 }
 .nsc-single-post-author img{
   max-width: 80px;
@@ -1931,7 +1931,7 @@ main#nsc-primary {
   }
   .nsc-comments-policy{
     background-image: unset !important;
-    padding-inline: 26px;
+    /*padding-inline: 26px;*/
     background-color: #FFCC0033;
     text-align: center;
   }
@@ -1951,6 +1951,10 @@ main#nsc-primary {
       margin-top: 24px;
    }
 }
+#nsc-other-articles .post-container:first-child img {
+    height: 100%;
+    max-height: 300px;
+}
 @media (min-width: 641px){
     .nsc-foot-column:nth-child(1) div#block-9,.nsc-foot-column:nth-child(3) .widget12{
         display: none;
@@ -1958,8 +1962,46 @@ main#nsc-primary {
     .page-template-nsc-about-us img.about-banner{
         display: none;
     }
+    .nsc-single-post-author .blend-social-media{
+        display: none !important;
+    }
 }
 @media (max-width: 641px){
+    .nsc-comments-policy {
+        background-size: auto;
+        background-position: bottom;
+    }
+    .nsc-related-article-container {
+        margin: 15px auto;
+    }
+    .nsc-single-post-author .normal-social-media{
+        display: none !important;
+    }
+    	#nsc-all-articles .post-container {
+    margin: 0 10px 0 0;
+}
+	.author-wrapper-outer {
+    display: flex;
+    justify-content: space-between;
+}
+	.author-wrapper-outer .author-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+}
+	.author-wrapper-outer .author-wrapper .single-author-designation {
+    border: navajowhite;
+}
+	.author-wrapper-outer {
+    display: flex;
+    justify-content: space-between;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+    .single figcaption.wp-image-caption, .nsc-content-single figure figcaption {
+        font-size: 11px !important;
+    }
     nav.nsc-post-navigation .d-lg-flex div {
         margin: 15px 0;
     }
@@ -2086,7 +2128,10 @@ nav.nsc-post-navigation p.nsc-post-nav-cat {
     margin: 0 5px;
 }
 .nsc-news-bar{
-    margin-top: 13px !important;
+    margin-top: 10px !important;
+}
+.single .nsc-news-bar{
+    margin-top: 50px !important;
 }
 .nsc-news-bar>span:first-child{
     border-radius: 0px;
@@ -2921,15 +2966,15 @@ div#preloader {
     justify-content: start;
     gap: 5px;
 }
-.single figcaption.wp-image-caption,.nsc-content-single figure figcaption{
-    background: #ffcc00;
-    padding: 5px 25px !important;
-    width: fit-content;
+.single figcaption.wp-image-caption, .nsc-content-single figure figcaption {
+    background: #fc0;
+    padding: 5px 10px !important;
+    width: auto;
     display: flex;
     height: auto;
     min-height: auto;
     border-radius: 0;
-    transform: skew(-30deg,0deg);
+    transform: skew(-10deg,0deg);
     font-family: Libre Baskerville;
     font-size: 16px;
     font-style: italic;
@@ -2937,7 +2982,7 @@ div#preloader {
     line-height: 19.84px;
     text-align: left;
     color: #000;
-    margin: 0 50px;
+    margin: 0 10px;
     bottom: -15px;
 }
 .nsc-content-single figure figcaption{
@@ -2955,4 +3000,73 @@ div#preloader {
 }
 .nsc-single-post-page blockquote p{
     color: #fff;
+}
+
+.single.dark-mode .nsc-single-post-page .nsc-post-cat {
+    background: rgba(242, 242, 242, 1);
+    color: #000;
+    margin: 0px 0 10px;
+}
+.nsc-post-share {
+    width: 100%;
+    justify-content: end;
+}
+.nsc-popups {
+    z-index: 9;
+}
+
+.dark-mode .comments-area form textarea#comment {
+    color: #fff;
+}
+
+@media (max-width: 640px) {
+.nsc-related-article-container{
+ margin:10px 0;
+}
+}
+
+@media (max-width: 640px) {
+    
+    blockquote p:before {
+    top: 25px;
+    left: 75px;
+    transform: translateY(-50%) translateX(-100%);
+    }
+    
+    blockquote p:after {
+        bottom: 30px;
+        right: 45px;
+        transform: translateY(50%);
+    }
+    
+    .single blockquote {
+        padding: 0 !important;
+    }
+    
+    .single blockquote p {
+            padding: 50px 45px;
+    }
+}
+
+.nsc-content-single p {
+    line-height:18px;
+}
+
+@media (max-width: 991px) {
+    .nsc-about-section-2{
+        display:none;
+    }
+    .nsc-single-post-author img {
+        max-width: 63px;
+        aspect-ratio: 1 / 1;
+        border: 2px solid #fc0;
+        border-radius: 50%;
+        margin: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .nsc-about-section-1{
+        display:none;
+    }
 }

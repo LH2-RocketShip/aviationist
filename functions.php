@@ -316,6 +316,12 @@ add_action('wp_ajax_nopriv_nsc_blog_like_comment', 'nsc_blog_like_comment');
 
 
 function nsc_blog_breadcrumb() {
+    if ( have_posts() ) :
+    while ( have_posts() ) : the_post();  
+        $post_categories = get_the_category();
+    endwhile;
+endif;
+    
     $separator = '<span class="breadcrumb-arrow"> > </span>';
     $home_title = 'Home';
     $page_title = get_query_var( 'name' );
@@ -329,11 +335,12 @@ function nsc_blog_breadcrumb() {
     $original_string = $page_title;
     $transformed_string = transform_string($original_string);
     
+    
 
     echo '<nav class="nsc-breadcrumb">';
     
     if (is_category() || is_single()) {
-		echo $post_categories = get_the_category();
+// 		$post_categories = get_the_category();
 			if ( ! empty( $post_categories ) ) {
 			    $first_category = $post_categories[0];
 			 //   echo esc_html( $first_category->name );
@@ -341,8 +348,8 @@ function nsc_blog_breadcrumb() {
         if (is_single()) {
             echo '<a href="' . get_home_url() . '">' . $home_title . '</a>';
             echo $separator;
-             echo esc_html( $first_category->name );
-             echo $separator;
+            echo '<a href="' . esc_url( get_category_link( $first_category->term_id ) ) . '">' . esc_html( $first_category->name ) . '</a> ';
+            echo $separator;
             echo $transformed_string;
         }
     }else {
@@ -1098,62 +1105,10 @@ add_filter('widget_text', 'add_lazyload_to_images');
 
 
 
-/**
- * Append captions to images in post content.
- *
- * @param string $content The post content.
- * @return string The modified content with captions.
- */
-function append_captions_to_images_in_content($content) {
-    if (empty($content)) {
-        return $content;
-    }
 
-    // Ensure the caption shortcode is parsed
-    $content = do_shortcode($content);
 
-    // Load the content into a DOMDocument
-    $dom = new DOMDocument();
-    libxml_use_internal_errors(true);
-    $dom->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-    libxml_clear_errors();
 
-    $images = $dom->getElementsByTagName('img');
 
-    foreach ($images as $img) {
-        $img_src = $img->getAttribute('src');
-        $img_id = attachment_url_to_postid($img_src);
 
-        if ($img_id) {
-            $caption = wp_get_attachment_caption($img_id);
-            if ($caption) {
-                // Create figure and figcaption elements
-                $figure = $dom->createElement('figure');
-                $figure->setAttribute('class', 'wp-image-figure');
-                $figcaption = $dom->createElement('figcaption', esc_html($caption));
-                $figcaption->setAttribute('class', 'wp-image-caption');
-
-                // Clone the image and append to figure
-                $img_clone = $img->cloneNode();
-                $figure->appendChild($img_clone);
-                $figure->appendChild($figcaption);
-
-                // Replace original img with the new figure
-                $img->parentNode->replaceChild($figure, $img);
-            }
-        }
-    }
-
-    // Serialize the DOMDocument back to HTML
-    $updated_content = '';
-    foreach ($dom->documentElement->childNodes as $node) {
-        $updated_content .= $dom->saveHTML($node);
-    }
-
-    return $updated_content;
-}
-
-// Filter the content to include captions for images
-add_filter('the_content', 'append_captions_to_images_in_content');
 
 ?>
