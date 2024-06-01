@@ -1103,12 +1103,4 @@ add_filter('widget_text', 'add_lazyload_to_images');
 
 
 
-
-
-
-
-
-
-
-
 ?>

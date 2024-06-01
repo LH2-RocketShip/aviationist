@@ -1346,7 +1346,7 @@ nav.nsc-post-navigation .d-lg-flex {
   object-fit: cover;
   border-radius: 6px;
   max-width: 134px;
-  height: unset;
+  /*height: unset;*/
   width: unset;
 }
 .nsc-post-navigation .nsc-post-nav-cat{
@@ -2114,7 +2114,7 @@ nav.nsc-post-navigation {
     position: relative;
 }
 .post-prev {
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
 }
 nav.nsc-post-navigation p.nsc-post-nav-cat {
@@ -3069,4 +3069,12 @@ div#preloader {
     .nsc-about-section-1{
         display:none;
     }
+}
+
+.nsc-post-navigation .post-prev {
+    background-color: transparent !important;
+}
+
+.nsc-post-navigation .next-post {
+    background-color: transparent !important;
 }

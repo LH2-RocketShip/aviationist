@@ -34,9 +34,12 @@ if ($query->have_posts()) :
       'posts_per_page' => 5,
     );
      $query = new WP_Query($args);
-     if ( $query->have_posts() ) { ?>
+     if ( $query->have_posts() ) { 
+     $post_counter = 0;
+     ?>
         <div class="nsc-blog-grid-5">
          <?php while ($query->have_posts()) : $query->the_post();
+         $post_counter++;
          $image_id = get_post_thumbnail_id();
          $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', TRUE);
          $image_title = get_the_title($image_id);
@@ -59,9 +62,29 @@ if ($query->have_posts()) :
                    <?php echo get_the_title(); ?>
                  </a>
                </h3>
-               <div class="nsc-post-para">
-                 <?php echo get_the_excerpt(); ?>
-               </div>
+                <div class="nsc-post-para">
+                  <?php 
+                  if ($post_counter == 1) {
+                  
+                    function limit_content_characters($content, $limit = 300) {
+    if (strlen($content) > $limit) {
+        return substr($content, 0, $limit) . '...';
+    }
+    return $content;
+}
+
+$content = get_the_content();
+$content = preg_replace('/<img[^>]+\>/i', '', $content);
+$content = preg_replace('/\[caption.*\[\/caption\]/is', '', $content);
+$content = wp_strip_all_tags($content);
+$content = limit_content_characters($content, 300); // Set limit to 300 characters
+echo $content;
+
+                  } else {
+                    echo get_the_excerpt();
+                  }
+                  ?>
+                </div>
 
                <div class="d-flex align-items-center gap-2">
                    <div class="d-flex align-items-center gap-2">

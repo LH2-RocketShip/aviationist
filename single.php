@@ -471,109 +471,109 @@
           <?php } ?>
 
           <h3 class="section-main-head mt-5">other articles</h3>
-          <nav class="nsc-post-navigation">
-			  <div class="d-lg-flex">
-				         <div class="nav-previous">
+         <nav class="nsc-post-navigation">
+              <div class="d-lg-flex" style="gap: 8px;">
                 <?php
-                $prev_post = get_adjacent_post(false, '', true);
-                if (!empty($prev_post)): ?>
-                    <div class="d-flex" style="gap: 10px;">
-                      <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
-                      <div>
-                        <?php
-                        $categories = get_the_category();
-                          if ( ! empty( $categories ) ) {
-                            echo "<p class='nsc-post-nav-cat mb-0'>" . $categories[0]->name . "</p>";
+                $total_posts = wp_count_posts()->publish;
+                if ($total_posts > 2) {
+                  $prev_post = get_adjacent_post(false, '', true);
+                  if (!empty($prev_post)): ?>
+                    <div class="nav-previous">
+                      <div class="d-flex" style="gap: 10px;">
+                        <?php nsc_blog_featured_image_with_custom_sizes(get_the_ID()); ?>
+                        <div>
+                          <?php
+                          $categories = get_the_category($prev_post->ID);
+                          if (!empty($categories)) {
+                            echo "<p class='nsc-post-nav-cat mb-0'>" . esc_html($categories[0]->name) . "</p>";
                           } ?>
                           <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nsc-nav-post-title">
                             <?php echo get_the_title($prev_post->ID); ?>
                           </a>
                           <ul class="nsc-single-tag-list nsc-posts-tags px-0 mb-0">
                             <?php
-                            $tags = get_tags();
-                            if ($tags !='') {
+                            $tags = get_the_tags($prev_post->ID);
+                            if ($tags) {
                               $count = 0;
-                              foreach ( $tags as $tag ) :
-                                if($count == 3) {
-                                  break;
-                                }
-                                $tag_link = get_tag_link( $tag->term_id ); ?>
+                              foreach ($tags as $tag) {
+                                if ($count == 3) break;
+                                $tag_link = get_tag_link($tag->term_id); ?>
                                 <li>
-                                  <a href='<?php echo $tag_link; ?>' title='<?php echo $tag->name; ?>' class='<?php echo $tag->slug ?>' title="<?php echo $tag->name; ?>">
-                                    <?php echo $tag->name; ?>
-                                    <span class="screen-reader-text">
-                                      <?php echo $tag->name; ?>
-                                    </span>
+                                  <a href='<?php echo esc_url($tag_link); ?>' title='<?php echo esc_attr($tag->name); ?>' class='<?php echo esc_attr($tag->slug); ?>'>
+                                    <?php echo esc_html($tag->name); ?>
+                                    <span class="screen-reader-text"><?php echo esc_html($tag->name); ?></span>
                                   </a>
                                 </li>
                                 <?php
                                 $count++;
-                              endforeach; } ?>
-                            </ul>
-                          </div>
+                              }
+                            } ?>
+                          </ul>
                         </div>
-                       
-                <?php endif; ?>
-            </div>
-			
-            <div class="nav-next">
-              <?php
-              $next_post = get_adjacent_post(false, '', false);
-              if (!empty($next_post)): ?>
-              <!-- <a href="<?php // echo get_permalink($next_post->ID); ?>"> -->
-              <div class="d-flex" style="gap: 10px;">
-                <?php echo get_the_post_thumbnail($next_post->ID, 'thumbnail'); ?>
-                <div>
-                  <?php
-                  $categories = get_the_category();
-                  if ( ! empty( $categories ) ) {
-                    echo "<p class='nsc-post-nav-cat mb-0'>" . $categories[0]->name . "</p>";
-                  } ?>
-                  <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-post-title">
-                    <?php echo get_the_title($next_post->ID); ?>
-                  </a>
-                  <ul class="nsc-single-tag-list nsc-posts-tags px-0 mb-0">
-                    <?php
-                    $tags = get_tags();
-                    if ($tags !='') {
-                      $count = 0;
-                      foreach ( $tags as $tag ) :
-                        if($count == 3) {
-                          break;
-                        }
-                        $tag_link = get_tag_link( $tag->term_id ); ?>
-                        <li>
-                          <a href='<?php echo $tag_link; ?>' title='<?php echo $tag->name; ?>' class='<?php echo $tag->slug ?>' title="<?php echo $tag->name; ?>">
-                            <?php echo $tag->name; ?>
-                            <span class="screen-reader-text">
-                              <?php echo $tag->name; ?>
-                            </span>
-                          </a>
-                        </li>
-                        <?php
-                        $count++;
-                      endforeach; } ?>
-                    </ul>
-                  </div>
-                </div>
-                
-                <?php endif; ?>
-            </div>
-			  </div>
-              <div class="prev-next">
-                  <div class="post-prev">
-                    <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nsc-nav-btn d-block">
-                         <?php echo esc_html('<< Previous', 'nsc-blog'); ?>
-                    </a>
-                  </div>
-    			  <div class="next-post">
-                    <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-btn text-end d-block">
-                      <?php echo esc_html('Next >>', 'nsc-blog'); ?>
-                    </a>
+                      </div>
                     </div>
+                  <?php endif;
+            
+                  $next_post = get_adjacent_post(false, '', false);
+                  if (!empty($next_post)): ?>
+                    <div class="nav-next">
+                      <div class="d-flex" style="gap: 10px;">
+                        <?php echo get_the_post_thumbnail($next_post->ID, 'thumbnail'); ?>
+                        <div>
+                          <?php
+                          $categories = get_the_category($next_post->ID);
+                          if (!empty($categories)) {
+                            echo "<p class='nsc-post-nav-cat mb-0'>" . esc_html($categories[0]->name) . "</p>";
+                          } ?>
+                          <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-post-title">
+                            <?php echo get_the_title($next_post->ID); ?>
+                          </a>
+                          <ul class="nsc-single-tag-list nsc-posts-tags px-0 mb-0">
+                            <?php
+                            $tags = get_the_tags($next_post->ID);
+                            if ($tags) {
+                              $count = 0;
+                              foreach ($tags as $tag) {
+                                if ($count == 3) break;
+                                $tag_link = get_tag_link($tag->term_id); ?>
+                                <li>
+                                  <a href='<?php echo esc_url($tag_link); ?>' title='<?php echo esc_attr($tag->name); ?>' class='<?php echo esc_attr($tag->slug); ?>'>
+                                    <?php echo esc_html($tag->name); ?>
+                                    <span class="screen-reader-text"><?php echo esc_html($tag->name); ?></span>
+                                  </a>
+                                </li>
+                                <?php
+                                $count++;
+                              }
+                            } ?>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  <?php endif; ?>
+                <?php } ?>
               </div>
-		
-          </nav>
+            
+              <?php if ($total_posts > 2): ?>
+                <div class="prev-next d-flex">
+                  <?php if (!empty($prev_post)): ?>
+                    <div class="post-prev">
+                      <a href="<?php echo get_permalink($prev_post->ID); ?>" class="nsc-nav-btn d-block">
+                        <?php echo esc_html('<< Previous', 'nsc-blog'); ?>
+                      </a>
+                    </div>
+                  <?php endif; ?>
+                  <?php if (!empty($next_post)): ?>
+                    <div class="next-post">
+                      <a href="<?php echo get_permalink($next_post->ID); ?>" class="nsc-nav-btn text-end d-block">
+                        <?php echo esc_html('Next >>', 'nsc-blog'); ?>
+                      </a>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              <?php endif; ?>
+            </nav>
+
 
           <?php
           endwhile;
