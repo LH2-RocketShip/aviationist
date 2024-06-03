@@ -1796,6 +1796,10 @@ main#nsc-archieve .container {
     .nsc-footer-grid .nsc-foot-column {
         width: calc(100% / 3 - 10px);
     }
+    #nsc-other-articles .post-container:first-child .nsc-content .nsc-post-para,#nsc-popular-post .post-container:first-child .nsc-content .nsc-post-para{
+        font-size: 12px !important;
+    }
+    
 }
 
 /*@media (max-width: 1040px){*/
@@ -1951,9 +1955,32 @@ main#nsc-primary {
       margin-top: 24px;
    }
 }
-#nsc-other-articles .post-container:first-child img {
-    height: 100%;
-    max-height: 300px;
+#nsc-other-articles .post-container:first-child .nsc-content .nsc-post-para, #nsc-popular-post .post-container:first-child .nsc-content .nsc-post-para{
+    font-size:16px;
+    line-height: 20.36px
+}
+
+
+
+
+
+
+
+@media(min-width: 991px){
+    #nsc-other-articles .post-container:first-child .nsc-post-para, #nsc-popular-post .post-container:first-child .nsc-post-para{
+        overflow: visible;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: unset;
+    }
+    #nsc-other-articles .post-container:first-child img, #nsc-popular-post .post-container:first-child img{
+        height: 100%;
+        max-height: 300px;
+    }
+    #nsc-other-articles .post-container:first-child .nsc-content h3.nsc-post-title,#nsc-popular-post .post-container:first-child .nsc-content h3.nsc-post-title {
+        font-size: 24px;
+        max-width: 527px;
+        width: 100%;
+    }
 }
 @media (min-width: 641px){
     .nsc-foot-column:nth-child(1) div#block-9,.nsc-foot-column:nth-child(3) .widget12{
@@ -3005,10 +3032,9 @@ div#preloader {
 .single.dark-mode .nsc-single-post-page .nsc-post-cat {
     background: rgba(242, 242, 242, 1);
     color: #000;
-    margin: 0px 0 10px;
 }
 .nsc-post-share {
-    width: 100%;
+    width: fit-width;
     justify-content: end;
 }
 .nsc-popups {
@@ -3026,7 +3052,10 @@ div#preloader {
 }
 
 @media (max-width: 640px) {
-    
+    .single-post-container {
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
     blockquote p:before {
     top: 25px;
     left: 75px;

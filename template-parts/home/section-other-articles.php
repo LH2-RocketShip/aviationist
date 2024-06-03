@@ -62,29 +62,39 @@ if ($query->have_posts()) :
                    <?php echo get_the_title(); ?>
                  </a>
                </h3>
-                <div class="nsc-post-para">
-                  <?php 
-                  if ($post_counter == 1) {
-                  
-                    function limit_content_characters($content, $limit = 300) {
-    if (strlen($content) > $limit) {
-        return substr($content, 0, $limit) . '...';
+<div class="nsc-post-para">
+    <?php 
+    if ($post_counter == 1) {
+        
+        // Function to limit content to a certain number of characters
+        function limit_content_characters($content, $limit = 300) {
+            if (mb_strlen($content) > $limit) {
+                return mb_substr($content, 0, $limit) . '...';
+            }
+            return $content;
+        }
+
+        // Fetch and process the content
+        $content = get_the_content();
+        // Remove <img> tags
+        $content = preg_replace('/<img[^>]+\>/i', '', $content);
+        // Remove caption shortcodes
+        $content = preg_replace('/\[caption.*\[\/caption\]/is', '', $content);
+        // Strip all other HTML tags
+        $content = strip_tags($content);
+        // Limit content to 300 characters
+        $content = limit_content_characters($content, 300);
+        // Echo the processed content
+        echo $content;
+
+    } else {
+        // Display the excerpt for other posts
+        echo get_the_excerpt();
     }
-    return $content;
-}
+    ?>
+</div>
 
-$content = get_the_content();
-$content = preg_replace('/<img[^>]+\>/i', '', $content);
-$content = preg_replace('/\[caption.*\[\/caption\]/is', '', $content);
-$content = wp_strip_all_tags($content);
-$content = limit_content_characters($content, 300); // Set limit to 300 characters
-echo $content;
 
-                  } else {
-                    echo get_the_excerpt();
-                  }
-                  ?>
-                </div>
 
                <div class="d-flex align-items-center gap-2">
                    <div class="d-flex align-items-center gap-2">

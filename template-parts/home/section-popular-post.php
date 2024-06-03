@@ -53,8 +53,36 @@
                  </a>
                </h3>
                <div class="nsc-post-para">
-                 <?php echo get_the_excerpt(); ?>
-               </div>
+    <?php 
+    if ($post_counter == 1) {
+        
+        // Function to limit content to a certain number of characters
+        function limit_content_characters($content, $limit = 300) {
+            if (mb_strlen($content) > $limit) {
+                return mb_substr($content, 0, $limit) . '...';
+            }
+            return $content;
+        }
+
+        // Fetch and process the content
+        $content = get_the_content();
+        // Remove <img> tags
+        $content = preg_replace('/<img[^>]+\>/i', '', $content);
+        // Remove caption shortcodes
+        $content = preg_replace('/\[caption.*\[\/caption\]/is', '', $content);
+        // Strip all other HTML tags
+        $content = strip_tags($content);
+        // Limit content to 300 characters
+        $content = limit_content_characters($content, 300);
+        // Echo the processed content
+        echo $content;
+
+    } else {
+        // Display the excerpt for other posts
+        echo get_the_excerpt();
+    }
+    ?>
+</div>
 
                <div class="d-flex align-items-center gap-2">
                    <div class="d-flex align-items-center gap-2">

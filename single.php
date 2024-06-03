@@ -46,7 +46,7 @@
               }
             } ?>
 
-          <div class="d-flex align-items-center justify-content-between flex-wrap single-post-container">
+          <div class="d-flex align-items-center justify-content-between single-post-container">
             <div class="d-flex align-items-center flex-wrap">
               <?php
               if(get_theme_mod('nsc_blog_single_post_cats', true) != '0'){

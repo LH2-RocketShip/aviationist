@@ -192,8 +192,8 @@ $(document).ready(function() {
 jQuery(document).ready(function($) {
     function initSlick() {
         if ($(window).width() < 641) {
-            if (!$('.nsc-blog-post-grid').hasClass('slick-initialized')) {
-                $('.nsc-blog-post-grid').slick({
+            if (!$('#nsc-all-articles .nsc-blog-post-grid').hasClass('slick-initialized')) {
+                $('#nsc-all-articles .nsc-blog-post-grid').slick({
                     dots: true,
                     arrows: false,
                     infinite: true,
